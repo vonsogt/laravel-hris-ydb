@@ -7,8 +7,11 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $li_1 }}</a></li>
-                    @if(isset($title))
+                    @if(isset($title) && !isset($li_end))
                         <li class="breadcrumb-item active">{{ $title }}</li>
+                    @elseif(isset($title) && isset($li_end))
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $title }}</a></li>
+                        <li class="breadcrumb-item active">{{ $li_end }}</li>
                     @endif
                 </ol>
             </div>
