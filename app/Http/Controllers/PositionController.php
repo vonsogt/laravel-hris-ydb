@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Position;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class PositionController extends Controller
 {
@@ -13,8 +15,32 @@ class PositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+
+            $data = Position::select('*')->latest('id');
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '
+                        <div class="d-flex gap-2">
+                            <div class="edit">
+                                <a href="' . route('positions.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                            </div>
+                            <div class="remove">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("positions.destroy", [$row->id]) .'">Hapus</a>
+                            </div>
+                        </div>
+                    ';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         return view('positions.index');
     }
 
@@ -25,7 +51,7 @@ class PositionController extends Controller
      */
     public function create()
     {
-        //
+        return view('positions.create');
     }
 
     /**
@@ -36,7 +62,9 @@ class PositionController extends Controller
      */
     public function store(StorePositionRequest $request)
     {
-        //
+        $position = Position::create($request->all());
+
+        return redirect()->route('positions.index')->with('message', 'Jabatan berhasil ditambahkan.');
     }
 
     /**
@@ -58,7 +86,7 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
-        //
+        return view('positions.edit', compact('position'));
     }
 
     /**
@@ -70,7 +98,9 @@ class PositionController extends Controller
      */
     public function update(UpdatePositionRequest $request, Position $position)
     {
-        //
+        $position->update($request->all());
+
+        return redirect()->route('positions.index')->with('message', 'Jabatan berhasil diubah.');
     }
 
     /**
@@ -81,6 +111,6 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
-        //
+        return $position->delete();
     }
 }
