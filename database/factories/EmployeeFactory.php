@@ -23,7 +23,7 @@ class EmployeeFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'institution_number' => $this->faker->unique()->numberBetween(100, 500),
+            'institution_number' => $this->faker->unique()->numberBetween(100000000000, 900000000000),
             'id_card' => $this->faker->unique()->numberBetween(217100, 2171000),
             'education_personnel_number' => $this->faker->unique()->numberBetween(100, 500),
             'birth_place' => $this->faker->city(),
@@ -31,8 +31,9 @@ class EmployeeFactory extends Factory
             'gender' => $this->faker->randomElement(Gender::asArray()),
             'religion' => $this->faker->randomElement(Religion::asArray()),
             'education' => $this->faker->name(),
+            'join_date' => $this->faker->date(),
             'blood_type' => $this->faker->randomElement(BloodType::asArray()),
-            'instituion_id' => $this->faker->numberBetween(1, Institution::count()),
+            'institution_id' => $this->faker->numberBetween(1, Institution::count()),
             'position_id' => $this->faker->numberBetween(1, Position::count()),
             'address' => $this->faker->address(),
             'status' => $this->faker->name(),

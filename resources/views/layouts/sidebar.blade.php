@@ -39,7 +39,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets">
+                    <a class="nav-link menu-link {{ (request()->routeIs('employees.*')) ? 'active' : '' }}" href="{{ route('employees.index') }}">
                         <i class="ri-group-line"></i> <span>Data Pegawai</span>
                     </a>
                 </li>
@@ -90,13 +90,13 @@
                         aria-expanded="false" aria-controls="sidebarOtherMenu">
                         <i class="ri-folder-open-line"></i> <span>Menu Lain</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs(['positions.*']) ? 'show' : '' }}" id="sidebarOtherMenu">
+                    <div class="collapse menu-dropdown {{ request()->routeIs(['positions.*', 'institutions.*']) ? 'show' : '' }}" id="sidebarOtherMenu">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('positions.index') }}" class="nav-link {{ (request()->routeIs('positions.*')) ? 'active' : '' }}" >Data Jabatan</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-detached" target="_blank" class="nav-link" >Data Lembaga</a>
+                                <a href="{{ route('institutions.index') }}" class="nav-link {{ (request()->routeIs('institutions.*')) ? 'active' : '' }}" >Data Lembaga</a>
                             </li>
                         </ul>
                     </div>

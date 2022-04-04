@@ -15,7 +15,7 @@ class StoreEmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -31,6 +31,7 @@ class StoreEmployeeRequest extends FormRequest
             'id_card'                       => 'required',
             'education_personnel_number'    => 'required',
             'gender'                        => 'required|' . new EnumValue(Gender::class),
+            'join_date'                     => 'required',
             'instituion_id'                 => 'required',
             'position_id'                   => 'required',
         ];

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Gender;
+use App\Enums\Religion;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
 {
@@ -13,9 +17,39 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+
+            $data = Employee::with(['institution', 'position'])->select('*')->latest('id');
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('institution_name', function (Employee $employee) {
+                    return $employee->institution->name;
+                })
+                ->addColumn('position_name', function (Employee $employee) {
+                    return $employee->position->name;
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '
+                        <div class="d-flex gap-2">
+                            <div class="edit">
+                                <a href="' . route('employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                            </div>
+                            <div class="remove">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("employees.destroy", [$row->id]) . '">Hapus</a>
+                            </div>
+                        </div>
+                    ';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('employees.index');
     }
 
     /**
@@ -25,7 +59,10 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $data['genderOptions'] = Gender::asSelectArray();
+        $data['religionOptions'] = Religion::asSelectArray();
+
+        return view('employees.create', compact('data'));
     }
 
     /**
@@ -81,6 +118,6 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        return $employee->delete();
     }
 }

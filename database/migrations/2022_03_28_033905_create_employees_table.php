@@ -27,7 +27,7 @@ return new class extends Migration
             $table->char('blood_type')->nullable();
             $table->date('join_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->foreignId('instituion_id')->constrained();
+            $table->foreignId('institution_id')->constrained();
             $table->foreignId('position_id')->constrained();
             $table->text('address')->nullable();
             $table->string('status')->nullable();

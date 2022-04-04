@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +26,11 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('roo
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::resource('positions', PositionController::class);
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('positions', PositionController::class);
+    Route::resource('institutions', InstitutionController::class);
+    Route::resource('employees', EmployeeController::class);
+});
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

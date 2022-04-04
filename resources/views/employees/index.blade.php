@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Jabatan
+    Pegawai
 @endsection
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
@@ -8,14 +8,14 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1') Dasbor @endslot
-        @slot('title') Jabatan @endslot
+        @slot('title') Pegawai @endslot
         @slot('li_end') Daftar @endslot
     @endcomponent
 
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
-                <a href="{{ route('positions.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah jabatan</a>
+                <a href="{{ route('employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
             </div>
         </div>
     </div>
@@ -26,12 +26,15 @@
                     <div id="customerList">
 
                         <div class="table-responsive mt-3 mb-1">
-                            <table class="table align-middle table-nowrap" id="positionTable">
+                            <table class="table align-middle table-nowrap" id="institutionTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Nama</th>
-                                        <th>Deskripsi</th>
+                                        <th>NIY</th>
+                                        <th>Lembaga</th>
+                                        <th>Jabatan</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Bergabung</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -60,23 +63,35 @@
     <script>
         $(function() {
 
-            var table = $('#positionTable').DataTable({
+            var table = $('#institutionTable').DataTable({
 
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('positions.index') }}",
+                ajax: "{{ route('employees.index') }}",
                 columns: [
                     {
                         data: 'id',
                         name: 'id'
                     },
                     {
+                        data: 'institution_number',
+                        name: 'institution_number'
+                    },
+                    {
+                        data: 'institution_name',
+                        name: 'institution_name'
+                    },
+                    {
+                        data: 'position_name',
+                        name: 'position_name'
+                    },
+                    {
                         data: 'name',
                         name: 'name'
                     },
                     {
-                        data: 'description',
-                        name: 'description'
+                        data: 'join_date',
+                        name: 'join_date'
                     },
                     {
                         data: 'action',
@@ -134,7 +149,7 @@
                                 }).showToast();
 
                                 // remove current table row and draw table again
-                                var table = $('#positionTable').DataTable()
+                                var table = $('#institutionTable').DataTable()
                                 table.row($(button).parents('tr')).remove().draw(false);
                             } else {
                                 Swal.fire({
