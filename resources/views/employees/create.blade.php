@@ -87,9 +87,55 @@
                             <label class="form-label" for="blood_type-input">Golongan Darah</label>
                             <input type="text" name="blood_type" class="form-control" id="blood_type-input" value="{{ old('blood_type', $employee->blood_type ?? '') }}" placeholder="Masukkan golongan darah">
                         </div>
+                        <div class="mb-3">
+                            <label for="joinDateInputdate" class="form-label">Bergabung</label>
+                            <input type="date" name="join_date" class="form-control" id="joinDateInputdate" value="{{ old('join_date', $employee->join_date ?? '') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDateInputdate" class="form-label">Akhir Kontrak</label>
+                            <input type="date" name="end_date" class="form-control" id="endDateInputdate" value="{{ old('end_date', $employee->end_date ?? '') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="institutionInputSelect">Lembaga</label>
+                            <select id="institutionInputSelect" class="form-select mb-3" name="institution_id" aria-label="Pilih lembaga">
+                                <option disabled selected> -- Pilih lembaga -- </option>
+                                @foreach ($data['institutionOptions'] as $key => $option)
+                                    <option @if (old('institution_id', '') == $key) selected @endif value="{{ $key }}">{{ $option }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="positionInputSelect">Jabatan</label>
+                            <select id="positionInputSelect" class="form-select mb-3" name="position_id" aria-label="Pilih jabatan">
+                                <option disabled selected> -- Pilih jabatan -- </option>
+                                @foreach ($data['positionOptions'] as $key => $option)
+                                    <option @if (old('position_id', '') == $key) selected @endif value="{{ $key }}">{{ $option }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div>
-                            <label class="form-label" for="description-input">Deskripsi</label>
-                            <textarea name="description" class="form-control" id="description-input" rows="3" spellcheck="false">{{ old('description', $employee->description ?? '') }}</textarea>
+                            <label class="form-label" for="addressInput">Alamat</label>
+                            <textarea name="address" class="form-control" id="addressInput" rows="3" spellcheck="false">{{ old('address', $employee->address ?? '') }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="status-input">Status</label>
+                            <input type="text" name="status" class="form-control" id="status-input" value="{{ old('status', $employee->status ?? '') }}" placeholder="Masukkan status">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="phoneNumberInput">Nomor HP</label>
+                            <input type="text" name="phone_number" class="form-control" id="phoneNumberInput" value="{{ old('phone_number', $employee->phone_number ?? '') }}" placeholder="Masukkan nomor hp">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="motherNameInput">Nama Ibu Kandung</label>
+                            <input type="text" name="mother_name" class="form-control" id="motherNameInput" value="{{ old('mother_name', $employee->mother_name ?? '') }}" placeholder="Masukkan nama ibu kandung">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="partnerNameInput">Nama Suami/Istri</label>
+                            <input type="text" name="partner_name" class="form-control" id="partnerNameInput" value="{{ old('partner_name', $employee->partner_name ?? '') }}" placeholder="Masukkan nama suami/istri">
+                        </div>
+                        <div class="mb-3">
+                            <label for="photoFile" class="form-label">Foto</label>
+                            <input class="form-control" name="photo" type="file" id="photoFile">
                         </div>
                     </div>
                 </div>

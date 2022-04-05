@@ -7,6 +7,8 @@ use App\Enums\Religion;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Institution;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -61,6 +63,8 @@ class EmployeeController extends Controller
     {
         $data['genderOptions'] = Gender::asSelectArray();
         $data['religionOptions'] = Religion::asSelectArray();
+        $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
+        $data['positionOptions'] = Position::get()->pluck('name', 'id');
 
         return view('employees.create', compact('data'));
     }
