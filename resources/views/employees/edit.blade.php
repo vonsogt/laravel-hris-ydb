@@ -90,8 +90,13 @@
                             <input type="text" name="education" class="form-control" id="education-input" value="{{ old('education', $employee->education ?? '') }}" placeholder="Masukkan pendidikan">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="blood_type-input">Golongan Darah</label>
-                            <input type="text" name="blood_type" class="form-control" id="blood_type-input" value="{{ old('blood_type', $employee->blood_type ?? '') }}" placeholder="Masukkan golongan darah">
+                            <label class="form-label" for="bloodTypeInputSelect">Golongan Darah</label>
+                            <select id="bloodTypeInputSelect" class="form-select mb-3" name="blood_type" aria-label="Pilih golongan darah">
+                                <option disabled selected> -- Pilih golongan darah -- </option>
+                                @foreach ($data['bloodTypeOptions'] as $key => $option)
+                                    <option @if (old('blood_type', $employee->blood_type ?? '') == $key) selected @endif value="{{ $key }}">{{ strtoupper($option) }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="joinDateInputdate" class="form-label">Bergabung</label>

@@ -100,10 +100,16 @@
                         searchable: false
                     },
                 ],
-                columnDefs: [{
-                    targets: 2,
-                    render: $.fn.dataTable.render.ellipsis()
-                }]
+                // columnDefs: [{
+                //     targets: 1,
+                //     render: function(data, type, row, meta) {
+                //         console.log(data)
+                //         if (type === 'display') {
+                //             data = '<a href="test">Edit</a>';
+                //         }
+                //         return data;
+                //     }
+                // }]
             });
         });
 

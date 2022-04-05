@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\BloodType;
 use App\Enums\Gender;
 use App\Enums\Religion;
 use App\Models\Employee;
@@ -28,6 +29,9 @@ class EmployeeController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('institution_number', function ($row) {
+                    return '<a class="fw-semibold" href="' . route('employees.show', $row->id) . '">' . $row->institution_number . '</a>';
+                })
                 ->addColumn('institution_name', function (Employee $employee) {
                     return $employee->institution->name;
                 })
@@ -48,7 +52,7 @@ class EmployeeController extends Controller
 
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['institution_number', 'action'])
                 ->make(true);
         }
 
@@ -64,6 +68,7 @@ class EmployeeController extends Controller
     {
         $data['genderOptions'] = Gender::asSelectArray();
         $data['religionOptions'] = Religion::asSelectArray();
+        $data['bloodTypeOptions'] = BloodType::asSelectArray();
         $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
         $data['positionOptions'] = Position::get()->pluck('name', 'id');
 
@@ -103,7 +108,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return view('employees.show', compact('employee'));
     }
 
     /**
@@ -116,6 +121,7 @@ class EmployeeController extends Controller
     {
         $data['genderOptions'] = Gender::asSelectArray();
         $data['religionOptions'] = Religion::asSelectArray();
+        $data['bloodTypeOptions'] = BloodType::asSelectArray();
         $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
         $data['positionOptions'] = Position::get()->pluck('name', 'id');
 
