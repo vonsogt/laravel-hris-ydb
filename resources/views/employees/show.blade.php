@@ -152,12 +152,14 @@
                                                         <th class="ps-0" scope="row">Nama Suami/Istri</th>
                                                         <td>: <span class="text-muted">{{ $employee->partner_name }}</span></td>
                                                     </tr>
-                                                    @foreach ($employee->children_name as $child_name)
+                                                    @forelse ($employee->children_name ?? [] as $child_name)
                                                         <tr>
                                                             <th class="ps-0" scope="row">Nama Anak Ke-{{ $loop->iteration }}</th>
                                                             <td>: <span class="text-muted">{{ $child_name }}</span></td>
                                                         </tr>
-                                                    @endforeach
+                                                    @empty
+
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
