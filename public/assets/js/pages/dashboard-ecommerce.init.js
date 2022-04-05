@@ -41,7 +41,7 @@
     var linechartcustomerColors = getChartColorsArray("customer_impression_charts");
     var options = {
         series: [{
-            name: "Pegawai",
+            name: "Total Pegawai",
             type: "bar",
             data: [160, 177, 186, 187, 188, 192, 194, 195, 200, 205, 208, 220]
         }],
@@ -117,18 +117,6 @@
             }
         },
         colors: linechartcustomerColors,
-        tooltip: {
-            shared: true,
-            y: [{
-                formatter: function formatter(y) {
-                    if (typeof y !== "undefined") {
-                        return y.toFixed(2);
-                    }
-
-                    return y;
-                }
-            }]
-        }
     };
     var chart = new ApexCharts(document.querySelector("#customer_impression_charts"), options);
     chart.render(); // Simple Donut Charts
