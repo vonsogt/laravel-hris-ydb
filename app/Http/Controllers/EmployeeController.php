@@ -140,11 +140,11 @@ class EmployeeController extends Controller
             $photo = json_decode($photo);
 
             $photoName = 'pegawai/' . $photo->id . '_' . $photo->name;
-            $path = public_path('uploads/images/');
+            $path = public_path('uploads/images');
 
             $request->merge(['photo' => $photoName]);
 
-            File::isDirectory($path . 'pegawai') or File::makeDirectory($path . 'pegawai', 0777, true, true);
+            File::isDirectory($path . '/' . 'pegawai') or File::makeDirectory($path . '/' . 'pegawai', 0777, true, true);
             File::put($path . '/' . $photoName, base64_decode($photo->data));
         }
 

@@ -26,7 +26,7 @@
                     <div id="customerList">
 
                         <div class="table-responsive mt-3 mb-1">
-                            <table class="table align-middle table-nowrap" id="institutionTable">
+                            <table class="table align-middle table-nowrap" id="employeeTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
@@ -63,7 +63,7 @@
     <script>
         $(function() {
 
-            var table = $('#institutionTable').DataTable({
+            var table = $('#employeeTable').DataTable({
 
                 processing: true,
                 serverSide: true,
@@ -149,7 +149,7 @@
                                 }).showToast();
 
                                 // remove current table row and draw table again
-                                var table = $('#institutionTable').DataTable()
+                                var table = $('#employeeTable').DataTable()
                                 table.row($(button).parents('tr')).remove().draw(false);
                             } else {
                                 Swal.fire({
