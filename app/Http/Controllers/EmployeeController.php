@@ -133,7 +133,6 @@ class EmployeeController extends Controller
     {
         if ($employee->photo) {
             File::delete(public_path('uploads/images') . '/' . $employee->photo);
-            $request->merge(['photo' => null]);
         }
 
         if ($photo = $request->photo) {
@@ -146,6 +145,8 @@ class EmployeeController extends Controller
 
             File::isDirectory($path . '/' . 'pegawai') or File::makeDirectory($path . '/' . 'pegawai', 0777, true, true);
             File::put($path . '/' . $photoName, base64_decode($photo->data));
+        } else {
+            $request->merge(['photo' => null]);
         }
 
         $employee->update($request->all());
