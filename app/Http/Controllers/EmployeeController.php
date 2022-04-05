@@ -77,7 +77,9 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        //
+        $employee = Employee::create($request->all());
+
+        return redirect()->route('employees.index')->with('message', 'Pegawai berhasil ditambahkan.');
     }
 
     /**
@@ -99,7 +101,12 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $data['genderOptions'] = Gender::asSelectArray();
+        $data['religionOptions'] = Religion::asSelectArray();
+        $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
+        $data['positionOptions'] = Position::get()->pluck('name', 'id');
+
+        return view('employees.edit', compact('employee', 'data'));
     }
 
     /**
@@ -111,7 +118,9 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee->update($request->all());
+
+        return redirect()->route('employees.index')->with('message', 'Pegawai berhasil diubah.');
     }
 
     /**

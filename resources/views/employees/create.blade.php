@@ -138,17 +138,32 @@
                             <div class="table-responsive">
                                 <table id="faqs" class="table table-hover">
                                     <tbody>
-                                        <tr>
-                                            <td class="text-start">
-                                                <div class="mb-2">
-                                                    <input type="text" name="children_name[1]" class="form-control" placeholder="Nama anak pertama">
-                                                </div>
-                                            </td>
-                                            <td style="width: 105px;">
-                                                <button type="button" onclick="addChildRow();" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-add-line"></i></button>
-                                                {{-- <button type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button> --}}
-                                            </td>
-                                        </tr>
+                                        @forelse (old('children_name', $employee->children_name ?? []) as $key => $item)
+                                            <tr id="children-name-row{{$key}}">
+                                                <td class="text-start">
+                                                    <div class="mb-2">
+                                                        <input type="text" name="children_name[{{ $key }}]" class="form-control" value="{{ $item }}" placeholder="Nama anak pertama">
+                                                    </div>
+                                                </td>
+                                                <td style="width: 105px;">
+                                                    <button type="button" onclick="addChildRow();" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-add-line"></i></button>
+                                                    @if ($loop->index != 0)
+                                                        <a href="javascript:void(0);" class="btn btn-danger btn-icon waves-effect waves-light" onclick="$('#children-name-row{{ $key }}').remove();"><i class="ri-delete-bin-5-line"></i></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td class="text-start">
+                                                    <div class="mb-2">
+                                                        <input type="text" name="children_name[1]" class="form-control" placeholder="Nama anak pertama">
+                                                    </div>
+                                                </td>
+                                                <td style="width: 105px;">
+                                                    <button type="button" onclick="addChildRow();" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-add-line"></i></button>
+                                                </td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -178,6 +193,10 @@
 
     <script>
         var children_name_row = 2;
+
+        @if(($cnr = count((array)old('children_name', $employee->children_name ?? []))) > 2)
+            children_name_row = {{ $cnr + 1 }}
+        @endif
 
         function addChildRow() {
             html = '<tr id="children-name-row' + children_name_row + '">';
