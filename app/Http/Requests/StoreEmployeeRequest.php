@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Gender;
 use Illuminate\Foundation\Http\FormRequest;
-use BenSampo\Enum\Rules\EnumValue;
 
 class StoreEmployeeRequest extends FormRequest
 {
@@ -30,9 +28,9 @@ class StoreEmployeeRequest extends FormRequest
             'institution_number'            => 'required',
             'id_card'                       => 'required',
             'education_personnel_number'    => 'required',
-            'gender'                        => 'required|' . new EnumValue(Gender::class),
+            'gender'                        => 'required',
             'join_date'                     => 'required',
-            'instituion_id'                 => 'required',
+            'institution_id'                => 'required',
             'position_id'                   => 'required',
         ];
     }

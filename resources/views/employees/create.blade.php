@@ -134,6 +134,26 @@
                             <input type="text" name="partner_name" class="form-control" id="partnerNameInput" value="{{ old('partner_name', $employee->partner_name ?? '') }}" placeholder="Masukkan nama suami/istri">
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Nama Anak</label>
+                            <div class="table-responsive">
+                                <table id="faqs" class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-start">
+                                                <div class="mb-2">
+                                                    <input type="text" name="children_name[1]" class="form-control" placeholder="Nama anak pertama">
+                                                </div>
+                                            </td>
+                                            <td style="width: 105px;">
+                                                <button type="button" onclick="addChildRow();" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-add-line"></i></button>
+                                                {{-- <button type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button> --}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mb-3">
                             <label for="photoFile" class="form-label">Foto</label>
                             <input class="form-control" name="photo" type="file" id="photoFile">
                         </div>
@@ -152,4 +172,25 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        var children_name_row = 2;
+
+        function addChildRow() {
+            html = '<tr id="children-name-row' + children_name_row + '">';
+            html += '<td><input type="text" name="children_name[' + children_name_row + ']" class="form-control" placeholder="Nama anak ke-' + children_name_row + '"></td>';
+            html += '<td><button type="button" onclick="addChildRow();" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-add-line"></i></button> ' +
+                '<button class="btn btn-danger btn-icon waves-effect waves-light" onclick="$(\'#children-name-row' + children_name_row +
+                '\').remove();children_name_row--"><i class="ri-delete-bin-5-line"></i></button></td>';
+
+            html += '</tr>';
+
+            $('#faqs tbody').append(html);
+
+            children_name_row++;
+        }
+    </script>
 @endsection
