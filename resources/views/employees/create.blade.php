@@ -2,6 +2,11 @@
 @section('title')
     Tambah Pegawai
 @endsection
+@section('css')
+    <!-- Filepond css -->
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/filepond/filepond.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+@endsection
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1') Dasbor @endslot
@@ -27,7 +32,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('employees.store') }}">
+            <form method="POST" action="{{ route('employees.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-body">
@@ -170,7 +175,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="photoFile" class="form-label">Foto</label>
-                            <input class="form-control" name="photo" type="file" id="photoFile">
+                            <div class="avatar-xl mx-auto">
+                                <input type="file"
+                                class="filepond filepond-input-circle"
+                                name="photo"
+                                id="photoFile"
+                                accept="image/png, image/jpeg, image/gif"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -190,6 +201,43 @@
 
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- filepond js -->
+    <script src="{{ URL::asset('assets/libs/filepond/filepond.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
+
+    <!-- File upload js -->
+    <script>
+        // FilePond
+        FilePond.registerPlugin(
+            // encodes the file as base64 data
+            FilePondPluginFileEncode,
+            // validates the size of the file
+            FilePondPluginFileValidateSize,
+            // corrects mobile image orientation
+            FilePondPluginImageExifOrientation,
+            // previews dropped images
+            FilePondPluginImagePreview,
+        );
+
+        FilePond.create(
+            document.querySelector('.filepond-input-circle'), {
+                labelIdle: 'Seret & Jatuhkan gambar Anda atau <span class="filepond--label-action">Pilih</span>',
+                imagePreviewHeight: 170,
+                imageCropAspectRatio: '1:1',
+                imageResizeTargetWidth: 200,
+                imageResizeTargetHeight: 200,
+                stylePanelLayout: 'compact circle',
+                styleLoadIndicatorPosition: 'center bottom',
+                styleProgressIndicatorPosition: 'right bottom',
+                styleButtonRemoveItemPosition: 'left bottom',
+                styleButtonProcessItemPosition: 'right bottom',
+            }
+        );
+    </script>
 
     <script>
         var children_name_row = 2;

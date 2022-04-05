@@ -33,7 +33,7 @@ FilePond.registerPlugin(
 var inputMultipleElements = document.querySelectorAll('input.filepond-input-multiple');
 
 // loop over input elements
-Array.from(inputMultipleElements).forEach(function (inputElement) {
+Array.from(inputMultipleElements).forEach(function(inputElement) {
     // create a FilePond instance at the input element location
     FilePond.create(inputElement);
 })

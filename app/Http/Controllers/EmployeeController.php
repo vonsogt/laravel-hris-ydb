@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Institution;
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
@@ -77,6 +78,18 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
+        if ($photo = $request->photo) {
+            $photo = json_decode($photo);
+
+            $photoName = 'pegawai/' . $photo->id . '_' . $photo->name;
+            $path = public_path('uploads/images/');
+
+            $request->merge(['photo' => $photoName]);
+
+            File::isDirectory($path . 'pegawai') or File::makeDirectory($path . 'pegawai', 0777, true, true);
+            File::put($path . '/' . $photoName, base64_decode($photo->data));
+        }
+
         $employee = Employee::create($request->all());
 
         return redirect()->route('employees.index')->with('message', 'Pegawai berhasil ditambahkan.');
@@ -118,6 +131,23 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
+        if ($employee->photo) {
+            File::delete(public_path('uploads/images') . '/' . $employee->photo);
+            $request->merge(['photo' => null]);
+        }
+
+        if ($photo = $request->photo) {
+            $photo = json_decode($photo);
+
+            $photoName = 'pegawai/' . $photo->id . '_' . $photo->name;
+            $path = public_path('uploads/images/');
+
+            $request->merge(['photo' => $photoName]);
+
+            File::isDirectory($path . 'pegawai') or File::makeDirectory($path . 'pegawai', 0777, true, true);
+            File::put($path . '/' . $photoName, base64_decode($photo->data));
+        }
+
         $employee->update($request->all());
 
         return redirect()->route('employees.index')->with('message', 'Pegawai berhasil diubah.');
@@ -132,5 +162,12 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         return $employee->delete();
+    }
+
+    public function handleUploadedImage($image): void
+    {
+        if (!is_null($image)) {
+            $image->move(public_path('images') . 'temp');
+        }
     }
 }
