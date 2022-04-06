@@ -13,7 +13,7 @@ class UpdateAppreciationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,24 @@ class UpdateAppreciationRequest extends FormRequest
         return [
             'employee_id'   => 'required',
             'name'          => 'required',
-            'date'          => 'required|date',
+            'date'          => 'required',
+            'files'         => 'sometimes|mimes:csv,txt,xlx,xls,pdf|max:2048',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'employee_id.required' => 'Pegawai wajib diisi.',
+
+            'name.required' => 'Nama penghargaan wajib diisi.',
+
+            'date.required' => 'Tahun penghargaan wajib diisi.',
         ];
     }
 }

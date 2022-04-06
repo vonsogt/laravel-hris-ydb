@@ -35,7 +35,7 @@
                             <label class="form-label" for="name-input">Nama</label>
                             <input type="text" name="name" class="form-control" id="name-input" value="{{ old('name', $position->name ?? '') }}" placeholder="Masukkan nama">
                         </div>
-                        <div>
+                        <div class="mb-3">
                             <label class="form-label" for="description-input">Deskripsi</label>
                             <textarea name="description" class="form-control" id="description-input" rows="3" spellcheck="false">{{ old('description', $position->description ?? '') }}</textarea>
                         </div>

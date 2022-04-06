@@ -80,7 +80,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets">
+                    <a class="nav-link menu-link {{ (request()->routeIs('appreciations.*')) ? 'active' : '' }}" href="{{ route('appreciations.index') }}">
                         <i class="ri-trophy-line"></i> <span>Penghargaan</span>
                     </a>
                 </li>
