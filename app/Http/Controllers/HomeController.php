@@ -52,9 +52,9 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        foreach ($headcountEmployeeChartData as $val) {
-            $data['chartData'] .= $val->total . ',';
-            $data['chartCategories'] .= $val->year . ',';
+        foreach (array_reverse($headcountEmployeeChartData->toArray()) as $val) {
+            $data['chartData'] .= $val['total'] . ',';
+            $data['chartCategories'] .= $val['year'] . ',';
         }
 
         return view('index', compact('data'));
