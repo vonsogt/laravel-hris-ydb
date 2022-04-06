@@ -46,7 +46,10 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="widgets">
-                        <i class="ri-money-dollar-box-line"></i> <span>Slip Gaji</span>
+                        <i class="ri-money-dollar-box-line"></i>
+                        Slip Gaji
+                        <span class="badge badge-pill bg-danger">Soon</span>
+
                     </a>
                 </li>
 
@@ -58,7 +61,10 @@
                     <div class="collapse menu-dropdown {{ request()->routeIs(['leaves.*']) ? 'show' : '' }}" id="sidebarPaidLeave">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal" class="nav-link">Approve Cuti</a>
+                                <a href="#" class="nav-link">
+                                    Approve Cuti
+                                    <span class="badge badge-pill bg-danger">Soon</span>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('leaves.index') }}" class="nav-link {{ (request()->routeIs('leaves.*')) ? 'active' : '' }}">Semua Data</a>
@@ -69,7 +75,9 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="widgets">
-                        <i class="ri-file-text-line"></i> <span>Penilaian Kerja</span>
+                        <i class="ri-file-text-line"></i>
+                        Penilaian Kerja
+                        <span class="badge badge-pill bg-danger">Soon</span>
                     </a>
                 </li>
 
