@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppreciationController;
+use App\Http\Controllers\DecreeController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\PositionController;
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('institutions', InstitutionController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('appreciations', AppreciationController::class);
+    Route::resource('decrees', DecreeController::class);
 });
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

@@ -74,7 +74,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets">
+                    <a class="nav-link menu-link {{ (request()->routeIs('decrees.*')) ? 'active' : '' }}" href="{{ route('decrees.index') }}">
                         <i class="ri-file-copy-line"></i> <span>SK</span>
                     </a>
                 </li>

@@ -13,7 +13,7 @@ class UpdateDecreeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,6 +27,23 @@ class UpdateDecreeRequest extends FormRequest
             'employee_id'   => 'required',
             'year'          => 'required',
             'number'        => 'required',
+            'files'         => 'sometimes|mimes:csv,txt,xlx,xls,pdf|max:2048',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'employee_id.required' => 'Pegawai wajib diisi.',
+
+            'year.required' => 'Tahun surat keputusan wajib diisi.',
+
+            'number.required' => 'Nomor surat keputusan wajib diisi.',
         ];
     }
 }
