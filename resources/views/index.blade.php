@@ -173,14 +173,140 @@
 
     </div> <!-- end col -->
 </div>
-
 @endsection
 @section('script')
 <!-- apexcharts -->
 <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
+
 <!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
+<script>
+    // get colors array from the string
+    function getChartColorsArray(chartId) {
+        if (document.getElementById(chartId) !== null) {
+            var colors = document.getElementById(chartId).getAttribute("data-colors");
+            colors = JSON.parse(colors);
+            return colors.map(function(value) {
+                var newValue = value.replace(" ", "");
+
+                if (newValue.indexOf(",") === -1) {
+                    var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                    if (color) return color;
+                    else return newValue;
+                } else {
+                    var val = value.split(",");
+
+                    if (val.length == 2) {
+                        var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                        rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+                        return rgbaColor;
+                    } else {
+                        return newValue;
+                    }
+                }
+            });
+        }
+    }
+
+    var linechartcustomerColors = getChartColorsArray("customer_impression_charts");
+    var options = {
+        series: [{
+            name: "Total",
+            type: "bar",
+            data: [{{ $data['chartData'] }}]
+        }],
+        chart: {
+            height: 370,
+            type: "line",
+            toolbar: {
+                show: false
+            }
+        },
+        stroke: {
+            curve: "straight",
+            dashArray: [0, 0, 8],
+            width: [2, 0, 2.2]
+        },
+        fill: {
+            opacity: 0.9
+        },
+        markers: {
+            size: [0, 0, 0],
+            strokeWidth: 2,
+            hover: {
+                size: 4
+            }
+        },
+        xaxis: {
+            categories: [{{ $data['chartCategories'] }}],
+            axisTicks: {
+                show: false
+            },
+            axisBorder: {
+                show: false
+            }
+        },
+        yaxis: {
+            min: 0,
+            tickAmount: 4,
+        },
+        grid: {
+            show: true,
+            xaxis: {
+                lines: {
+                    show: true
+                }
+            },
+            yaxis: {
+                lines: {
+                    show: false
+                }
+            },
+            padding: {
+                top: 0,
+                right: -2,
+                bottom: 15,
+                left: 10
+            }
+        },
+        legend: {
+            show: true,
+            horizontalAlign: "center",
+            offsetX: 0,
+            offsetY: -5,
+            markers: {
+                width: 9,
+                height: 9,
+                radius: 6
+            },
+            itemMargin: {
+                horizontal: 10,
+                vertical: 0
+            }
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: "30%",
+                barHeight: "70%"
+            }
+        },
+        colors: linechartcustomerColors,
+        tooltip: {
+            shared: true,
+            y: [{
+                formatter: function(y) {
+                    if (typeof y !== "undefined") {
+                        return y.toFixed(0) + " Pegawai";
+                    }
+                    return y;
+                },
+            }, ],
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#customer_impression_charts"), options);
+    chart.render(); // Simple Donut Charts
+</script>
+
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection

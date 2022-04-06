@@ -43,6 +43,19 @@ class HomeController extends Controller
         $data['newEmployeesCount'] = Employee::whereYear('join_date', now()->year)
             ->whereMonth('join_date', now()->month)
             ->count();
+        $data['chartData'] = '';
+        $data['chartCategories'] = '';
+
+        $headcountEmployeeChartData = Employee::selectRaw('YEAR(join_date) as year, count(*) as total')
+            ->groupBy('year')
+            ->latest('year')
+            ->take(5)
+            ->get();
+
+        foreach ($headcountEmployeeChartData as $val) {
+            $data['chartData'] .= $val->total . ',';
+            $data['chartCategories'] .= $val->year . ',';
+        }
 
         return view('index', compact('data'));
     }
