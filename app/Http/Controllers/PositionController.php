@@ -30,7 +30,7 @@ class PositionController extends Controller
                                 <a href="' . route('positions.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
                             </div>
                             <div class="remove">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("positions.destroy", [$row->id]) .'">Hapus</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("positions.destroy", [$row->id]) . '">Hapus</a>
                             </div>
                         </div>
                     ';

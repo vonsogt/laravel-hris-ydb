@@ -4,6 +4,7 @@ use App\Http\Controllers\AppreciationController;
 use App\Http\Controllers\DecreeController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('employees', EmployeeController::class);
     Route::resource('appreciations', AppreciationController::class);
     Route::resource('decrees', DecreeController::class);
+    Route::resource('leaves', LeaveController::class);
 });
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

@@ -51,17 +51,17 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link {{ request()->routeIs(['leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPaidLeave">
                         <i class="ri-calendar-2-line"></i> <span>Cuti</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarPaidLeave">
+                    <div class="collapse menu-dropdown {{ request()->routeIs(['leaves.*']) ? 'show' : '' }}" id="sidebarPaidLeave">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal" target="_blank" class="nav-link" >Approve Cuti</a>
+                                <a href="layouts-horizontal" class="nav-link">Approve Cuti</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-detached" target="_blank" class="nav-link" >Semua Data</a>
+                                <a href="{{ route('leaves.index') }}" class="nav-link {{ (request()->routeIs('leaves.*')) ? 'active' : '' }}">Semua Data</a>
                             </li>
                         </ul>
                     </div>

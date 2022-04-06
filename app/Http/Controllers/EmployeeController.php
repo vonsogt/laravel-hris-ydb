@@ -12,6 +12,7 @@ use App\Models\Institution;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
@@ -95,6 +96,9 @@ class EmployeeController extends Controller
             File::put($path . '/' . $photoName, base64_decode($photo->data));
         }
 
+        $password = Hash::make($request->password ?? '123456');
+        $request->merge(['password' => $password]);
+
         $employee = Employee::create($request->all());
 
         return redirect()->route('employees.index')->with('message', 'Pegawai berhasil ditambahkan.');
@@ -153,6 +157,11 @@ class EmployeeController extends Controller
             File::put($path . '/' . $photoName, base64_decode($photo->data));
         } else {
             $request->merge(['photo' => null]);
+        }
+
+        if ($request->password != $employee->password) {
+            $password = Hash::make($request->password ?? '123456');
+            $request->merge(['password' => $password]);
         }
 
         $employee->update($request->all());

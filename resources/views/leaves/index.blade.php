@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Pegawai
+    Cuti
 @endsection
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
@@ -8,14 +8,14 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1') Dasbor @endslot
-        @slot('title') Pegawai @endslot
+        @slot('title') Cuti @endslot
         @slot('li_end') Daftar @endslot
     @endcomponent
 
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
-                <a href="{{ route('employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
+                <a href="{{ route('leaves.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah cuti</a>
             </div>
         </div>
     </div>
@@ -26,15 +26,17 @@
                     <div id="customerList">
 
                         <div class="table-responsive mt-3 mb-1">
-                            <table class="table align-middle table-nowrap" id="employeeTable">
+                            <table class="table align-middle table-nowrap" id="leaveTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
+                                        <th>Keterangan</th>
+                                        <th>Nama</th>
                                         <th>NIY</th>
-                                        <th>Lembaga</th>
-                                        <th>Jabatan</th>
-                                        <th>Nama Lengkap</th>
-                                        <th>Bergabung</th>
+                                        <th>Pengajuan</th>
+                                        <th>Mulai</th>
+                                        <th>Selesai</th>
+                                        <th>Alasan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -63,35 +65,43 @@
     <script>
         $(function() {
 
-            var table = $('#employeeTable').DataTable({
+            var table = $('#leaveTable').DataTable({
 
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('employees.index') }}",
+                ajax: "{{ route('leaves.index') }}",
                 columns: [
                     {
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'institution_number',
-                        name: 'institution_number'
+                        data: 'is_approve',
+                        name: 'is_approve'
                     },
                     {
-                        data: 'institution_name',
-                        name: 'institution_name'
+                        data: 'employee_name',
+                        name: 'employee_name'
                     },
                     {
-                        data: 'position_name',
-                        name: 'position_name'
+                        data: 'employee_institution_number',
+                        name: 'employee_institution_number'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'submission_date',
+                        name: 'submission_date'
                     },
                     {
-                        data: 'join_date',
-                        name: 'join_date'
+                        data: 'start_date',
+                        name: 'start_date'
+                    },
+                    {
+                        data: 'end_date',
+                        name: 'end_date'
+                    },
+                    {
+                        data: 'reason',
+                        name: 'reason'
                     },
                     {
                         data: 'action',
@@ -100,16 +110,10 @@
                         searchable: false
                     },
                 ],
-                // columnDefs: [{
-                //     targets: 1,
-                //     render: function(data, type, row, meta) {
-                //         console.log(data)
-                //         if (type === 'display') {
-                //             data = '<a href="test">Edit</a>';
-                //         }
-                //         return data;
-                //     }
-                // }]
+                columnDefs: [{
+                    targets: 2,
+                    render: $.fn.dataTable.render.ellipsis()
+                }]
             });
         });
 
@@ -155,7 +159,7 @@
                                 }).showToast();
 
                                 // remove current table row and draw table again
-                                var table = $('#employeeTable').DataTable()
+                                var table = $('#leaveTable').DataTable()
                                 table.row($(button).parents('tr')).remove().draw(false);
                             } else {
                                 Swal.fire({

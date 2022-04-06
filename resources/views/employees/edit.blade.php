@@ -189,6 +189,10 @@
                                 accept="image/png, image/jpeg, image/gif"/>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="passwordInput">Kata Sandi</label>
+                            <input type="password" name="password" class="form-control" id="passwordInput" value="{{ old('password', $employee->password ?? '') }}" placeholder="Masukkan kata sandi">
+                        </div>
                     </div>
                 </div>
                 <!-- end card -->

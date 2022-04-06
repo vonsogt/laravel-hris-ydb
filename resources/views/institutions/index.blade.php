@@ -32,7 +32,7 @@
                                         <th>ID</th>
                                         <th>Nama</th>
                                         <th>Deskripsi</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

@@ -32,6 +32,7 @@ class Employee extends Model
         'partner_name',
         'children_name',
         'photo',
+        'password',
     ];
 
     protected $casts = [

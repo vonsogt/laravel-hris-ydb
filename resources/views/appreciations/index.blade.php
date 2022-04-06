@@ -34,7 +34,7 @@
                                         <th>Nama Penghargaan</th>
                                         <th>Lembaga</th>
                                         <th>Tahun</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                             </table>
