@@ -76,8 +76,14 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="education-input">Pendidikan</label>
-                            <input type="text" name="education" class="form-control" id="education-input" value="{{ old('education', $employee->education ?? '') }}" placeholder="Masukkan pendidikan">
+                            <label class="form-label" for="educationInputSelect">Pendidikan</label>
+                            <select id="educationInputSelect" class="form-select mb-3" name="education" aria-label="Pilih pendidikan">
+                                <option disabled selected> -- Pilih pendidikan -- </option>
+                                @foreach ($data['educationOptions'] as $key => $option)
+                                    <option @if (old('education', '') == $key) selected @endif value="{{ $key }}">{{ strtoupper($option) }}</option>
+                                @endforeach
+                            </select>
+                            {{-- <input type="text" name="education" class="form-control" id="education-input" value="{{ old('education', $employee->education ?? '') }}" placeholder="Masukkan pendidikan"> --}}
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="bloodTypeInputSelect">Golongan Darah</label>
@@ -91,6 +97,12 @@
                         <div class="mb-3">
                             <label for="joinDateInputdate" class="form-label">Bergabung</label>
                             <input type="date" name="join_date" class="form-control" id="joinDateInputdate" value="{{ old('join_date', $employee->join_date ?? '') }}">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="formCheck1">
+                                <label class="form-check-label text-primary" for="formCheck1">
+                                    Centang jika pegawai tetap
+                                </label>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="endDateInputdate" class="form-label">Akhir Kontrak</label>
@@ -259,5 +271,13 @@
 
             children_name_row++;
         }
+
+        $('#formCheck1').change(function() {
+            if ($(this).is(':checked')) {
+                $('#endDateInputdate').parent().removeClass('d-none').addClass('d-none');
+            } else {
+                $('#endDateInputdate').parent().removeClass('d-none');
+            }
+        });
     </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BloodType;
+use App\Enums\Education;
 use App\Enums\Gender;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
@@ -68,6 +69,7 @@ class EmployeeController extends Controller
     {
         $data['genderOptions'] = Gender::asSelectArray();
         $data['bloodTypeOptions'] = BloodType::asSelectArray();
+        $data['educationOptions'] = Education::asSelectArray();
         $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
         $data['positionOptions'] = Position::get()->pluck('name', 'id');
 
@@ -123,6 +125,7 @@ class EmployeeController extends Controller
     {
         $data['genderOptions'] = Gender::asSelectArray();
         $data['bloodTypeOptions'] = BloodType::asSelectArray();
+        $data['educationOptions'] = Education::asSelectArray();
         $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
         $data['positionOptions'] = Position::get()->pluck('name', 'id');
 

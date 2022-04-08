@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\BloodType;
+use App\Enums\Education;
 use App\Enums\Gender;
 use App\Models\Institution;
 use App\Models\Position;
@@ -28,7 +29,7 @@ class EmployeeFactory extends Factory
             'birth_place' => $this->faker->city(),
             'birth_date' => $this->faker->date(),
             'gender' => $this->faker->randomElement(Gender::asArray()),
-            'education' => $this->faker->name(),
+            'education' => $this->faker->randomElement(Education::asArray()),
             'join_date' => $this->faker->date(),
             'blood_type' => $this->faker->randomElement(BloodType::asArray()),
             'institution_id' => $this->faker->numberBetween(1, Institution::count()),
