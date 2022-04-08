@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\JobAssessment;
 use App\Http\Requests\StoreJobAssessmentRequest;
 use App\Http\Requests\UpdateJobAssessmentRequest;
+use App\Models\Employee;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class JobAssessmentController extends Controller
 {
@@ -13,9 +16,48 @@ class JobAssessmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+
+            $data = JobAssessment::select('*')->latest('id');
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('employee_name', function (JobAssessment $jobAssessment) {
+                    return $jobAssessment->employee->name;
+                })
+                ->addColumn('employee_institution_number', function (JobAssessment $jobAssessment) {
+                    return $jobAssessment->employee->institution_number;
+                })
+                ->addColumn('employee_institution_name', function (JobAssessment $jobAssessment) {
+                    return $jobAssessment->employee->institution->name;
+                })
+                ->addColumn('total', function (JobAssessment $jobAssessment) {
+                    return $jobAssessment->getTotalValue();
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '
+                        <div class="d-flex gap-2">
+                            <div class="show">
+                                <a href="' . route('job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                            </div>
+                            <div class="edit">
+                                <a href="' . route('job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                            </div>
+                            <div class="remove">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("job-assessments.destroy", [$row->id]) . '">Hapus</a>
+                            </div>
+                        </div>
+                    ';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('job-assessments.index');
     }
 
     /**
@@ -25,7 +67,9 @@ class JobAssessmentController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::get()->pluck('name', 'id');
+
+        return view('job-assessments.create', compact('employees'));
     }
 
     /**
@@ -36,7 +80,9 @@ class JobAssessmentController extends Controller
      */
     public function store(StoreJobAssessmentRequest $request)
     {
-        //
+        $jobAssessment = JobAssessment::create($request->all());
+
+        return redirect()->route('job-assessments.index')->with('message', 'Penilaian kerja berhasil ditambahkan.');
     }
 
     /**
@@ -47,7 +93,7 @@ class JobAssessmentController extends Controller
      */
     public function show(JobAssessment $jobAssessment)
     {
-        //
+        return view('job-assessments.show', compact('jobAssessment'));
     }
 
     /**
@@ -58,7 +104,9 @@ class JobAssessmentController extends Controller
      */
     public function edit(JobAssessment $jobAssessment)
     {
-        //
+        $employees = Employee::get()->pluck('name', 'id');
+
+        return view('job-assessments.edit', compact('jobAssessment', 'employees'));
     }
 
     /**
@@ -70,7 +118,9 @@ class JobAssessmentController extends Controller
      */
     public function update(UpdateJobAssessmentRequest $request, JobAssessment $jobAssessment)
     {
-        //
+        $jobAssessment->update($request->all());
+
+        return redirect()->route('job-assessments.index')->with('message', 'Penilaian kerja berhasil diubah.');
     }
 
     /**
@@ -81,6 +131,6 @@ class JobAssessmentController extends Controller
      */
     public function destroy(JobAssessment $jobAssessment)
     {
-        //
+        return $jobAssessment->delete();
     }
 }

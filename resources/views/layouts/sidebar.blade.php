@@ -74,10 +74,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets">
+                    <a class="nav-link menu-link {{ (request()->routeIs('job-assessments.*')) ? 'active' : '' }}" href="{{ route('job-assessments.index') }}">
                         <i class="ri-file-text-line"></i>
                         Penilaian Kerja
-                        <span class="badge badge-pill bg-danger">Soon</span>
                     </a>
                 </li>
 

@@ -13,7 +13,7 @@ class StoreJobAssessmentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,6 +26,20 @@ class StoreJobAssessmentRequest extends FormRequest
         return [
             'employee_id'   => 'required',
             'year'          => 'required',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'employee_id.required' => 'Pegawai wajib diisi.',
+
+            'year.required' => 'Tahun wajib diisi.',
         ];
     }
 }
