@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
+use App\Models\Salary;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +15,6 @@ class SalarySeeder extends Seeder
      */
     public function run()
     {
-        Employee::factory()->count(25)->create();
+        Salary::factory()->count(25)->create();
     }
 }

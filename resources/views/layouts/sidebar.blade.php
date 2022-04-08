@@ -45,11 +45,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets">
-                        <i class="ri-money-dollar-box-line"></i>
-                        Slip Gaji
-                        <span class="badge badge-pill bg-danger">Soon</span>
-
+                    <a class="nav-link menu-link {{ (request()->routeIs('salaries.*')) ? 'active' : '' }}" href="{{ route('salaries.index') }}">
+                        <i class="ri-money-dollar-box-line"></i> <span>Slip Gaji</span>
                     </a>
                 </li>
 
@@ -75,8 +72,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ (request()->routeIs('job-assessments.*')) ? 'active' : '' }}" href="{{ route('job-assessments.index') }}">
-                        <i class="ri-file-text-line"></i>
-                        Penilaian Kerja
+                        <i class="ri-file-text-line"></i> <span>Penilaian Kerja</span>
                     </a>
                 </li>
 

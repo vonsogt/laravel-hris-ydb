@@ -7,6 +7,7 @@ use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\JobAssessmentController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\SalaryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -39,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('decrees', DecreeController::class);
     Route::resource('leaves', LeaveController::class);
     Route::resource('job-assessments', JobAssessmentController::class);
+    Route::resource('salaries', SalaryController::class);
 });
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

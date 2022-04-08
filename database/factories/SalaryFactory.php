@@ -19,7 +19,7 @@ class SalaryFactory extends Factory
     {
         return [
             'employee_id' => $this->faker->numberBetween(1, Employee::count()),
-            'date' => $this->faker->date(),
+            'date' => $this->faker->numberBetween(2010, now()->year) . $this->faker->date('-m-d'),
         ];
     }
 }

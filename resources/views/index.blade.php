@@ -155,7 +155,7 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header border-0 align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">HEADCOUNT PEGAWAI 2017 - 2022</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">HEADCOUNT PEGAWAI {{ explode(',', $data['chartCategories'])[0] }} - {{ explode(',', $data['chartCategories'])[4] }}</h4>
                         </div><!-- end card header -->
 
                         <div class="card-body p-0 pb-2">
