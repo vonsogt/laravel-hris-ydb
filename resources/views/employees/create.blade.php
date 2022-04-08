@@ -76,15 +76,6 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="religion-inputSelect">Agama</label>
-                            <select id="religion-inputSelect" class="form-select mb-3" name="religion" aria-label="Pilih agama">
-                                <option disabled selected> -- Pilih agama -- </option>
-                                @foreach ($data['religionOptions'] as $key => $option)
-                                    <option @if (old('religion', '') == $key) selected @endif value="{{ $key }}">{{ $option }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label" for="education-input">Pendidikan</label>
                             <input type="text" name="education" class="form-control" id="education-input" value="{{ old('education', $employee->education ?? '') }}" placeholder="Masukkan pendidikan">
                         </div>

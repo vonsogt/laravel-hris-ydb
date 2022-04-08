@@ -105,10 +105,6 @@
                                                         <td>: <span class="text-muted">{{ $employee->gender ? \App\Enums\Gender::getDescription((int) $employee->gender) : '-' }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="ps-0" scope="row">Agama</th>
-                                                        <td>: <span class="text-muted">{{ $employee->religion ? \App\Enums\Religion::getDescription($employee->religion) : '-' }}</span></td>
-                                                    </tr>
-                                                    <tr>
                                                         <th class="ps-0" scope="row">Pendidikan</th>
                                                         <td>: <span class="text-muted">{{ $employee->education ?? '-' }}</span></td>
                                                     </tr>

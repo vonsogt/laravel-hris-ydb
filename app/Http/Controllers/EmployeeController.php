@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\BloodType;
 use App\Enums\Gender;
-use App\Enums\Religion;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
@@ -68,7 +67,6 @@ class EmployeeController extends Controller
     public function create()
     {
         $data['genderOptions'] = Gender::asSelectArray();
-        $data['religionOptions'] = Religion::asSelectArray();
         $data['bloodTypeOptions'] = BloodType::asSelectArray();
         $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
         $data['positionOptions'] = Position::get()->pluck('name', 'id');
@@ -124,7 +122,6 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $data['genderOptions'] = Gender::asSelectArray();
-        $data['religionOptions'] = Religion::asSelectArray();
         $data['bloodTypeOptions'] = BloodType::asSelectArray();
         $data['institutionOptions'] = Institution::get()->pluck('name', 'id');
         $data['positionOptions'] = Position::get()->pluck('name', 'id');

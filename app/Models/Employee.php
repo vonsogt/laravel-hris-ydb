@@ -18,7 +18,6 @@ class Employee extends Model
         'birth_place',
         'birth_date',
         'gender',
-        'religion',
         'education',
         'blood_type',
         'join_date',
