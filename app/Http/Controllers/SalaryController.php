@@ -64,6 +64,9 @@ class SalaryController extends Controller
                         });
                     }
                 })
+                ->addColumn('date', function ($row) {
+                    return '<a class="fw-semibold" href="' . route('salaries.show', $row->id) . '">' . $row->date . '</a>';
+                })
                 ->addColumn('employee_name', function (Salary $salary) {
                     return $salary->employee->name;
                 })
@@ -90,7 +93,7 @@ class SalaryController extends Controller
 
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'date'])
                 ->make(true);
         }
 
@@ -131,7 +134,7 @@ class SalaryController extends Controller
      */
     public function show(Salary $salary)
     {
-        //
+        return view('salaries.show', compact('salary'));
     }
 
     /**
