@@ -63,7 +63,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="alert alert-info alert-solid" role="alert">
+            <div id="filter-alert" class="alert alert-info alert-solid d-none" role="alert">
                 Menampilkan Data Gaji Pegawai Bulan: <strong>04</strong> Tahun: <b> 2022</b>
             </div>
         </div>
@@ -76,7 +76,7 @@
                     <div id="customerList">
 
                         <div class="table-responsive mt-3 mb-1">
-                            <table class="table align-middle table-nowrap" id="salaryTable">
+                            <table class="table align-middle table-nowrap table-hover" id="salaryTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th>Detail</th>
@@ -155,9 +155,16 @@
             });
 
             $('#filterData').on('click', function(e) {
-                table.draw();
-                e.preventDefault();
-                $("#clearFilterData").removeClass('d-none');
+                if (checkFilterInput()) {
+
+                    var monthText = $("#filterMonth").val() != '' ? ' Bulan: ' + $("#filterMonth").val() : ''
+                    var yearText = $("#filterYear").val() != '' ? ' Tahun: ' + $("#filterYear").val() : ''
+
+                    table.draw();
+                    e.preventDefault();
+                    $("#clearFilterData").removeClass('d-none');
+                    filterAlert('Menampilkan Data Gaji Pegawai' + monthText + yearText)
+                }
             });
 
             $("#clearFilterData").click(function (e) {
@@ -166,10 +173,27 @@
                 table.draw();
                 e.preventDefault();
                 $("#clearFilterData").addClass('d-none');
+                filterAlert()
             });
         });
 
+        function filterAlert(text) {
+            var filterAlertBox = $("#filter-alert")
 
+            if (text) {
+                filterAlertBox.removeClass('d-none')
+                filterAlertBox.text(text)
+            } else {
+                filterAlertBox.removeClass('d-none').addClass('d-none')
+            }
+        }
+
+        function checkFilterInput() {
+            if ($("#filterMonth").val() == '' && $("#filterYear").val() == '') {
+                return false
+            }
+            return true
+        }
 
         $.fn.dataTable.render.ellipsis = function() {
             return function(data, type, row) {

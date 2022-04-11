@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Salary;
 use App\Http\Requests\StoreSalaryRequest;
 use App\Http\Requests\UpdateSalaryRequest;
+use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -103,7 +104,9 @@ class SalaryController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::get()->pluck('name', 'id');
+
+        return view('salaries.create', compact('employees'));
     }
 
     /**
@@ -114,7 +117,10 @@ class SalaryController extends Controller
      */
     public function store(StoreSalaryRequest $request)
     {
-        //
+        $request->merge(['date' => $request->year . '-' . $request->month . '-' . now()->day]);
+        $salary = Salary::create($request->all());
+
+        return redirect()->route('salaries.index')->with('message', 'Slip gaji berhasil ditambahkan.');
     }
 
     /**
@@ -136,7 +142,9 @@ class SalaryController extends Controller
      */
     public function edit(Salary $salary)
     {
-        //
+        $employees = Employee::get()->pluck('name', 'id');
+
+        return view('salaries.edit', compact('salary', 'employees'));
     }
 
     /**

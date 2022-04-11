@@ -11,6 +11,13 @@ class Salary extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['employee_id', 'date', 'incomes', 'cuts'];
+
+    protected $casts = [
+        'incomes'   => 'array',
+        'cuts'      => 'array',
+    ];
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);
@@ -25,9 +32,19 @@ class Salary extends Model
     protected function date(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::make($value)->format('M Y'),
-            set: fn ($value) => $value . now()->format('-d'),
+            get: fn ($value) => $value ? Carbon::make($value)->format('M Y') : '-',
+            set: fn ($value) => $value,
         );
+    }
+
+    public function getMonthFromDate()
+    {
+        return Carbon::make($this->date)->format('m');
+    }
+
+    public function getYearFromDate()
+    {
+        return Carbon::make($this->date)->format('Y');
     }
 
     public function getNetSalary()
