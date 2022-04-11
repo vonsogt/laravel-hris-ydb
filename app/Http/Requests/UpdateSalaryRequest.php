@@ -25,7 +25,24 @@ class UpdateSalaryRequest extends FormRequest
     {
         return [
             'employee_id'   => 'required',
-            'date'          => 'required|date',
+            'month'         => 'required',
+            'year'          => 'required',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'employee_id.required' => 'Pegawai wajib diisi.',
+
+            'month.required' => 'Bulan wajib diisi.',
+
+            'year.required' => 'Tahun wajib diisi.',
         ];
     }
 }

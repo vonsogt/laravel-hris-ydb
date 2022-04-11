@@ -52,11 +52,18 @@
                 <div class="card-body p-4">
                     <div class="row g-3">
                         <!-- Small Tables -->
-                        <table class="table table-sm table-nowrap">
+                        <table class="table table-sm table-nowrap table-borderless">
                             <thead>
                                 <tr>
-                                    <td></td>
                                     <td colspan="3">
+                                        <div class="row mb-4 d-print-none">
+                                            <div class="text-end">
+                                                <a href="javascript:window.print()" class="btn btn-success">
+                                                    <i class="ri-printer-line align-bottom me-1"></i>
+                                                    Cetak Slip
+                                                </a>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="d-flex align-items-center">
@@ -80,66 +87,160 @@
                                                 <h5 class="text-danger">PRIVATE & CONFIDENTIAL</h5>
                                             </div>
                                         </div>
-                                        <div style="margin-left:117px;margin-bottom: 1rem;border: 0;border-top: 3px solid "></div>
-                                    </td>
-                                </tr>
-                                <tr style="border-top: 0">
-                                    <td></td>
-                                    <td colspan="3" class="border-bottom">
-                                        <table class="table table-borderless table-sm table-nowrap">
-                                            <tr>
-                                                <td style="width: 150px">NIK</td>
-                                                <td>: {{ $salary->employee->id_card ?? '-' }}</td>
-                                                <td style="width: 150px">Jabatan</td>
-                                                <td>: {{ $salary->employee->position->name ?? '-' }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama Karyawan</td>
-                                                <td>: {{ $salary->employee->name ?? '-' }}</td>
-                                                <td>NPWP</td>
-                                                <td>: - </td>
-                                            </tr>
-                                        </table>
+                                        <div style="margin-left:117px;border: 0;border-top: 3px solid "></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class=""></th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Assignee</th>
+                                    <td colspan="3">
+                                        <div class="row" style="margin-bottom: -15px;">
+                                            <div class="col-6">
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">NIK</dt>
+                                                    <dd class="col-sm-9">: &ensp;{{ $salary->employee->id_card ?? '-' }}</dd>
+
+                                                    <dt class="col-sm-3">Jabatan</dt>
+                                                    <dd class="col-sm-9 fw-bold text-uppercase">: &ensp;{{ $salary->employee->position->name ?? '-' }}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-6">
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Nama Karyawan:</dt>
+                                                    <dd class="col-sm-9">: &ensp;{{ $salary->employee->name ?? '-' }}</dd>
+
+                                                    <dt class="col-sm-3">NPWP</dt>
+                                                    <dd class="col-sm-9">: &ensp;-</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        <div style="border: 0;border-top: 2px solid "></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="row" style="margin-top: -7px">
+                                            <div class="col-6">
+                                                <span class="fw-bold">PENDAPATAN</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="fw-bold">POTONGAN</span>
+                                            </div>
+                                        </div>
+                                        <div style="border: 0;border-top: 5px double;"></div>
+
+                                    </td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="border-top-width: 0">
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Implement new UX</td>
-                                    <td><span class="badge badge-soft-primary">Backlog</span></td>
-                                    <td>Lanora Sandoval</td>
+                                    <td colspan="3">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                @php
+                                                    $totalIncomes = 0;
+                                                    $totalCuts = 0;
+                                                @endphp
+                                                @forelse ($salary->incomes ?? [] as $item)
+                                                    @php $totalIncomes += $item['value']; @endphp
+                                                    <dl class="row" style="margin-bottom: -30px; padding-right: 50px">
+                                                        <dt class="col-sm-1">{{ $loop->iteration }}</dt>
+                                                        <dd class="col-sm-7">{{ $item['description'] }}</dd>
+                                                        <dd class="col-sm-4">
+                                                        <dl class="row">
+                                                            <dd class="col-sm-2">Rp</dd>
+                                                            <dd class="col-sm-10 text-end">{{ $item['value'] ? number_format($item['value'], '0', '.', ',') : '-' }}</dd>
+                                                        </dl>
+                                                        </dd>
+                                                    </dl>
+                                                @empty
+                                                    -
+                                                @endforelse
+                                            </div>
+                                            <div class="col-6">
+                                                @forelse ($salary->cuts ?? [] as $item)
+                                                    @php $totalCuts += $item['value']; @endphp
+                                                    <dl class="row" style="margin-bottom: -30px; padding-right: 50px">
+                                                        <dt class="col-sm-1">{{ $loop->iteration }}</dt>
+                                                        <dd class="col-sm-7">{{ $item['description'] }}</dd>
+                                                        <dd class="col-sm-4">
+                                                        <dl class="row">
+                                                            <dd class="col-sm-2">Rp</dd>
+                                                            <dd class="col-sm-10 text-end">{{ $item['value'] ? number_format($item['value'], '0', '.', ',') : '-' }}</dd>
+                                                        </dl>
+                                                        </dd>
+                                                    </dl>
+                                                @empty
+                                                    -
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Design syntax</td>
-                                    <td><span class="badge badge-soft-secondary">In Progress</span></td>
-                                    <td>Calvin Garrett</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Configurable resources</td>
-                                    <td><span class="badge badge-soft-success">Done</span></td>
-                                    <td>Florence Guzman</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Implement extensions</td>
-                                    <td><span class="badge badge-soft-dark">Backlog</span></td>
-                                    <td>Maritza Blanda</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Applications Engineer</td><td>
-                                    <span class="badge badge-soft-success">Done</span></td>
-                                    <td>Leslie Alexander</td>
-                                </tr>
+                                @if ($totalIncomes != 0 || $totalCuts != 0)
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <dl class="row" style="margin-bottom: -30px; padding-right: 50px">
+                                                        <dt class="col-sm-1"></dt>
+                                                        <dt class="col-sm-7 pt-2">JUMLAH PENDAPATAN</dt>
+                                                        <dd class="col-sm-4">
+                                                            <dl class="row bg-soft-info">
+                                                                <dt class="col-sm-2 pt-2">Rp</dt>
+                                                                <dd class="col-sm-10 text-end pt-2">{{ number_format($totalIncomes, '0', '.', ',') }}</dd>
+                                                            </dl>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="col-6">
+                                                    <dl class="row" style="margin-bottom: -30px; padding-right: 50px">
+                                                        <dt class="col-sm-1"></dt>
+                                                        <dt class="col-sm-7 pt-2">JUMLAH POTONGAN</dt>
+                                                        <dd class="col-sm-4">
+                                                            <dl class="row bg-soft-info">
+                                                                <dt class="col-sm-2 pt-2">Rp</dt>
+                                                                <dd class="col-sm-10 text-end pt-2">{{ number_format($totalCuts, '0', '.', ',') }}</dd>
+                                                            </dl>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="row pt-3">
+                                                <div class="col-6">
+                                                    <dl class="row" style="margin-bottom: -20px; padding-right: 50px">
+                                                        <dt class="col-sm-1 pt-2"></dt>
+                                                        <dt class="col-sm-5 pt-2">GAJI BERSIH</dt>
+                                                        <dd class="col-sm-6">
+                                                            <dl class="row bg-soft-dark">
+                                                                <dt class="col-sm-2 pt-2">Rp</dt>
+                                                                <dd class="col-sm-10 text-end pt-2">{{ number_format($totalIncomes, '0', '.', ',') }}</dd>
+                                                            </dl>
+                                                        </dd>
+                                                    </dl>
+                                                    <div class="row text-end" style="padding-right: 40px">
+                                                        @php
+                                                            $sc = new \App\Http\Controllers\SalaryController;
+                                                            $totalText = $sc->penyebut($totalIncomes - $totalCuts);
+                                                        @endphp
+                                                        <em class="fw-medium text-capitalize">({{ $totalText }})</em>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    Bendahara,
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <span class="fw-bold text-decoration-underline">Kurnia Candrawati, S.E.</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -158,4 +259,8 @@
 
     <script src="{{ URL::asset('assets/js/pages/profile.init.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
 @endsection
