@@ -71,13 +71,13 @@ class SalaryController extends Controller
                     return $salary->employee->name;
                 })
                 ->addColumn('net_salary', function (Salary $salary) {
-                    return $salary->getNetSalary();
+                    return 'Rp' . number_format($salary->getNetSalary(), '0', '.', ',');
                 })
                 ->addColumn('salary_received', function (Salary $salary) {
-                    return $salary->getSalaryReceived();
+                    return 'Rp' . number_format($salary->getSalaryReceived(), '0', '.', ',');
                 })
                 ->addColumn('total_allowance', function (Salary $salary) {
-                    return $salary->getTotalAllowance();
+                    return 'Rp' . number_format($salary->getTotalAllowance(), '0', '.', ',');
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '

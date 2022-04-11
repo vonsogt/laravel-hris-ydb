@@ -49,16 +49,32 @@ class Salary extends Model
 
     public function getNetSalary()
     {
-        return 0;
+        $value = $this->getSalaryReceived() - $this->getTotalAllowance();
+
+        return $value;
     }
 
     public function getSalaryReceived()
     {
-        return 0;
+        $value = 0;
+        if ($this->incomes != []) {
+            foreach ($this->incomes as $item) {
+                $value += $item['value'];
+            }
+        }
+
+        return $value;
     }
 
     public function getTotalAllowance()
     {
-        return 0;
+        $value = 0;
+        if ($this->cuts != []) {
+            foreach ($this->cuts as $item) {
+                $value += $item['value'];
+            }
+        }
+
+        return $value;
     }
 }
