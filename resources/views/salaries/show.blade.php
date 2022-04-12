@@ -216,7 +216,7 @@
                                                         <dd class="col-sm-6">
                                                             <dl class="row bg-soft-dark">
                                                                 <dt class="col-sm-2 pt-2">Rp</dt>
-                                                                <dd class="col-sm-10 text-end pt-2">{{ number_format($totalIncomes, '0', '.', ',') }}</dd>
+                                                                <dd class="col-sm-10 text-end pt-2">{{ number_format($totalIncomes - $totalCuts, '0', '.', ',') }}</dd>
                                                             </dl>
                                                         </dd>
                                                     </dl>
