@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['api'])->prefix('v1/auth')->name('v1.auth.')->group(function () {
+Route::middleware(['api'])->prefix('v1/auth')->name('api.v1.auth.')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
 

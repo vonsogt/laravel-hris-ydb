@@ -91,6 +91,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->guard('api')->factory()->getTTL() * 60,
+            'redirect_location' => route('root'),
             'employee' => auth()->guard('api')->user()
         ]);
     }

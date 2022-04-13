@@ -45,4 +45,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('leaves/approve/{id}', [LeaveController::class, 'approve'])->name('leaves.approve');
 });
 
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

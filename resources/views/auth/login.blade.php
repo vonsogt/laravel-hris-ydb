@@ -39,47 +39,92 @@
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
                                 <h5 class="text-primary">Selamat Datang !</h5>
-                                <p class="text-muted">Masuk untuk lanjut ke HRIS Yayasan Darussalam Batam.</p>
+                                <p class="text-muted">Masuk sebagai</p>
                             </div>
+                            <ul class="nav nav-pills justify-content-center" role="tablist">
+                                <li class="nav-item waves-effect waves-light">
+                                    <a class="nav-link @if(!$errors->any()) active @endif" data-bs-toggle="tab" href="#pegawai-1" role="tab">
+                                        Pegawai
+                                    </a>
+                                </li>
+                                <li class="nav-item waves-effect waves-light">
+                                    <a class="nav-link @if($errors->any()) active @endif" data-bs-toggle="tab" href="#admin-1" role="tab">
+                                        Admin
+                                    </a>
+                                </li>
+                            </ul>
                             <div class="p-2 mt-4">
-                                <form action="{{ route('login') }}" method="POST">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Email</label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', '') }}" id="username" name="email" placeholder="Enter username">
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <!-- Tab panes -->
+                                <div class="tab-content text-muted">
+                                    <div class="tab-pane @if(!$errors->any()) active @endif" id="pegawai-1" role="tabpanel">
+                                        <form id="handleAjax" action="{{ route('api.v1.auth.login') }}" method="POST">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="employee-institution-number-input" class="form-label">Nomor Induk Yayasan</label>
+                                                <input type="text" class="form-control" value="{{ old('institution_number', '') }}" id="employee-institution-number-input" name="institution_number" placeholder="Masukkan nomor induk yayasan">
+                                            </div>
 
-                                    <div class="mb-3">
-                                        <div class="float-end">
-                                            <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
-                                        </div>
-                                        <label class="form-label" for="password-input">Kata Sandi</label>
-                                        <div class="position-relative auth-pass-inputgroup mb-3">
-                                            <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Enter password" id="password-input">
-                                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                            <div class="mb-3">
+                                                <div class="float-end">
+                                                    <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
+                                                </div>
+                                                <label class="form-label" for="employee-password-input">Kata Sandi</label>
+                                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                                    <input type="password" class="form-control pe-5" name="password" placeholder="Masukkan kata sandi" id="employee-password-input">
+                                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="employee-password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                </div>
+                                            </div>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                        <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
-                                    </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                                                <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
+                                            </div>
 
-                                    <div class="mt-4">
-                                        <button class="btn btn-success w-100" type="submit">Masuk</button>
+                                            <div class="mt-4">
+                                                <button class="btn btn-success w-100" type="submit">Masuk</button>
+                                            </div>
+                                        </form>
                                     </div>
+                                    <div class="tab-pane @if($errors->any()) active @endif" id="admin-1" role="tabpanel">
+                                        <form action="{{ route('login') }}" method="POST">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Email</label>
+                                                <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', '') }}" id="username" name="email" placeholder="Masukkan email">
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
 
-                                </form>
+                                            <div class="mb-3">
+                                                <div class="float-end">
+                                                    <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
+                                                </div>
+                                                <label class="form-label" for="password-input">Kata Sandi</label>
+                                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                                    <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Masukkan kata sandi" id="password-input">
+                                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                    @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                                                <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <button class="btn btn-success w-100" type="submit">Masuk</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- end card body -->
@@ -104,7 +149,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Yayasan Darussalam Batam. Crafted with <i class="mdi mdi-heart text-danger"></i> by Anggi Syah Putri Nasution</p>
+                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Yayasan Darussalam Batam. Dibuat dengan <i class="mdi mdi-heart text-danger"></i> oleh Anggi Syah Putri Nasution</p>
                     </div>
                 </div>
             </div>
@@ -116,6 +161,83 @@
 @section('script')
 <script src="assets/libs/particles.js/particles.js.min.js"></script>
 <script src="assets/js/pages/particles.app.js"></script>
-<script src="assets/js/pages/password-addon.init.js"></script>
+
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+
+    // password addon
+    document.getElementById('password-addon').addEventListener('click', function () {
+        var passwordInput = document.getElementById("password-input");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    });
+
+    // employee password addon
+    document.getElementById('employee-password-addon').addEventListener('click', function () {
+        var passwordInput = document.getElementById("employee-password-input");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    });
+
+    $(function() {
+        // handle submit event of form
+        $(document).on("submit", "#handleAjax", function() {
+            var e = this;
+            // change login button text before ajax
+            $(this).find("[type='submit']").html("Masuk...");
+
+            $.post($(this).attr('action'), $(this).serialize(), function(data) {
+
+                $(e).find("[type='submit']").html("Masuk");
+                if (data.status) { // If success then redirect to login url
+                    window.location = data.redirect_location;
+                }
+            }).fail(function(response) {
+                // handle error and show in html
+                $(e).find("[type='submit']").html("Masuk");
+                $(".invalid-feedback").remove();
+                $(".is-invalid").removeClass('is-invalid');
+                var erroJson = JSON.parse(response.responseText);
+
+                for (var err in erroJson) {
+                    if (err == 'error') {
+                        var el = document.createElement("span")
+                            el.role = 'alert'
+                            el.className = 'invalid-feedback'
+                            el.innerHTML = '<strong>Identitas tersebut tidak cocok dengan data kami.</strong>'
+
+                            var input = document.getElementById("handleAjax").querySelector('input[name=institution_number]')
+
+                            input.parentNode.insertBefore(el, input.nextSibling)
+                            input.classList.add('is-invalid')
+                    } else {
+                        for (var errstr of erroJson[err]) {
+
+                            var el = document.createElement("span")
+                            el.role = 'alert'
+                            el.className = 'invalid-feedback'
+                            el.innerHTML = '<strong>' + errstr + '</strong>'
+
+                            var input = document.getElementById("handleAjax").querySelector('input[name=' + err + ']')
+
+                            input.parentNode.insertBefore(el, input.nextSibling)
+                            input.classList.add('is-invalid')
+                        }
+                    }
+                }
+
+            });
+            return false;
+        });
+    });
+</script>
 
 @endsection
