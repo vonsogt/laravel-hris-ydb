@@ -218,7 +218,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        type: "PUT",
+                        type: "POST",
                         url: route,
                         data: {
                             'is_approve': value

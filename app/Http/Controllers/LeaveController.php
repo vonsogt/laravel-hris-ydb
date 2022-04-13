@@ -35,8 +35,8 @@ class LeaveController extends Controller
                 ->addIndexColumn()
                 ->addColumn('is_approve', function ($row) use ($type) {
                     if ($type == 'approve') {
-                        return '<a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="updateEntry(this)" data-route="' . route("leaves_approve", $row->id) . '" data-value="0">Tolak</a> ' .
-                            '<a href="javascript:void(0)" class="btn btn-sm btn-success" onclick="updateEntry(this)" data-route="' . route("leaves_approve", $row->id) . '" data-value="1">Setujui</a>';
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="0">Tolak</a> ' .
+                            '<a href="javascript:void(0)" class="btn btn-sm btn-success" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="1">Setujui</a>';
                     } else {
                         if ($row->is_approve !== null) {
                             if ($row->is_approve == 1) {
