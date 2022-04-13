@@ -8,6 +8,7 @@ use App\Enums\Gender;
 use App\Models\Institution;
 use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
@@ -39,6 +40,7 @@ class EmployeeFactory extends Factory
             'phone_number' => $this->faker->phoneNumber(),
             'mother_name' => $this->faker->name(),
             'partner_name' => $this->faker->name(),
+            'password' => Hash::make('123456'),
         ];
     }
 }

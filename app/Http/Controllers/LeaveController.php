@@ -24,17 +24,29 @@ class LeaveController extends Controller
 
             $data = Leave::select('*')->with(['employee'])->latest('id');
 
+            $type = $request->type;
+            if ($type == 'approve') {
+                $data = $data->whereNull('is_approve');
+            } else {
+                $data = $data->whereNotNull('is_approve');
+            }
+
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('is_approve', function ($row) {
-                    if ($row->is_approve !== null) {
-                        if ($row->is_approve == 1) {
-                            return '<button type="button" class="btn btn-success">Disetujui</button>';
-                        } else if ($row->is_approve == 0) {
-                            return '<button type="button" class="btn btn-danger">Ditolak</button>';
+                ->addColumn('is_approve', function ($row) use ($type) {
+                    if ($type == 'approve') {
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="0">Tolak</a> ' .
+                            '<a href="javascript:void(0)" class="btn btn-sm btn-success" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="1">Setujui</a>';
+                    } else {
+                        if ($row->is_approve !== null) {
+                            if ($row->is_approve == 1) {
+                                return '<button type="button" class="btn btn-success">Disetujui</button>';
+                            } else if ($row->is_approve == 0) {
+                                return '<button type="button" class="btn btn-danger">Ditolak</button>';
+                            }
                         }
+                        return '-';
                     }
-                    return '-';
                 })
                 ->addColumn('employee_name', function (Leave $leave) {
                     return $leave->employee->name;
@@ -51,25 +63,31 @@ class LeaveController extends Controller
                 ->addColumn('end_date', function ($row) {
                     return Carbon::make($row->end_date)->format('d-M-Y');
                 })
-                ->addColumn('action', function ($row) {
-                    $btn = '
-                        <div class="d-flex gap-2">
-                            <div class="edit">
-                                <a href="' . route('leaves.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
-                            </div>
-                            <div class="remove">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("leaves.destroy", $row->id) . '">Hapus</a>
-                            </div>
-                        </div>
-                    ';
+                // ->addColumn('action', function ($row) {
+                //     $btn = '
+                //         <div class="d-flex gap-2">
+                //             <div class="edit">
+                //                 <a href="' . route('leaves.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                //             </div>
+                //             <div class="remove">
+                //                 <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("leaves.destroy", $row->id) . '">Hapus</a>
+                //             </div>
+                //         </div>
+                //     ';
 
-                    return $btn;
-                })
+                //     return $btn;
+                // })
                 ->rawColumns(['is_approve', 'action'])
                 ->make(true);
         }
 
-        return view('leaves.index');
+        $type = $request->type;
+        $data['title'] = 'Semua Data Cuti';
+        if ($type == 'approve') {
+            $data['title'] = 'Approve Cuti';
+        }
+
+        return view('leaves.index', compact('data'));
     }
 
     /**
@@ -131,6 +149,7 @@ class LeaveController extends Controller
      */
     public function update(UpdateLeaveRequest $request, Leave $leaf)
     {
+        dd($request->all());
         $leaf->update($request->all());
 
         return redirect()->route('leaves.index')->with('message', 'Cuti berhasil diubah.');
@@ -145,5 +164,13 @@ class LeaveController extends Controller
     public function destroy($id, Leave $leave)
     {
         return DB::table('leaves')->delete($id);
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $leave = Leave::findOrFail($id);
+        $leave->is_approve = $request->is_approve;
+
+        return $leave->save();
     }
 }

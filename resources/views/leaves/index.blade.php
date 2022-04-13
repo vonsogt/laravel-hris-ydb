@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Cuti
+    {{ $data['title'] ?? 'Cuti' }}
 @endsection
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
@@ -8,17 +8,17 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1') Dasbor @endslot
-        @slot('title') Cuti @endslot
+        @slot('title') {{ $data['title'] ?? 'Cuti' }} @endslot
         @slot('li_end') Daftar @endslot
     @endcomponent
 
-    <div class="row g-4 mb-3">
+    {{-- <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
                 <a href="{{ route('leaves.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah cuti</a>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -37,7 +37,7 @@
                                         <th>Mulai</th>
                                         <th>Selesai</th>
                                         <th>Alasan</th>
-                                        <th>Aksi</th>
+                                        {{-- <th>Aksi</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -69,7 +69,12 @@
 
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('leaves.index') }}",
+                ajax: {
+                    url: "{{ route('leaves.index') }}",
+                    data: function (d) {
+                        d.type = "{{ request()->type ?? '' }}";
+                    }
+                },
                 columns: [
                     {
                         data: 'id',
@@ -103,12 +108,12 @@
                         data: 'reason',
                         name: 'reason'
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                    // {
+                    //     data: 'action',
+                    //     name: 'action',
+                    //     orderable: false,
+                    //     searchable: false
+                    // },
                 ],
                 columnDefs: [{
                     targets: 2,
@@ -152,6 +157,77 @@
                                 // Show success notification
                                 Toastify({
                                     text: "Item berhasil dihapus!",
+                                    className: "info",
+                                    style: {
+                                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                                    }
+                                }).showToast();
+
+                                // remove current table row and draw table again
+                                var table = $('#leaveTable').DataTable()
+                                table.row($(button).parents('tr')).remove().draw(false);
+                            } else {
+                                Swal.fire({
+                                    title: 'NOT deleted!',
+                                    text: 'There\'s been an error.',
+                                    icon: 'error',
+                                    timer: 4000,
+                                    showConfirmButton: false,
+                                })
+                            }
+                        },
+                        error: function(response) {
+                            Swal.fire({
+                                title: 'NOT deleted!',
+                                text: 'There\'s been an error.',
+                                icon: 'error',
+                                timer: 4000,
+                                showConfirmButton: false,
+                            })
+                        }
+                    })
+                }
+            })
+        }
+
+        // Approve Button
+        function updateEntry(button) {
+
+            var route = $(button).attr('data-route');
+            var value = $(button).attr('data-value');
+            var confirmText = 'Apakah Anda ingin <span class="fw-bold text-danger">menolak</span> cuti ini?',
+                confirmButtonText = 'Tolak!';
+
+            if (value == 1) {
+                confirmText = 'Apakah Anda ingin <span class="fw-bold text-success">menyetujui</span> cuti ini?'
+                confirmButtonText = 'Setujui!'
+            }
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                html: confirmText,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: confirmButtonText,
+                // cancelButtonColor: '#d33',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: "PUT",
+                        url: route,
+                        data: {
+                            'is_approve': value
+                        },
+                        success: function(response) {
+                            if (response == 1) {
+                                // Show success notification
+                                Toastify({
+                                    text: "Item berhasil diubah!",
                                     className: "info",
                                     style: {
                                         background: "linear-gradient(to right, #00b09b, #96c93d)",

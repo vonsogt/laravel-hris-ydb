@@ -58,13 +58,10 @@
                     <div class="collapse menu-dropdown {{ request()->routeIs(['leaves.*']) ? 'show' : '' }}" id="sidebarPaidLeave">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Approve Cuti
-                                    <span class="badge badge-pill bg-danger">Soon</span>
-                                </a>
+                                <a href="{{ route('leaves.index') . '?type=approve'}}" class="nav-link {{ (request()->routeIs('leaves.*') && request()->type == 'approve') ? 'active' : '' }}">Approve Cuti</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('leaves.index') }}" class="nav-link {{ (request()->routeIs('leaves.*')) ? 'active' : '' }}">Semua Data</a>
+                                <a href="{{ route('leaves.index') }}" class="nav-link {{ (request()->routeIs('leaves.*') && request()->type == null) ? 'active' : '' }}">Semua Data</a>
                             </li>
                         </ul>
                     </div>

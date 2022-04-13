@@ -180,10 +180,18 @@ class EmployeeController extends Controller
         return $employee->delete();
     }
 
+    /**
+     * handleUploadedImage
+     *
+     * @param  mixed $image
+     * @return void
+     */
     public function handleUploadedImage($image): void
     {
         if (!is_null($image)) {
             $image->move(public_path('images') . 'temp');
         }
     }
+
+    
 }
