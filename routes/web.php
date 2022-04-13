@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('job-assessments', JobAssessmentController::class);
     Route::resource('salaries', SalaryController::class);
 
-    Route::put('leaves/approve/{id}', [LeaveController::class, 'approve'])->name('leaves.approve');
+    Route::put('leaves-approve/{id}', [LeaveController::class, 'approve'])->name('leaves_approve');
 });
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
