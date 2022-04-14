@@ -143,7 +143,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->routeIs('job-assessments.*')) ? 'active' : '' }}" href="{{ route('job-assessments.index') }}">
+                        <a class="nav-link menu-link {{ (request()->routeIs('employee.job-assessments.*')) ? 'active' : '' }}" href="{{ route('employee.job-assessments.index') }}">
                             <i class="ri-file-text-line"></i> <span>Penilaian Kerja</span>
                         </a>
                     </li>

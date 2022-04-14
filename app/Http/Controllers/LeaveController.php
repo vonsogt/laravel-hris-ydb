@@ -18,11 +18,6 @@ class LeaveController extends Controller
      *
      * @return void
      */
-    /**
-     * __construct
-     *
-     * @return void
-     */
     public function __construct()
     {
         if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {

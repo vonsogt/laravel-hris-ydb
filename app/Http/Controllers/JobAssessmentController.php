@@ -12,6 +12,20 @@ use Yajra\DataTables\DataTables;
 class JobAssessmentController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('auth');
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,6 +35,10 @@ class JobAssessmentController extends Controller
         if ($request->ajax()) {
 
             $data = JobAssessment::select('*')->latest('id');
+
+            if (auth()->getDefaultDriver() == 'api') {
+                $data = $data->where('employee_id', auth()->user()->id);
+            }
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -50,6 +68,16 @@ class JobAssessmentController extends Controller
                             </div>
                         </div>
                     ';
+
+                    if (auth()->getDefaultDriver() == 'api')
+                        $btn = '
+                            <div class="d-flex gap-2">
+                                <div class="show">
+                                    <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                </div>
+                            </div>
+                        ';
+
 
                     return $btn;
                 })
@@ -93,6 +121,12 @@ class JobAssessmentController extends Controller
      */
     public function show(JobAssessment $jobAssessment)
     {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($jobAssessment->employee->id != auth()->user()->id) {
+                return abort(404);
+            }
+        }
+
         return view('job-assessments.show', compact('jobAssessment'));
     }
 

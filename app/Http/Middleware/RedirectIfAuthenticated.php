@@ -31,6 +31,15 @@ class RedirectIfAuthenticated
         $jwtMiddleware = new JwtMiddleware;
         $jwtMiddleware->setTokenToHeader($request);
 
+        // Add JWT token to headers 2
+        // try {
+        //     $jwtMiddleware = new JwtMiddleware;
+        //     if ($jwtMiddleware->setTokenToHeader($request))
+        //         $user = \JWTAuth::parseToken()->authenticate();
+        // } catch (Exception $e) {
+        //     return $next($request);
+        // }
+
         return $next($request);
     }
 }
