@@ -45,6 +45,9 @@ class EmployeeController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('institution_number', function ($row) {
+                    if (auth()->getDefaultDriver() == 'api') {
+                        return $row->institution_number;
+                    }
                     return '<a class="fw-semibold" href="' . route('employees.show', $row->id) . '">' . $row->institution_number . '</a>';
                 })
                 ->addColumn('institution_name', function (Employee $employee) {
