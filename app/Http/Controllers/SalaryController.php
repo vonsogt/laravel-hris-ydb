@@ -9,9 +9,24 @@ use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SalaryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('auth');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,9 +58,13 @@ class SalaryController extends Controller
 
         if ($request->ajax()) {
 
-            $data = Salary::select('*')->with(['employee'])->latest('id')->get();
+            $data = Salary::select('*')->with(['employee'])->latest('id');
 
-            return DataTables::of($data)
+            if (auth()->getDefaultDriver() == 'api') {
+                $data = $data->where('employee_id', auth()->user()->id);
+            }
+
+            return DataTables::of($data->get())
                 ->filter(function ($instance) use ($request) {
                     if (($month = $request->bulan) != null) {
                         $instance->collection = $instance->collection->filter(function ($row) use ($month) {
@@ -65,6 +84,8 @@ class SalaryController extends Controller
                     }
                 })
                 ->addColumn('date', function ($row) {
+                    if (auth()->getDefaultDriver() == 'api')
+                        return $row->date;
                     return '<a class="fw-semibold" href="' . route('salaries.show', $row->id) . '">' . $row->date . '</a>';
                 })
                 ->addColumn('employee_name', function (Salary $salary) {
@@ -90,6 +111,19 @@ class SalaryController extends Controller
                             </div>
                         </div>
                     ';
+
+                    if (auth()->getDefaultDriver() == 'api') {
+                        $btn = '
+                            <div class="d-flex gap-2">
+                                <div class="edit">
+                                    <a href="' . route('employee.salaries.show', $row->id) . '" class="btn btn-sm btn-primary show-item-btn">Detail</a>
+                                </div>
+                                <div class="remove">
+                                    <a href="' . route('employee.salaries.download_pdf', $row->id) . '" target="_blank" class="btn btn-sm btn-success remove-item-btn">Unduh</a>
+                                </div>
+                            </div>
+                        ';
+                    }
 
                     return $btn;
                 })
@@ -134,6 +168,12 @@ class SalaryController extends Controller
      */
     public function show(Salary $salary)
     {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($salary->employee->id != auth()->user()->id) {
+                return abort(404);
+            }
+        }
+
         return view('salaries.show', compact('salary'));
     }
 
@@ -173,6 +213,21 @@ class SalaryController extends Controller
     public function destroy(Salary $salary)
     {
         return $salary->delete();
+    }
+
+    public function downloadPdf(Salary $salary)
+    {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($salary->employee->id != auth()->user()->id) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized']);
+            }
+        }
+
+        // $pdf = PDF::loadView('salaries.show', compact('salary'));
+        $pdf = PDF::loadView('salaries.download-pdf', compact('salary'))->setPaper('a4', 'landscape');
+        return $pdf->download('invoice.pdf');
+
+        return view('salaries.show', compact('salary'));
     }
 
     public function penyebut($nilai)

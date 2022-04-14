@@ -1,54 +1,16 @@
-@extends('layouts.master')
-@section('title')
-    Lihat Slip Gaji
-@endsection
-@section('css')
-    <link rel="stylesheet" href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}">
-@endsection
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1') Dasbor @endslot
-        @slot('title') Slip Gaji @endslot
-        @slot('li_end') Lihat @endslot
-    @endcomponent
-    <div class="row d-print-none g-4 mb-5">
-        <div class="col-sm-auto">
-            <div>
-                <a href="{{ auth()->getDefaultDriver() == 'api' ? route('employee.salaries.index') : route('salaries.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke daftar slip gaji</a>
-            </div>
-        </div>
-    </div>
+<!doctype html >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @include('layouts.head-css')
+</head>
+<body>
 
     <div class="row justify-content-center">
         <div class="col-xxl-9">
             <div class="card" id="demo">
-                {{-- <div class="card-header border-bottom-dashed p-4">
-                    <div class="d-sm-flex">
-                        <div class="flex-grow-1">
-                            <img src="{{ URL::asset('images/logo-group-darussalam-sm.png') }}" class="card-logo card-logo-dark"
-                                alt="logo dark" height="100">
-                            <img src="{{ URL::asset('images/logo-group-darussalam-sm.png') }}" class="card-logo card-logo-light"
-                                alt="logo light" height="100">
-                            <div class="mt-sm-5 mt-4">
-                                <h6 class="text-muted text-uppercase fw-semibold">Address</h6>
-                                <p class="text-muted mb-1">California, United States</p>
-                                <p class="text-muted mb-0">Zip-code: 90201</p>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 mt-sm-0 mt-3">
-                            <h6><span class="text-muted fw-normal">Legal Registration No:</span> 987654
-                            </h6>
-                            <h6><span class="text-muted fw-normal">Email:</span> velzon@themesbrand.com
-                            </h6>
-                            <h6><span class="text-muted fw-normal">Website:</span> <a
-                                    href="https://themesbrand.com/" class="link-primary"
-                                    target="_blank">www.themesbrand.com</a></h6>
-                            <h6 class="mb-0"><span class="text-muted fw-normal">Contact No:</span> +(01)
-                                234 6789</h6>
-                        </div>
-                    </div>
-                </div>
-                <!--end card-header--> --}}
                 <div class="card-body p-4">
                     <div class="row g-3">
                         <!-- Small Tables -->
@@ -68,7 +30,7 @@
                                             <div class="col-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-shrink-0 me-3">
-                                                        <img src="{{ URL::asset('images/logo-group-darussalam-sm.png') }}" alt="" class="img-fluid d-block">
+                                                        {{-- <img src="{{ URL::asset('images/logo-group-darussalam-sm.png') }}" alt="" class="img-fluid d-block"> --}}
                                                     </div>
                                                     <div class="flex-grow-1">
                                                         <h4 class="mb-1 fw-medium text-danger">
@@ -253,12 +215,6 @@
         <!--end col-->
     </div>
     <!--end row-->
-@endsection
-@section('script')
-    <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
+</body>
 
-    <script src="{{ URL::asset('assets/js/pages/profile.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
-@endsection
+</html>

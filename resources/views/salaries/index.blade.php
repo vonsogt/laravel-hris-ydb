@@ -11,63 +11,66 @@
         @slot('title') Slip Gaji @endslot
         @slot('li_end') Daftar @endslot
     @endcomponent
-    <div class="card">
-        <div class="card-header card-primary">
-            <div class="row g-4 align-items-center">
-                <div class="col-sm">
-                    <div>
-                        <h5 class="card-title mb-0">Filter Data Gaji Pegawai</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="row g-3">
-                <div class="col-xxl-4 col-lg-4">
-                    <select class="form-control" name="filterMonth" id="filterMonth">
-                        <option value=""> -- Pilih Bulan -- </option>
-                        <option value="1">Januari</option>
-                        <option value="2">Februari</option>
-                        <option value="3">Maret</option>
-                        <option value="4">April</option>
-                        <option value="5">Mei</option>
-                        <option value="6">Juni</option>
-                        <option value="7">Juli</option>
-                        <option value="8">Agustus</option>
-                        <option value="9">September</option>
-                        <option value="10">Oktober</option>
-                        <option value="11">November</option>
-                        <option value="12">Desember</option>
-                    </select>
-                </div>
-                <!--end col-->
-                <div class="col-xxl-4 col-lg-4">
-                    <select class="form-control" name="filterYear" id="filterYear">
-                        <option value=""> -- Pilih Tahun -- </option>
-                        @foreach ($filterYearRange as $year)
-                            <option value="{{ $year }}">{{ $year }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <!--end col-->
-                <div class="col-xxl-4 col-lg-4 text-end">
-                    <a id="clearFilterData" href="{{ route('salaries.index') }}" class="text-format-underline d-none"> Bersihkan Filter &nbsp;&nbsp;</a>
-                    <button id="filterData" class="btn btn-primary"><i class="ri-equalizer-line align-bottom me-1"></i> Tampilkan</button>
-                    <a href="{{ route('salaries.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah slip gaji</a>
-                    </div>
-                <!--end col-->
-            </div>
-            <!--end row-->
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div id="filter-alert" class="alert alert-info alert-solid d-none" role="alert">
-                Menampilkan Data Gaji Pegawai Bulan: <strong>04</strong> Tahun: <b> 2022</b>
+    @if (auth()->getDefaultDriver() == 'web')
+        <div class="card">
+            <div class="card-header card-primary">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <h5 class="card-title mb-0">Filter Data Gaji Pegawai</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-xxl-4 col-lg-4">
+                        <select class="form-control" name="filterMonth" id="filterMonth">
+                            <option value=""> -- Pilih Bulan -- </option>
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                    </div>
+                    <!--end col-->
+                    <div class="col-xxl-4 col-lg-4">
+                        <select class="form-control" name="filterYear" id="filterYear">
+                            <option value=""> -- Pilih Tahun -- </option>
+                            @foreach ($filterYearRange as $year)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!--end col-->
+                    <div class="col-xxl-4 col-lg-4 text-end">
+                        <a id="clearFilterData" href="{{ route('salaries.index') }}" class="text-format-underline d-none"> Bersihkan Filter &nbsp;&nbsp;</a>
+                        <button id="filterData" class="btn btn-primary"><i class="ri-equalizer-line align-bottom me-1"></i> Tampilkan</button>
+                        <a href="{{ route('salaries.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah slip gaji</a>
+                        </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
             </div>
         </div>
-    </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="filter-alert" class="alert alert-info alert-solid d-none" role="alert">
+                    Menampilkan Data Gaji Pegawai Bulan: <strong>04</strong> Tahun: <b> 2022</b>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-lg-12">
@@ -116,7 +119,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('salaries.index') }}",
+                    url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.salaries.index') : route('salaries.index') }}",
                     data: function (d) {
                         d.bulan = $("#filterMonth").val();
                         d.tahun = $("#filterYear").val();

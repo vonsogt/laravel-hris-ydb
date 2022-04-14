@@ -52,9 +52,13 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
         'create', 'store', 'destroy'
     ]);
 
+    Route::get('salaries/download-pdf/{salary}', [SalaryController::class, 'downloadPdf'])->name('salaries.download_pdf');
+    Route::resource('salaries', SalaryController::class)->except([
+        'create', 'store', 'edit', 'update', 'destroy'
+    ]);
+
     // Route::resource('positions', PositionController::class);
     // Route::resource('institutions', InstitutionController::class);
-    // Route::resource('employees', EmployeeController::class);
     // Route::resource('appreciations', AppreciationController::class);
     // Route::resource('decrees', DecreeController::class);
     // Route::resource('leaves', LeaveController::class);
