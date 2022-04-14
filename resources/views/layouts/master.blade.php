@@ -51,13 +51,12 @@
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
 
-    @if (auth()->guard('api')->check())
+    @if (auth()->getDefaultDriver() == 'api')
         <script>
             $(function() {
                 // handle submit event of form
                 $(document).on("submit", "#logout-form", function() {
                     var e = this;
-                    alert('test')
                     $.post($(this).attr('action'), $(this).serialize(), function(data) {
 
                         if (data.success) { // If success then redirect to login url
