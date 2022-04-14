@@ -12,13 +12,16 @@
         @slot('li_end') Daftar @endslot
     @endcomponent
 
-    <div class="row g-4 mb-3">
-        <div class="col-sm-auto">
-            <div>
-                <a href="{{ route('decrees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah surat keputusan</a>
+    @if (auth()->getDefaultDriver() == 'web')
+        <div class="row g-4 mb-3">
+            <div class="col-sm-auto">
+                <div>
+                    <a href="{{ route('decrees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah surat keputusan</a>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -64,7 +67,7 @@
 
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('decrees.index') }}",
+                ajax: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.decrees.index') : route('decrees.index') }}",
                 columns: [
                     {
                         data: 'id',

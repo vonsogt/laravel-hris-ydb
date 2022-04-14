@@ -82,6 +82,15 @@ class SalaryController extends Controller
                             return \Str::contains($row['date'], $year) ? true : false;
                         });
                     }
+
+                    if (!empty($request->get('search')['value'])) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                            if (\Str::contains(\Str::lower($row['employee_name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
                 })
                 ->addColumn('date', function ($row) {
                     if (auth()->getDefaultDriver() == 'api')

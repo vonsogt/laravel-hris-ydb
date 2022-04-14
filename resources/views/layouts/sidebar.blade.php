@@ -149,13 +149,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->routeIs('decrees.*')) ? 'active' : '' }}" href="{{ route('decrees.index') }}">
+                        <a class="nav-link menu-link {{ (request()->routeIs('employee.decrees.*')) ? 'active' : '' }}" href="{{ route('employee.decrees.index') }}">
                             <i class="ri-file-copy-line"></i> <span>SK</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->routeIs('appreciations.*')) ? 'active' : '' }}" href="{{ route('appreciations.index') }}">
+                        <a class="nav-link menu-link {{ (request()->routeIs('employee.appreciations.*')) ? 'active' : '' }}" href="{{ route('employee.appreciations.index') }}">
                             <i class="ri-trophy-line"></i> <span>Penghargaan</span>
                         </a>
                     </li>

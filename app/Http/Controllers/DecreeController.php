@@ -13,6 +13,20 @@ use Yajra\DataTables\DataTables;
 class DecreeController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('auth');
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,7 +37,21 @@ class DecreeController extends Controller
 
             $data = Decree::select('*')->with(['employee'])->latest('id');
 
-            return DataTables::of($data)
+            if (auth()->getDefaultDriver() == 'api') {
+                $data = $data->where('employee_id', auth()->user()->id);
+            }
+
+            return DataTables::of($data->get())
+                ->filter(function ($instance) use ($request) {
+                    if (!empty($request->get('search')['value'])) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                            if (\Str::contains(\Str::lower($row['employee_name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
+                })
                 ->addIndexColumn()
                 ->addColumn('employee_name', function (Decree $decree) {
                     return $decree->employee->name;
@@ -45,6 +73,18 @@ class DecreeController extends Controller
                             </div>
                         </div>
                     ';
+
+                    if (auth()->getDefaultDriver() == 'api')
+                        $btn = '
+                            <div class="d-flex gap-2">
+                                <div class="show">
+                                    <a href="' . route('employee.decrees.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                </div>
+                                <div class="download">
+                                    <a href="' . ($row->files ? (url('storage/uploads') . '/' . $row->files) : 'javascript:void(0)') . '" onclick="' . (!$row->files ? "Swal.fire({ icon: 'error', title: 'Oops...', text: 'Sepertinya file SK tidak ada!'})" : '') . '" class="btn btn-sm btn-success download-item-btn">Unduh</a>
+                                </div>
+                            </div>
+                        ';
 
                     return $btn;
                 })
@@ -98,6 +138,12 @@ class DecreeController extends Controller
      */
     public function show(Decree $decree)
     {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($decree->employee->id != auth()->user()->id) {
+                return abort(404);
+            }
+        }
+
         return view('decrees.show', compact('decree'));
     }
 

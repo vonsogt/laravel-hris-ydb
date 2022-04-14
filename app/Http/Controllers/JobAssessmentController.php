@@ -40,7 +40,17 @@ class JobAssessmentController extends Controller
                 $data = $data->where('employee_id', auth()->user()->id);
             }
 
-            return DataTables::of($data)
+            return DataTables::of($data->get())
+                ->filter(function ($instance) use ($request) {
+                    if (!empty($request->get('search')['value'])) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                            if (\Str::contains(\Str::lower($row['employee_name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
+                })
                 ->addIndexColumn()
                 ->addColumn('employee_name', function (JobAssessment $jobAssessment) {
                     return $jobAssessment->employee->name;
