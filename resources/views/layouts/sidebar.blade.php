@@ -126,17 +126,17 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs(['leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
+                        <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarPaidLeave">
                             <i class="ri-calendar-2-line"></i> <span>Cuti</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->routeIs(['leaves.*']) ? 'show' : '' }}" id="sidebarPaidLeave">
+                        <div class="collapse menu-dropdown {{ request()->routeIs(['employee.leaves.*']) ? 'show' : '' }}" id="sidebarPaidLeave">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ route('leaves.index') . '?type=approve'}}" class="nav-link {{ (request()->routeIs('leaves.*') && request()->type == 'approve') ? 'active' : '' }}">Approve Cuti</a>
+                                    <a href="{{ route('employee.leaves.index') . '?type=pending-approval'}}" class="nav-link {{ (request()->routeIs('employee.leaves.*') && request()->type == 'pending-approval') ? 'active' : '' }}">Menunggu Approval</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('leaves.index') }}" class="nav-link {{ (request()->routeIs('leaves.*') && request()->type == null) ? 'active' : '' }}">Semua Data</a>
+                                    <a href="{{ route('employee.leaves.index') }}" class="nav-link {{ (request()->routeIs('employee.leaves.*') && request()->type == null) ? 'active' : '' }}">Riwayat Cuti</a>
                                 </li>
                             </ul>
                         </div>
@@ -159,24 +159,6 @@
                             <i class="ri-trophy-line"></i> <span>Penghargaan</span>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs(['positions.*']) ? 'active' : '' }}" href="#sidebarOtherMenu" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarOtherMenu">
-                            <i class="ri-folder-open-line"></i> <span>Menu Lain</span>
-                        </a>
-                        <div class="collapse menu-dropdown {{ request()->routeIs(['positions.*', 'institutions.*']) ? 'show' : '' }}" id="sidebarOtherMenu">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('positions.index') }}" class="nav-link {{ (request()->routeIs('positions.*')) ? 'active' : '' }}" >Data Jabatan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('institutions.index') }}" class="nav-link {{ (request()->routeIs('institutions.*')) ? 'active' : '' }}" >Data Lembaga</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
                 </ul>
             @endif
         </div>

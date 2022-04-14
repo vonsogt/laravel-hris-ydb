@@ -19,6 +19,17 @@
             </div>
         </div>
     </div> --}}
+
+    @if (auth()->getDefaultDriver() == 'api')
+        <div class="row g-4 mb-3">
+            <div class="col-sm-auto">
+                <div>
+                    <a href="{{ route('employee.leaves.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah cuti</a>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -68,7 +79,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('leaves.index') }}",
+                    url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.leaves.index') : route('leaves.index') }}",
                     data: function (d) {
                         d.type = "{{ request()->type ?? '' }}";
                     }

@@ -14,6 +14,25 @@ use Yajra\DataTables\DataTables;
 class LeaveController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('auth');
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -25,10 +44,14 @@ class LeaveController extends Controller
             $data = Leave::select('*')->with(['employee'])->latest('id');
 
             $type = $request->type;
-            if ($type == 'approve') {
+            if ($type == 'approve' || $type == 'pending-approval') {
                 $data = $data->whereNull('is_approve');
             } else {
                 $data = $data->whereNotNull('is_approve');
+            }
+
+            if (auth()->getDefaultDriver() == 'api') {
+                $data = $data->where('employee_id', auth()->user()->id);
             }
 
             return DataTables::of($data)
@@ -45,7 +68,7 @@ class LeaveController extends Controller
                                 return '<button type="button" class="btn btn-danger">Ditolak</button>';
                             }
                         }
-                        return '-';
+                        return '<button type="button" class="btn btn-success">Menunggu Approval</button>';
                     }
                 })
                 ->addColumn('employee_name', function (Leave $leave) {
@@ -111,6 +134,10 @@ class LeaveController extends Controller
     public function store(StoreLeaveRequest $request)
     {
         $leave = Leave::create($request->all());
+
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect(route('employee.leaves.index') . '?type=pending-approval')->with('message', 'Cuti berhasil ditambah.');
+        }
 
         return redirect()->route('leaves.index')->with('message', 'Cuti berhasil ditambahkan.');
     }

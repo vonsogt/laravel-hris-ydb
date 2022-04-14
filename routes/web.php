@@ -57,13 +57,13 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
         'create', 'store', 'edit', 'update', 'destroy'
     ]);
 
-    // Route::resource('positions', PositionController::class);
-    // Route::resource('institutions', InstitutionController::class);
+    Route::resource('leaves', LeaveController::class)->except([
+        'edit', 'update', 'destroy'
+    ]);
+
     // Route::resource('appreciations', AppreciationController::class);
     // Route::resource('decrees', DecreeController::class);
-    // Route::resource('leaves', LeaveController::class);
     // Route::resource('job-assessments', JobAssessmentController::class);
-    // Route::resource('salaries', SalaryController::class);
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

@@ -27,19 +27,31 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('leaves.store') }}">
+            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.leaves.index') : route('leaves.store') }}">
                 @csrf
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label" for="name-input">Pegawai</label>
-                            <select name="employee_id" class="form-control" data-choices name="choices-single-default" id="choices-single-default">
-                                <option value="">Pilih nama pegawai</option>
-                                @foreach ($employees as $key => $value)
-                                    <option @if (old('employee_id', $leave->employee_id ?? '') == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (auth()->getDefaultDriver() == 'api')
+                            <input type="hidden" name="employee_id" value="{{ auth()->user()->id }}">
+                            <div class="mb-3">
+                                <label class="form-label" for="submissionDateInputdate">Pegawai</label>
+                                <input type="text" class="form-control" value="{{ auth()->user()->name }}" readonly disabled />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="submissionDateInputdate">Nomor Induk Yayasan</label>
+                                <input type="text" class="form-control" value="{{ auth()->user()->institution_number }}" readonly disabled />
+                            </div>
+                        @else
+                            <div class="mb-3">
+                                <label class="form-label" for="name-input">Pegawai</label>
+                                <select name="employee_id" class="form-control" data-choices name="choices-single-default" id="choices-single-default">
+                                    <option value="">Pilih nama pegawai</option>
+                                    @foreach ($employees as $key => $value)
+                                        <option @if (old('employee_id', $leave->employee_id ?? '') == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                         <div class="mb-3">
                             <label class="form-label" for="submissionDateInputdate">Tanggal Pengajuan</label>
                             <input type="date" name="submission_date" class="form-control" id="submissionDateInputdate" value="{{ old('submission_date', $leave->submission_date ?? '') }}">
@@ -56,28 +68,30 @@
                             <label class="form-label" for="reasonInput">Alasan</label>
                             <textarea name="reason" class="form-control" id="reasonInput" rows="3" spellcheck="false">{{ old('reason', $institution->reason ?? '') }}</textarea>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="endDateInputdate">Disetujui?</label>
-                            <!-- Base Radios -->
-                            <div class="form-check mb-2">
-                                <input value="" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault" checked>
-                                <label class="form-check-label" for="flexRadioDefault">
-                                    Menunggu
-                                </label>
+                        @if (auth()->getDefaultDriver() == 'web')
+                            <div class="mb-3">
+                                <label class="form-label" for="endDateInputdate">Disetujui?</label>
+                                <!-- Base Radios -->
+                                <div class="form-check mb-2">
+                                    <input value="" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault" checked>
+                                    <label class="form-check-label" for="flexRadioDefault">
+                                        Menunggu
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input value="1" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Setujui
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input value="0" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault2">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Tolak
+                                    </label>
+                                </div>
                             </div>
-                            <div class="form-check mb-2">
-                                <input value="1" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Setujui
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input value="0" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Tolak
-                                </label>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <!-- end card -->
