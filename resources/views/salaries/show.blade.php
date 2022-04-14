@@ -260,7 +260,5 @@
     <script src="{{ URL::asset('assets/js/pages/profile.init.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
 @endsection

@@ -23,8 +23,17 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // return redirect(RouteServiceProvider::HOME);
             }
+        }
+
+        // Add JWT token to headers
+        try {
+            $jwtMiddleware = new JwtMiddleware;
+            if ($jwtMiddleware->setTokenToHeader($request))
+                $user = \JWTAuth::parseToken()->authenticate();
+        } catch (Exception $e) {
+            return $next($request);
         }
 
         return $next($request);

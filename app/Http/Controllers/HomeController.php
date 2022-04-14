@@ -20,7 +20,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('auth');
+        }
     }
 
     /**

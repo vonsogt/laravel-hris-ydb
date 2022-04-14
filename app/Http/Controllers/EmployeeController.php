@@ -18,6 +18,20 @@ use Yajra\DataTables\DataTables;
 class EmployeeController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (request()->route() != null && str_contains(request()->route()->getPrefix(), 'employee')) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('auth');
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -112,6 +126,12 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($employee->id != auth()->user()->id) {
+                return abort(404);
+            }
+        }
+
         return view('employees.show', compact('employee'));
     }
 
@@ -123,6 +143,12 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($employee->id != auth()->user()->id) {
+                return abort(404);
+            }
+        }
+
         $data['genderOptions'] = Gender::asSelectArray();
         $data['bloodTypeOptions'] = BloodType::asSelectArray();
         $data['educationOptions'] = Education::asSelectArray();
@@ -166,6 +192,10 @@ class EmployeeController extends Controller
 
         $employee->update($request->all());
 
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.employees.index')->with('message', 'Pegawai berhasil diubah.');
+        }
+
         return redirect()->route('employees.index')->with('message', 'Pegawai berhasil diubah.');
     }
 
@@ -192,6 +222,4 @@ class EmployeeController extends Controller
             $image->move(public_path('images') . 'temp');
         }
     }
-
-    
 }

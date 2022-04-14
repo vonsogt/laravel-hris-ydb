@@ -50,8 +50,6 @@
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Datatables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
 

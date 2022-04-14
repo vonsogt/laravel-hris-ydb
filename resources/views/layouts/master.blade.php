@@ -50,6 +50,27 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
+
+    @if (auth()->guard('api')->check())
+        <script>
+            $(function() {
+                // handle submit event of form
+                $(document).on("submit", "#logout-form", function() {
+                    var e = this;
+                    alert('test')
+                    $.post($(this).attr('action'), $(this).serialize(), function(data) {
+
+                        if (data.success) { // If success then redirect to login url
+                            window.location = "{{ route('login') }}";
+                        }
+                    }).fail(function(response) {
+                        // handle error and show in html
+                    });
+                    return false;
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>

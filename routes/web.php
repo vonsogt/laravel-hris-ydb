@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppreciationController;
 use App\Http\Controllers\DecreeController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\JobAssessmentController;
 use App\Http\Controllers\LeaveController;
@@ -23,16 +24,15 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 //Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+Route::get('index/{locale}', [HomeController::class, 'lang']);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::get('/', [HomeController::class, 'root'])->name('root');
 
 //Update User Details
-Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::middleware(['auth'])->group(function () {
-
+Route::middleware([])->group(function () {
     Route::resource('positions', PositionController::class);
     Route::resource('institutions', InstitutionController::class);
     Route::resource('employees', EmployeeController::class);
@@ -43,6 +43,23 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('salaries', SalaryController::class);
 
     Route::post('leaves/approve/{id}', [LeaveController::class, 'approve'])->name('leaves.approve');
+});
+
+Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(function () {
+    Route::get('/', [HomeController::class, 'root'])->name('home');
+
+    Route::resource('employees', EmployeeController::class)->except([
+        'create', 'store', 'destroy'
+    ]);
+
+    // Route::resource('positions', PositionController::class);
+    // Route::resource('institutions', InstitutionController::class);
+    // Route::resource('employees', EmployeeController::class);
+    // Route::resource('appreciations', AppreciationController::class);
+    // Route::resource('decrees', DecreeController::class);
+    // Route::resource('leaves', LeaveController::class);
+    // Route::resource('job-assessments', JobAssessmentController::class);
+    // Route::resource('salaries', SalaryController::class);
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

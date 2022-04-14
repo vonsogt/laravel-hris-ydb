@@ -211,9 +211,6 @@
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <!-- filepond js -->
     <script src="{{ URL::asset('assets/libs/filepond/filepond.min.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}"></script>

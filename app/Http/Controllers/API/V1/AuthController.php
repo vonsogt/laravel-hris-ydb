@@ -65,7 +65,10 @@ class AuthController extends Controller
     {
         auth()->guard('api')->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully logged out'
+        ])->withCookie(cookie('token', null));
     }
 
     /**
@@ -87,12 +90,14 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $expire_in = auth()->guard('api')->factory()->getTTL() * 60;
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->guard('api')->factory()->getTTL() * 60,
-            'redirect_location' => route('root'),
+            'expires_in' => $expire_in,
+            'redirect_location' => route('employee.home'),
             'employee' => auth()->guard('api')->user()
-        ]);
+        ])->cookie(cookie('token', $token, $expire_in));
     }
 }

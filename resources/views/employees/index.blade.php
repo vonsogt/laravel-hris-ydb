@@ -12,13 +12,24 @@
         @slot('li_end') Daftar @endslot
     @endcomponent
 
-    <div class="row g-4 mb-3">
-        <div class="col-sm-auto">
-            <div>
-                <a href="{{ route('employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
+    @if (auth()->getDefaultDriver() == 'web')
+        <div class="row g-4 mb-3">
+            <div class="col-sm-auto">
+                <div>
+                    <a href="{{ route('employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
+                </div>
             </div>
         </div>
-    </div>
+    @else
+        <div class="row g-4 mb-3">
+            <div class="col-sm-auto">
+                <div>
+                    <a href="{{ route('employee.employees.show', auth()->user()->id) }}" class="btn btn-primary add-btn" id="create-btn"><i class="ri-eye-line align-bottom me-1"></i> Detail Pegawai Saya</a>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -35,7 +46,9 @@
                                         <th>Jabatan</th>
                                         <th>Nama Lengkap</th>
                                         <th>Bergabung</th>
-                                        <th>Aksi</th>
+                                        @if (auth()->getDefaultDriver() == 'web')
+                                            <th>Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                             </table>
@@ -53,8 +66,6 @@
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Datatables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
 
@@ -67,7 +78,7 @@
 
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('employees.index') }}",
+                ajax: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}",
                 columns: [
                     {
                         data: 'id',
@@ -93,12 +104,14 @@
                         data: 'join_date',
                         name: 'join_date'
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                    @if (auth()->getDefaultDriver() == 'web')
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    @endif
                 ],
                 // columnDefs: [{
                 //     targets: 1,

@@ -57,72 +57,108 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content text-muted">
                                     <div class="tab-pane @if(!$errors->any()) active @endif" id="pegawai-1" role="tabpanel">
-                                        <form id="handleAjax" action="{{ route('api.v1.auth.login') }}" method="POST">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label for="employee-institution-number-input" class="form-label">Nomor Induk Yayasan</label>
-                                                <input type="text" class="form-control" value="{{ old('institution_number', '') }}" id="employee-institution-number-input" name="institution_number" placeholder="Masukkan nomor induk yayasan">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <div class="float-end">
-                                                    <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
+                                        @if (auth()->guard('api')->check())
+                                            <div class="card-body text-center">
+                                                <div class="avatar-lg mx-auto mt-2">
+                                                    <div class="avatar-title bg-light text-success display-3 rounded-circle">
+                                                        <i class="ri-checkbox-circle-fill"></i>
+                                                    </div>
                                                 </div>
-                                                <label class="form-label" for="employee-password-input">Kata Sandi</label>
-                                                <div class="position-relative auth-pass-inputgroup mb-3">
-                                                    <input type="password" class="form-control pe-5" name="password" placeholder="Masukkan kata sandi" id="employee-password-input">
-                                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="employee-password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <div class="mt-4 pt-2">
+                                                    <h4>Anda sudah masuk !</h4>
+                                                    <p class="text-muted mx-4">Anda sudah masuk sebagai <span class="fw-bold text-primary">pegawai</span>.</p>
+                                                    <div class="mt-4">
+                                                        <a href="{{ route('employee.home') }}" class="btn btn-success w-100">Kembali ke Dasbor Pegawai</a>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!-- end card body -->
+                                        @else
+                                            <form id="handleAjax" action="{{ route('api.v1.auth.login') }}" method="POST">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="employee-institution-number-input" class="form-label">Nomor Induk Yayasan</label>
+                                                    <input type="text" class="form-control" value="{{ old('institution_number', '') }}" id="employee-institution-number-input" name="institution_number" placeholder="Masukkan nomor induk yayasan">
+                                                </div>
 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                                <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
-                                            </div>
+                                                <div class="mb-3">
+                                                    <div class="float-end">
+                                                        <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
+                                                    </div>
+                                                    <label class="form-label" for="employee-password-input">Kata Sandi</label>
+                                                    <div class="position-relative auth-pass-inputgroup mb-3">
+                                                        <input type="password" class="form-control pe-5" name="password" placeholder="Masukkan kata sandi" id="employee-password-input">
+                                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="employee-password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                    </div>
+                                                </div>
 
-                                            <div class="mt-4">
-                                                <button class="btn btn-success w-100" type="submit">Masuk</button>
-                                            </div>
-                                        </form>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                                                    <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
+                                                </div>
+
+                                                <div class="mt-4">
+                                                    <button class="btn btn-success w-100" type="submit">Masuk</button>
+                                                </div>
+                                            </form>
+                                        @endif
                                     </div>
                                     <div class="tab-pane @if($errors->any()) active @endif" id="admin-1" role="tabpanel">
-                                        <form action="{{ route('login') }}" method="POST">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label for="username" class="form-label">Email</label>
-                                                <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', '') }}" id="username" name="email" placeholder="Masukkan email">
-                                                @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <div class="float-end">
-                                                    <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
+                                        @if (auth()->guard()->check())
+                                            <div class="card-body text-center">
+                                                <div class="avatar-lg mx-auto mt-2">
+                                                    <div class="avatar-title bg-light text-success display-3 rounded-circle">
+                                                        <i class="ri-checkbox-circle-fill"></i>
+                                                    </div>
                                                 </div>
-                                                <label class="form-label" for="password-input">Kata Sandi</label>
-                                                <div class="position-relative auth-pass-inputgroup mb-3">
-                                                    <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Masukkan kata sandi" id="password-input">
-                                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                                    @error('password')
+                                                <div class="mt-4 pt-2">
+                                                    <h4>Anda sudah masuk !</h4>
+                                                    <p class="text-muted mx-4">Anda sudah masuk sebagai <span class="fw-bold text-primary">admin</span>.</p>
+                                                    <div class="mt-4">
+                                                        <a href="{{ route('root') }}" class="btn btn-success w-100">Kembali ke Dasbor Admin</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end card body -->
+                                        @else
+                                            <form action="{{ route('login') }}" method="POST">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="username" class="form-label">Email</label>
+                                                    <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', '') }}" id="username" name="email" placeholder="Masukkan email">
+                                                    @error('email')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
-                                            </div>
 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                                <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
-                                            </div>
+                                                <div class="mb-3">
+                                                    <div class="float-end">
+                                                        <a href="auth-pass-reset-basic" class="text-muted">Lupa Kata Sandi?</a>
+                                                    </div>
+                                                    <label class="form-label" for="password-input">Kata Sandi</label>
+                                                    <div class="position-relative auth-pass-inputgroup mb-3">
+                                                        <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Masukkan kata sandi" id="password-input">
+                                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                        @error('password')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
 
-                                            <div class="mt-4">
-                                                <button class="btn btn-success w-100" type="submit">Masuk</button>
-                                            </div>
-                                        </form>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                                                    <label class="form-check-label" for="auth-remember-check">Ingat saya</label>
+                                                </div>
+
+                                                <div class="mt-4">
+                                                    <button class="btn btn-success w-100" type="submit">Masuk</button>
+                                                </div>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -162,30 +198,31 @@
 <script src="assets/libs/particles.js/particles.js.min.js"></script>
 <script src="assets/js/pages/particles.app.js"></script>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <script>
 
     // password addon
-    document.getElementById('password-addon').addEventListener('click', function () {
-        var passwordInput = document.getElementById("password-input");
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-        } else {
-            passwordInput.type = "password";
-        }
-    });
+    if (document.getElementById('password-addon')) {
+        document.getElementById('password-addon').addEventListener('click', function () {
+            var passwordInput = document.getElementById("password-input");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+    }
 
     // employee password addon
-    document.getElementById('employee-password-addon').addEventListener('click', function () {
-        var passwordInput = document.getElementById("employee-password-input");
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-        } else {
-            passwordInput.type = "password";
-        }
-    });
+    if (document.getElementById('employee-password-addon')) {
+        document.getElementById('employee-password-addon').addEventListener('click', function () {
+                var passwordInput = document.getElementById("employee-password-input");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+    }
 
     $(function() {
         // handle submit event of form
@@ -197,7 +234,7 @@
             $.post($(this).attr('action'), $(this).serialize(), function(data) {
 
                 $(e).find("[type='submit']").html("Masuk");
-                if (data.status) { // If success then redirect to login url
+                if (data.access_token) { // If success then redirect to login url
                     window.location = data.redirect_location;
                 }
             }).fail(function(response) {

@@ -32,7 +32,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('employees.update', $employee->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.update', $employee->id) : route('employees.update', $employee->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card">
@@ -211,9 +211,6 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- filepond js -->
     <script src="{{ URL::asset('assets/libs/filepond/filepond.min.js') }}"></script>
