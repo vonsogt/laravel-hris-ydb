@@ -53,13 +53,6 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1"
                         role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link fs-14 active" data-bs-toggle="tab" href="#overview-tab"
-                                role="tab">
-                                <i class="ri-airplay-fill d-inline-block d-md-none"></i> <span
-                                    class="d-none d-md-inline-block">Umum</span>
-                            </a>
-                        </li>
                     </ul>
                     <div class="flex-shrink-0">
                         <a href="{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.edit', $employee->id) : route('employees.edit', $employee->id) }}" class="btn btn-success"><i
@@ -103,7 +96,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Jenis Kelamin</th>
-                                                        <td>: <span class="text-muted">{{ $employee->gender ? \App\Enums\Gender::getDescription((int) $employee->gender) : '-' }}</span></td>
+                                                        <td>: <span class="text-muted">{{ $employee->gender !== null ? \App\Enums\Gender::getDescription((int) $employee->gender) : '-' }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Pendidikan</th>
