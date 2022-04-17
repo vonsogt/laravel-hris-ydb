@@ -16,7 +16,7 @@
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
-                <a href="{{ route('employees.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke daftar pegawai</a>
+                <a href="{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke daftar pegawai</a>
             </div>
         </div>
     </div>

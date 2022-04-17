@@ -74,4 +74,4 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     ]);
 });
 
-// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('{any}', [HomeController::class, 'index'])->name('index');
