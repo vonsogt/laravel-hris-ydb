@@ -100,7 +100,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Pendidikan</th>
-                                                        <td>: <span class="text-muted">{{ \App\Enums\Education::getDescription((int) $employee->education) ?? '-' }}</span></td>
+                                                        <td>: <span class="text-muted text-uppercase">{{ \App\Enums\Education::getDescription((int) $employee->education) ?? '-' }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Gol Darah</th>
