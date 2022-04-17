@@ -47,7 +47,22 @@ class EmployeeController extends Controller
                     ->whereMonth('join_date', $request->month);
             }
 
-            return DataTables::of($data)
+            return DataTables::of($data->get())
+                ->filter(function ($instance) use ($request) {
+                    if (!empty($request->get('search')['value'])) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                            if (\Str::contains(\Str::lower($row['institution_name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+
+                            if (\Str::contains(\Str::lower($row['position_name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+
+                            return false;
+                        });
+                    }
+                })
                 ->addIndexColumn()
                 ->addColumn('institution_number', function ($row) {
                     if (auth()->getDefaultDriver() == 'api') {
