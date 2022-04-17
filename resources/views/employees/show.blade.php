@@ -100,11 +100,11 @@
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Pendidikan</th>
-                                                        <td>: <span class="text-muted">{{ $employee->education ?? '-' }}</span></td>
+                                                        <td>: <span class="text-muted">{{ \App\Enums\Education::getDescription((int) $employee->education) ?? '-' }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Gol Darah</th>
-                                                        <td>: <span class="text-muted">{{ $employee->blood_type ? \App\Enums\BloodType::getDescription($employee->blood_type ) : '-' }}</span></td>
+                                                        <td>: <span class="text-muted text-uppercase">{{ $employee->blood_type ? \App\Enums\BloodType::getDescription($employee->blood_type) : '-' }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Bergabung</th>
