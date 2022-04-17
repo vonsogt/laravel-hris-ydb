@@ -105,7 +105,7 @@
                                         <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                 class="counter-value" data-target="{{ $data['newEmployeesCount'] }}">0</span>
                                         </h4>
-                                        <a href="{{ route('employees.index') }}" class="text-decoration-underline">Lihat semua pegawai</a>
+                                        <a href="{{ route('employees.index') . '?bulan=' . now()->month . '&tahun=' . now()->year }}" class="text-decoration-underline">Lihat semua pegawai</a>
                                     </div>
                                     <div class="avatar-sm flex-shrink-0">
                                         <span class="avatar-title bg-soft-warning rounded fs-3">

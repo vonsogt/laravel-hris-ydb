@@ -78,7 +78,13 @@
 
                 processing: true,
                 serverSide: true,
-                ajax: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}",
+                ajax: {
+                    url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}",
+                    data: function (d) {
+                        d.month = "{{ request()->bulan }}";
+                        d.year = "{{ request()->tahun }}";
+                    }
+                },
                 columns: [
                     {
                         data: 'id',

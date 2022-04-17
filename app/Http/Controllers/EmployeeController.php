@@ -42,6 +42,11 @@ class EmployeeController extends Controller
 
             $data = Employee::with(['institution', 'position'])->select('*')->latest('id');
 
+            if ($request->month || $request->year) {
+                $data = $data->whereYear('join_date', $request->year)
+                    ->whereMonth('join_date', $request->month);
+            }
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('institution_number', function ($row) {
