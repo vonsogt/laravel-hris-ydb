@@ -173,20 +173,21 @@ class HomeController extends Controller
             $user->password = Hash::make($request->get('password'));
             $user->update();
             if ($user) {
-                Session::flash('message', 'Password updated successfully!');
+                Session::flash('message', 'Kata sandi berhasil diperbarui!');
                 Session::flash('alert-class', 'alert-success');
-                return response()->json([
-                    'isSuccess' => true,
-                    'Message' => "Password updated successfully!"
-                ], 200); // Status code here
+                // return response()->json([
+                //     'isSuccess' => true,
+                //     'Message' => "Password updated successfully!"
+                // ], 200); // Status code here
             } else {
-                Session::flash('message', 'Something went wrong!');
+                Session::flash('message', 'Ada yang salah!');
                 Session::flash('alert-class', 'alert-danger');
-                return response()->json([
-                    'isSuccess' => true,
-                    'Message' => "Something went wrong!"
-                ], 200); // Status code here
+                // return response()->json([
+                //     'isSuccess' => true,
+                //     'Message' => "Something went wrong!"
+                // ], 200); // Status code here
             }
         }
+        return redirect()->back();
     }
 }
