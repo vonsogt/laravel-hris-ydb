@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -77,6 +78,13 @@ class HomeController extends Controller
         }
     }
 
+    public function editProfile()
+    {
+        $user = auth()->user();
+
+        return view('users.edit-profile', compact('user'));
+    }
+
     public function updateProfile(Request $request, $id)
     {
         $request->validate([
@@ -84,6 +92,11 @@ class HomeController extends Controller
             'email' => ['required', 'string', 'email'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
         ]);
+
+        // Check if authenticated user edit self
+        if ($id != auth()->user()->id) {
+            return abort(404);
+        }
 
         $user = User::find($id);
         $user->name = $request->get('name');
@@ -99,7 +112,7 @@ class HomeController extends Controller
 
         $user->update();
         if ($user) {
-            Session::flash('message', 'User Details Updated successfully!');
+            Session::flash('message', 'Detail Pengguna Berhasil Diperbarui!');
             Session::flash('alert-class', 'alert-success');
             // return response()->json([
             //     'isSuccess' => true,
@@ -107,7 +120,7 @@ class HomeController extends Controller
             // ], 200); // Status code here
             return redirect()->back();
         } else {
-            Session::flash('message', 'Something went wrong!');
+            Session::flash('message', 'Ada yang salah!');
             Session::flash('alert-class', 'alert-danger');
             // return response()->json([
             //     'isSuccess' => true,
@@ -119,17 +132,43 @@ class HomeController extends Controller
 
     public function updatePassword(Request $request, $id)
     {
-        $request->validate([
+        // $validator = $request->validate([
+        //     'current_password' => ['required', 'string'],
+        //     'password' => ['required', 'string', 'min:6', 'confirmed'],
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'current_password' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
+        if ($validator->fails()) {
+            $error = $validator->errors()->first();
+            Session::flash('type', 'password');
+            Session::flash('message', $error);
+            Session::flash('alert-class', 'alert-success');
+            // return response()->json([
+            //     'isSuccess' => false,
+            //     'Message' => "Your Current password does not matches with the password you provided. Please try again."
+            // ], 200); // Status code
+            return redirect()->back();
+        }
+
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
-            return response()->json([
-                'isSuccess' => false,
-                'Message' => "Your Current password does not matches with the password you provided. Please try again."
-            ], 200); // Status code
+            Session::flash('message', 'Kata sandi Anda saat ini tidak cocok dengan kata sandi yang Anda berikan. Silakan coba lagi.');
+            Session::flash('alert-class', 'alert-success');
+            // return response()->json([
+            //     'isSuccess' => false,
+            //     'Message' => "Your Current password does not matches with the password you provided. Please try again."
+            // ], 200); // Status code
+            return redirect()->back();
         } else {
+
+            // Check if authenticated user edit self
+            if ($id != auth()->user()->id) {
+                return abort(404);
+            }
+
             $user = User::find($id);
             $user->password = Hash::make($request->get('password'));
             $user->update();

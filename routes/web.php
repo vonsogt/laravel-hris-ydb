@@ -29,8 +29,9 @@ Route::get('index/{locale}', [HomeController::class, 'lang']);
 Route::get('/', [HomeController::class, 'root'])->name('root');
 
 //Update User Details
-Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+Route::get('/edit-profile', [HomeController::class, 'editProfile'])->name('edit_profile');
+Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('update_profile');
+Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('update_password');
 
 Route::middleware([])->group(function () {
     Route::resource('positions', PositionController::class);
@@ -74,4 +75,4 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     ]);
 });
 
-Route::get('{any}', [HomeController::class, 'index'])->name('index');
+// Route::get('{any}', [HomeController::class, 'index'])->name('index');

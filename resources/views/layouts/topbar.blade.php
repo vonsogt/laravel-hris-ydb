@@ -172,7 +172,7 @@
                         <!-- item-->
                         <h6 class="dropdown-header">Halo {{Auth::user()->name}}!</h6>
                         @if (auth()->getDefaultDriver() == 'web')
-                            <a class="dropdown-item" href="pages-profile"><i
+                            <a class="dropdown-item" href="{{ route('edit_profile') }}"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Profile</span></a>
                             <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
