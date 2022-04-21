@@ -21,7 +21,7 @@ class InstitutionController extends Controller
 
             $data = Institution::select('*');
 
-            return DataTables::of($data)
+            return DataTables::of($data->get())
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '
