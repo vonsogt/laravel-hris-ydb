@@ -178,8 +178,8 @@
                                 table.row($(button).parents('tr')).remove().draw(false);
                             } else {
                                 Swal.fire({
-                                    title: 'NOT deleted!',
-                                    text: 'There\'s been an error.',
+                                    title: 'TIDAK Dihapus!',
+                                    text: 'Terjadi kesalahan.',
                                     icon: 'error',
                                     timer: 4000,
                                     showConfirmButton: false,
@@ -188,8 +188,8 @@
                         },
                         error: function(response) {
                             Swal.fire({
-                                title: 'NOT deleted!',
-                                text: 'There\'s been an error.',
+                                title: 'TIDAK Dihapus!',
+                                text: 'Terjadi kesalahan.',
                                 icon: 'error',
                                 timer: 4000,
                                 showConfirmButton: false,
