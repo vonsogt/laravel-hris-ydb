@@ -12,14 +12,15 @@
             <div class="card-body p-4">
                 <div class="text-center">
                     <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                        <img src="{{ URL::asset('assets/images/users/avatar-1.jpg') }}"
-                            class="rounded-circle avatar-xl img-thumbnail user-profile-image"
-                            alt="user-profile-image">
+                        @if (file_exists(public_path('images/') . $user->avatar))
+                            <img src="{{ URL::asset('images/' . $user->avatar) }}" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                        @else
+                            <img src="{{ URL::asset('assets/images/users/avatar-1.jpg') }}" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                        @endif
                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                            <input id="profile-img-file-input" type="file"
-                                class="profile-img-file-input">
-                            <label for="profile-img-file-input"
-                                class="profile-photo-edit avatar-xs">
+                            <form action="{{ route('update_profile', $user->id) }}" method="POST" enctype="multipart/form-data">
+                            <input id="profile-img-file-input" type="file" name="avatar" class="profile-img-file-input">
+                            <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                 <span class="avatar-title rounded-circle bg-light text-body">
                                     <i class="ri-camera-fill"></i>
                                 </span>
@@ -57,7 +58,7 @@
             <div class="card-body p-4">
                 <div class="tab-content">
                     <div class="tab-pane @if(!session('type')) active @endif" id="personalDetails" role="tabpanel">
-                        <form action="{{ route('update_profile', $user->id) }}" method="POST">
+                        {{-- <form action="{{ route('update_profile', $user->id) }}" method="POST"> --}}
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6">
