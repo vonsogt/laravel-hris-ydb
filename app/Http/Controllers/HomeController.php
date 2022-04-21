@@ -57,10 +57,23 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        foreach (array_reverse($headcountEmployeeChartData->toArray()) as $val) {
-            $data['chartData'] .= $val['total'] . ',';
-            $data['chartCategories'] .= $val['year'] . ',';
+
+        $count = count(array_reverse($headcountEmployeeChartData->toArray())) - 1;
+        foreach (array_reverse($headcountEmployeeChartData->toArray()) as $key => $val) {
+            if ($key == $count) {
+                $data['chartData'] .= $val['total'];
+                $data['chartCategories'] .= $val['year'];
+            } else {
+                $data['chartData'] .= $val['total'] . ',';
+                $data['chartCategories'] .= $val['year'] . ',';
+            }
         }
+
+        $dataChartCategories = explode(',', $data['chartCategories']);
+        $maxYear = count($dataChartCategories) <= 4 ? count($dataChartCategories) : 4;
+        $data['headCountEmployeeTitle'] = $data['chartCategories'] != ''
+            ? (count($dataChartCategories) > 1 ? ($dataChartCategories[0] . ' - ' . $dataChartCategories[$maxYear - 1]) : $dataChartCategories[0])
+            : now()->year;
 
         return view('index', compact('data'));
     }
