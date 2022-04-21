@@ -316,7 +316,10 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        type: "DELETE",
+                        type: "POST",
+                        data: {
+                            _method: "DELETE",
+                        },
                         url: route,
                         success: function(response) {
                             if (response == 1) {
