@@ -132,9 +132,19 @@
                             <textarea name="address" class="form-control" id="addressInput" rows="3" spellcheck="false">{{ old('address', $employee->address ?? '') }}</textarea>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="statusInputSelect">Status</label>
+                            <select id="statusInputSelect" class="form-select mb-3" name="status" aria-label="Pilih status">
+                                <option disabled selected> -- Pilih status -- </option>
+                                <option @if (old('status', $employee->status ?? '') == "GTY") selected @endif value="GTY">GTY</option>
+                                <option @if (old('status', $employee->status ?? '') == "GTTY") selected @endif value="GTTY">GTTY</option>
+                                <option @if (old('status', $employee->status ?? '') == "PTY") selected @endif value="PTY">PTY</option>
+                                <option @if (old('status', $employee->status ?? '') == "PTTY") selected @endif value="PTTY">PTTY</option>
+                            </select>
+                        </div>
+                        {{-- <div class="mb-3">
                             <label class="form-label" for="status-input">Status</label>
                             <input type="text" name="status" class="form-control" id="status-input" value="{{ old('status', $employee->status ?? '') }}" placeholder="Masukkan status">
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label class="form-label" for="phoneNumberInput">Nomor HP</label>
                             <input type="text" name="phone_number" class="form-control" id="phoneNumberInput" value="{{ old('phone_number', $employee->phone_number ?? '') }}" placeholder="Masukkan nomor hp">

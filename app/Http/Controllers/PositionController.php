@@ -19,7 +19,7 @@ class PositionController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Position::select('*')->latest('id');
+            $data = Position::select('*');
 
             return DataTables::of($data)
                 ->addIndexColumn()

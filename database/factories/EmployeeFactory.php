@@ -9,6 +9,7 @@ use App\Models\Institution;
 use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
@@ -36,7 +37,7 @@ class EmployeeFactory extends Factory
             'institution_id' => $this->faker->numberBetween(1, Institution::count()),
             'position_id' => $this->faker->numberBetween(1, Position::count()),
             'address' => $this->faker->address(),
-            'status' => $this->faker->name(),
+            'status' => Arr::random(['GTY', 'GTTY', 'PTY', 'PTTY']),
             'phone_number' => $this->faker->phoneNumber(),
             'mother_name' => $this->faker->name(),
             'partner_name' => $this->faker->name(),

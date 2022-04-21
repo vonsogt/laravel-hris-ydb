@@ -19,7 +19,7 @@ class InstitutionController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Institution::select('*')->latest('id');
+            $data = Institution::select('*');
 
             return DataTables::of($data)
                 ->addIndexColumn()
