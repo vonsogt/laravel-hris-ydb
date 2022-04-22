@@ -160,11 +160,18 @@
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != '' && file_exists(public_path('images/') . Auth::user()->avatar)){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                alt="Header Avatar">
+                            @if (auth()->getDefaultDriver() == 'web')
+                                <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != '' && file_exists(public_path('images/') . Auth::user()->avatar)){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Admin Header Avatar">
+                            @else
+                                <img class="rounded-circle header-profile-user" src="@if (Auth::user()->photo != '' && file_exists(public_path('uploads/images/') . Auth::user()->photo)){{ URL::asset('uploads/images/' . Auth::user()->photo) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Pegawai Header Avatar">
+                            @endif
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->name}}</span>
-                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">Founder</span>
+                                @if (auth()->getDefaultDriver() == 'web')
+                                    <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">Admin</span>
+                                @else
+                                    <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">{{Auth::user()->position->name}}</span>
+                                @endif
                             </span>
                         </span>
                     </button>

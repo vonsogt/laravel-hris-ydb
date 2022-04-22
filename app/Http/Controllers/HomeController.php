@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Institution;
+use App\Models\Position;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ class HomeController extends Controller
     {
         $data['employeesCount'] = Employee::count();
         $data['institutionsCount'] = Institution::count();
+        $data['positionsCount'] = Position::count();
         $data['newEmployeesCount'] = Employee::whereYear('join_date', now()->year)
             ->whereMonth('join_date', now()->month)
             ->count();
