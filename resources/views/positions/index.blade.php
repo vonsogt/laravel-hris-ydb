@@ -290,6 +290,7 @@
 
         $.fn.dataTable.render.ellipsis = function() {
             return function(data, type, row) {
+                data = '-';
                 return type === 'display' && data.length > 100 ?
                     data.substr(0, 100) + '…' :
                     data;
