@@ -51,11 +51,24 @@ class EmployeeController extends Controller
                 ->filter(function ($instance) use ($request) {
                     if (!empty($request->get('search')['value'])) {
                         $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+
+                            if (\Str::contains(\Str::lower($row['institution_number']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+
                             if (\Str::contains(\Str::lower($row['institution_name']), \Str::lower($request->get('search')['value']))) {
                                 return true;
                             }
 
                             if (\Str::contains(\Str::lower($row['position_name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+
+                            if (\Str::contains(\Str::lower($row['name']), \Str::lower($request->get('search')['value']))) {
+                                return true;
+                            }
+
+                            if (\Str::contains(\Str::lower($row['join_date']), \Str::lower($request->get('search')['value']))) {
                                 return true;
                             }
 
