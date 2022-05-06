@@ -29,7 +29,7 @@ class UpdateEmployeeRequest extends FormRequest
             'name'                          => 'required|max:255',
             'institution_number'            => 'required|unique:employees,institution_number,' . $employeeId,
             'id_card'                       => 'required|unique:employees,id_card,' . $employeeId,
-            'education_personnel_number'    => 'required|unique:employees,education_personnel_number,' . $employeeId,
+            // 'education_personnel_number'    => 'required|unique:employees,education_personnel_number,' . $employeeId,
             'gender'                        => 'required',
             'join_date'                     => 'required',
             'institution_id'                => 'required',
