@@ -4,6 +4,7 @@
 @endsection
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css"/>
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -36,11 +37,12 @@
                 <div class="card-body">
                     <div id="customerList">
 
-                        <div class="table-responsive mt-3 mb-1">
+                        <div class="mt-3 mb-1">
                             <table class="table align-middle table-nowrap" id="employeeTable">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>ID</th>
+                                        <th></th>
+                                        {{-- <th>ID</th> --}}
                                         <th>NIY</th>
                                         <th>Lembaga</th>
                                         <th>Jabatan</th>
@@ -68,6 +70,8 @@
 
     <!-- Datatables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -76,6 +80,7 @@
 
             var table = $('#employeeTable').DataTable({
 
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -87,9 +92,13 @@
                 },
                 columns: [
                     {
-                        data: 'id',
-                        name: 'id'
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
                     },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'institution_number',
                         name: 'institution_number'
@@ -119,16 +128,6 @@
                         },
                     @endif
                 ],
-                // columnDefs: [{
-                //     targets: 1,
-                //     render: function(data, type, row, meta) {
-                //         console.log(data)
-                //         if (type === 'display') {
-                //             data = '<a href="test">Edit</a>';
-                //         }
-                //         return data;
-                //     }
-                // }],
                 language: {
                     "emptyTable": "Tidak ada data yang tersedia pada tabel ini",
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
