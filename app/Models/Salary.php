@@ -37,6 +37,11 @@ class Salary extends Model
         );
     }
 
+    public function getEmployeeInstitution()
+    {
+        return $this->employee->institution->name;
+    }
+
     public function getMonthFromDate()
     {
         return Carbon::make($this->date)->format('m');

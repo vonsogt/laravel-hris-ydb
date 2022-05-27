@@ -72,7 +72,7 @@
                                                     </div>
                                                     <div class="flex-grow-1">
                                                         <h4 class="mb-1 fw-medium text-danger">
-                                                            SDIT 01 DARUSSALAM
+                                                            {{ $salary->getEmployeeInstitution() ?? '-' }}
                                                         </h4>
                                                         <h4 class="mb-1 fw-bold">
                                                             YAYASAN DARUSSALAM BATAM
