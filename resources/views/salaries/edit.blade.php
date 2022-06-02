@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Pengeluaran</label>
+                            <label class="form-label">Potongan</label>
                             <div class="table-responsive">
                                 <table class="invoice-table table table-borderless table-nowrap mb-0">
                                     <thead class="align-middle">
@@ -158,7 +158,7 @@
                                                 <th scope="row" class="cut-id">{{ $key }}</th>
                                                 <td class="text-start">
                                                     <div class="mb-2">
-                                                        <input type="text" class="form-control bg-light border-0 cut-item-description" name="cuts[{{ $key }}][description]" placeholder="Masukkan deskripsi pengeluaran" value="{{ $item['description'] }}" required />
+                                                        <input type="text" class="form-control bg-light border-0 cut-item-description" name="cuts[{{ $key }}][description]" placeholder="Masukkan deskripsi potongan" value="{{ $item['description'] }}" required />
                                                     </div>
                                                 </td>
                                                 <td class="text-end">
@@ -175,7 +175,7 @@
                                                 <th scope="row" class="cut-id">1</th>
                                                 <td class="text-start">
                                                     <div class="mb-2">
-                                                        <input type="text" class="form-control bg-light border-0 cut-item-description" name="cuts[1][description]" placeholder="Masukkan deskripsi pengeluaran" required />
+                                                        <input type="text" class="form-control bg-light border-0 cut-item-description" name="cuts[1][description]" placeholder="Masukkan deskripsi potongan" required />
                                                     </div>
                                                 </td>
                                                 <td class="text-end">
@@ -201,7 +201,7 @@
                                             <table class="table table-borderless table-sm table-nowrap align-middle mb-0">
                                                 <tbody>
                                                     <tr class="border-top border-top-dashed text-end">
-                                                        <th scope="row">Total Pengeluaran</th>
+                                                        <th scope="row">Total Potongan</th>
                                                         <td>
                                                             <input type="text" class="form-control bg-light border-0" id="cuts-total" placeholder="Rp0" readonly />
                                                         </td>
@@ -349,7 +349,7 @@
                     "</th>" +
                     '<td class="text-start">' +
                         '<div class="mb-2">' +
-                            '<input class="form-control bg-light border-0 cut-item-description" type="text" name="cuts[' + cutsCount + '][description]" placeholder="Masukkan deskripsi pengeluaran" required />' +
+                            '<input class="form-control bg-light border-0 cut-item-description" type="text" name="cuts[' + cutsCount + '][description]" placeholder="Masukkan deskripsi potongan" required />' +
                         '</div>' +
                     "</td>" +
                     '<td class="text-end">' +

@@ -87,7 +87,7 @@
                                         <th>Nama</th>
                                         <th>Gaji Bersih</th>
                                         <th>Gaji diterima</th>
-                                        <th>Total Tunjangan</th>
+                                        <th>Total Potongan</th>
                                     </tr>
                                 </thead>
                             </table>
