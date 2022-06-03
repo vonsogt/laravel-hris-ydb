@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Spatie\Browsershot\Browsershot;
+use Illuminate\Support\Facades\File;
 
 class SalaryController extends Controller
 {
@@ -128,7 +130,7 @@ class SalaryController extends Controller
                                     <a href="' . route('employee.salaries.show', $row->id) . '" class="btn btn-sm btn-primary show-item-btn">Detail</a>
                                 </div>
                                 <div class="remove">
-                                    <a href="' . route('employee.salaries.download_pdf', $row->id) . '" target="_blank" class="btn btn-sm btn-success remove-item-btn">Unduh</a>
+                                    <a href="' . route('employee.salaries.download_pdf', $row->id) . '" class="btn btn-sm btn-success remove-item-btn">Unduh</a>
                                 </div>
                             </div>
                         ';
@@ -224,6 +226,17 @@ class SalaryController extends Controller
         return $salary->delete();
     }
 
+    public function previewPdf(Salary $salary)
+    {
+        if (auth()->getDefaultDriver() == 'api') {
+            if ($salary->employee->id != auth()->user()->id) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized']);
+            }
+        }
+
+        return view('salaries.download-pdf', compact('salary'));
+    }
+
     public function downloadPdf(Salary $salary)
     {
         if (auth()->getDefaultDriver() == 'api') {
@@ -232,11 +245,21 @@ class SalaryController extends Controller
             }
         }
 
-        // $pdf = PDF::loadView('salaries.show', compact('salary'));
-        $pdf = PDF::loadView('salaries.download-pdf', compact('salary'))->setPaper('a4', 'landscape');
-        return $pdf->download('invoice.pdf');
+        $fileName = $salary->id . '-slip-gaji.pdf';
+        $path = public_path('uploads/salaries/');
 
-        return view('salaries.show', compact('salary'));
+        File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+
+        $browsershot = Browsershot::url(route('employee.salaries.preview_pdf', $salary))
+            ->setExtraHttpHeaders([
+                'Authorization' => 'Bearer ' . request()->bearerToken()
+            ])
+            ->format('A4')
+            ->landscape()
+            ->showBackground()
+            ->save($path . $fileName);
+
+        return response()->download($path . $fileName);
     }
 
     public function penyebut($nilai)

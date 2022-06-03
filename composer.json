@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "spatie/browsershot": "^3.54",
         "tymon/jwt-auth": "dev-develop",
         "yajra/laravel-datatables-oracle": "^9.19"
     },

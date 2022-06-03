@@ -54,6 +54,7 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     ]);
 
     Route::get('salaries/download-pdf/{salary}', [SalaryController::class, 'downloadPdf'])->name('salaries.download_pdf');
+    Route::get('salaries/preview-pdf/{salary}', [SalaryController::class, 'previewPdf'])->name('salaries.preview_pdf');
     Route::resource('salaries', SalaryController::class)->except([
         'create', 'store', 'edit', 'update', 'destroy'
     ]);
