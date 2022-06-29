@@ -29,6 +29,19 @@ class JobAssessment extends Model
                 $result += $value;
             }
         }
-        return $result;
+
+        if ($result >= 55 && $result <= 60) {
+            return $result . ' (A)';
+        } elseif ($result >= 42 && $result <= 54) {
+            return $result . ' (B)';
+        } elseif ($result >= 24 && $result <= 41) {
+            return $result . ' (C)';
+        } elseif ($result >= 12 && $result <= 33) {
+            return $result . ' (D)';
+        } elseif ($result >= 0 && $result <= 11) {
+            return $result . ' (E)';
+        } else {
+            return $result . ' (-)';
+        }
     }
 }
