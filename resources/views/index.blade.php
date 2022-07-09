@@ -24,7 +24,7 @@
                 <!--end col-->
             </div>
             <!--end row-->
-            @if (auth()->getDefaultDriver() == 'web')
+            {{-- @if (auth()->getDefaultDriver() == 'web') --}}
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
                         <!-- card -->
@@ -145,7 +145,7 @@
                         </div><!-- end card -->
                     </div><!-- end col -->
                 </div> <!-- end row-->
-            @endif
+            {{-- @endif --}}
 
             <div class="row">
                 <div class="col-xl-12">
