@@ -47,6 +47,7 @@
                                         <th>Pengajuan</th>
                                         <th>Mulai</th>
                                         <th>Selesai</th>
+                                        <th>Jumlah Cuti</th>
                                         <th>Alasan</th>
                                         {{-- <th>Aksi</th> --}}
                                     </tr>
@@ -112,6 +113,10 @@
                     {
                         data: 'end_date',
                         name: 'end_date'
+                    },
+                    {
+                        data: 'range_count',
+                        name: 'range_count'
                     },
                     {
                         data: 'reason',

@@ -91,6 +91,13 @@ class LeaveController extends Controller
                 ->addColumn('end_date', function ($row) {
                     return Carbon::make($row->end_date)->format('d-M-Y');
                 })
+                ->addColumn('range_count', function ($row) {
+                    // Count start date and end date
+                    $start = Carbon::make($row->start_date);
+                    $end = Carbon::make($row->end_date);
+                    $count = $start->diffInDays($end) + 1;
+                    return $count;
+                })
                 // ->addColumn('action', function ($row) {
                 //     $btn = '
                 //         <div class="d-flex gap-2">
