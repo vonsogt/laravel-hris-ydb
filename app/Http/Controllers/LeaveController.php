@@ -93,12 +93,12 @@ class LeaveController extends Controller
                 })
                 ->addColumn('range_count', function ($row) {
 
-                    // Count difference between start date and end date withouth weekend
+                    // Count difference between start date and end date withouth sunday
                     $start = Carbon::make($row->start_date);
                     $end = Carbon::make($row->end_date);
                     $count = $start->diffInDaysFiltered(function (Carbon $date) {
-                        return !$date->isWeekend();
-                    }, $end) + 1;
+                        return !$date->isSunday();
+                    }, $end);
                     return $count . ' Hari';
                 })
                 // ->addColumn('action', function ($row) {
