@@ -250,14 +250,20 @@ class SalaryController extends Controller
 
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
 
-        $browsershot = Browsershot::url(route('employee.salaries.preview_pdf', $salary))
-            ->setExtraHttpHeaders([
-                'Authorization' => 'Bearer ' . request()->bearerToken()
-            ])
+        $browsershot = BrowserShot::html(view('salaries.download-pdf', compact('salary'))->render())
             ->format('A4')
             ->landscape()
             ->showBackground()
             ->save($path . $fileName);
+
+        // $browsershot = Browsershot::url(route('employee.salaries.preview_pdf', $salary))
+        //     ->setExtraHttpHeaders([
+        //         'Authorization' => 'Bearer ' . request()->bearerToken()
+        //     ])
+        //     ->format('A4')
+        //     ->landscape()
+        //     ->showBackground()
+        //     ->save($path . $fileName);
 
         return response()->download($path . $fileName);
     }
