@@ -20,6 +20,37 @@
                     <a href="{{ route('employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
                 </div>
             </div>
+            <div class="col-sm-auto ms-auto">
+                <div class="hstack gap-2">
+                    <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Fliters</button>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header bg-light">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter Pegawai</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <!--end offcanvas-header-->
+            <form action="" class="d-flex flex-column justify-content-end h-100">
+                <div class="offcanvas-body">
+                    <div class="mb-4">
+                        <label for="filter-by-" class="form-label text-muted text-uppercase fw-semibold mb-3">Lembaga</label>
+                        <select class="form-select mb-3" id="filter-by-institution" aria-label="Default select example">
+                            <option selected="" disabled>Pilih Lembaga</option>
+                            @foreach ($institutionOptions as $key => $value)
+                                <option value="{{ $key }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <!--end offcanvas-body-->
+                <div class="offcanvas-footer border-top p-3 text-center hstack gap-2">
+                    <button class="btn btn-light w-100">Hapus Filter</button>
+                    <button type="submit" class="btn btn-success w-100">Terapkan Filter</button>
+                </div>
+                <!--end offcanvas-footer-->
+            </form>
         </div>
     @else
         <div class="row g-4 mb-3">

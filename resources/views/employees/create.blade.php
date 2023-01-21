@@ -45,6 +45,10 @@
                             <input type="text" name="institution_number" class="form-control" id="institution_number-input" value="{{ old('institution_number', $employee->institution_number ?? '') }}" placeholder="Masukkan nomor induk yayasan">
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="email-input">Email</label>
+                            <input type="email" name="email" class="form-control" id="email-input" value="{{ old('email', $employee->email ?? '') }}" placeholder="Masukkan email">
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="id_card-input">Nomor KTP</label>
                             <input type="text" name="id_card" class="form-control" id="id_card-input" value="{{ old('id_card', $employee->id_card ?? '') }}" placeholder="Masukkan nomor ktp">
                         </div>

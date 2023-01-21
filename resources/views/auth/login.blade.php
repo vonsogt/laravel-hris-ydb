@@ -76,9 +76,13 @@
                                         @else
                                             <form id="handleAjax" action="{{ route('api.v1.auth.login') }}" method="POST">
                                                 @csrf
-                                                <div class="mb-3">
+                                                {{-- <div class="mb-3">
                                                     <label for="employee-institution-number-input" class="form-label">Nomor Induk Yayasan</label>
                                                     <input type="text" class="form-control" value="{{ old('institution_number', '') }}" id="employee-institution-number-input" name="institution_number" placeholder="Masukkan nomor induk yayasan">
+                                                </div> --}}
+                                                <div class="mb-3">
+                                                    <label for="employee-email-input" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" value="{{ old('email', '') }}" id="employee-email-input" name="email" placeholder="cth: pegawai@email.com">
                                                 </div>
 
                                                 <div class="mb-3">

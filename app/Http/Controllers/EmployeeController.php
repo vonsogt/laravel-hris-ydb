@@ -107,7 +107,9 @@ class EmployeeController extends Controller
                 ->make(true);
         }
 
-        return view('employees.index');
+        $institutionOptions = Institution::get()->pluck('name', 'id');
+
+        return view('employees.index', compact('institutionOptions'));
     }
 
     /**

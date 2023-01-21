@@ -79,6 +79,10 @@
                                                         <td>: <span class="text-muted">{{ $employee->institution_number ?? '-' }}</span></td>
                                                     </tr>
                                                     <tr>
+                                                        <th class="ps-0" scope="row">Email</th>
+                                                        <td>: <span class="text-muted">{{ $employee->email ?? '-' }}</span></td>
+                                                    </tr>
+                                                    <tr>
                                                         <th class="ps-0" scope="row">Nomor KTP</th>
                                                         <td>: <span class="text-muted">{{ $employee->id_card ?? '-' }}</span></td>
                                                     </tr>

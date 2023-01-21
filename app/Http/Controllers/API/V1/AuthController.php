@@ -26,10 +26,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'institution_number'    => 'required',
+            'email'                 => 'required|string|email',
             'password'              => 'required|string|min:6',
         ], [
-            'institution_number.required'   => 'Nomor induk yayasan wajib diisi.',
+            'email.required'    => 'Email wajib diisi.',
+            'email.email'       => 'Email tidak valid.',
 
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min'      => 'Kata sandi minimal berisi :min karakter.'

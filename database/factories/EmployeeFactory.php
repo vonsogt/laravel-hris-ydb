@@ -26,6 +26,7 @@ class EmployeeFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'institution_number' => $this->faker->unique()->numberBetween(100000000000, 900000000000),
+            'email' => $this->faker->unique()->safeEmail(),
             'id_card' => $this->faker->unique()->numberBetween(217100, 2171000),
             'education_personnel_number' => $this->faker->unique()->numberBetween(100, 500),
             'birth_place' => $this->faker->city(),
