@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EmployeesExport;
 
 class EmployeeController extends Controller
 {
@@ -259,5 +261,16 @@ class EmployeeController extends Controller
         if (!is_null($image)) {
             $image->move(public_path('images') . 'temp');
         }
+    }
+
+    public function export(Request $request, $type = 'xlsx')
+    {
+        $fileName = 'employees_' . time() . '.' . $type;
+
+        if ($type == 'pdf') {
+            return Excel::download(new EmployeesExport, $fileName, \Maatwebsite\Excel\Excel::MPDF);
+        }
+
+        return Excel::download(new EmployeesExport, $fileName);
     }
 }

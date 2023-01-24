@@ -59,6 +59,21 @@
                     <a href="{{ route('employee.employees.show', auth()->user()->id) }}" class="btn btn-primary add-btn" id="create-btn"><i class="ri-eye-line align-bottom me-1"></i> Detail Pegawai Saya</a>
                 </div>
             </div>
+            <div class="col-sm-auto ms-auto">
+                <div class="hstack gap-2">
+                    <div class="float-end">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ri-file-download-line align-middle me-1"></i> Export
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'xlsx']) }}" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a>
+                                <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'pdf']) }}" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     @endif
 

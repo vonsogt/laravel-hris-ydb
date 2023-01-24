@@ -55,6 +55,7 @@ Route::middleware([])->group(function () {
 Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(function () {
     Route::get('/', [HomeController::class, 'root'])->name('home');
 
+    Route::get('employees/export/{type}', [EmployeeController::class, 'export'])->name('employees.export');
     Route::resource('employees', EmployeeController::class)->except([
         'create', 'store', 'destroy'
     ]);
