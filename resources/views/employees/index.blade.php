@@ -32,21 +32,21 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <!--end offcanvas-header-->
-            <form action="" class="d-flex flex-column justify-content-end h-100">
+            <form id="filter-employee" action="" class="d-flex flex-column justify-content-end h-100">
                 <div class="offcanvas-body">
                     <div class="mb-4">
                         <label for="filter-by-" class="form-label text-muted text-uppercase fw-semibold mb-3">Lembaga</label>
                         <select class="form-select mb-3" id="filter-by-institution" aria-label="Default select example">
                             <option selected="" disabled>Pilih Lembaga</option>
                             @foreach ($institutionOptions as $key => $value)
-                                <option value="{{ $key }}">{{ $value }}</option>
+                                <option value="{{ $value }}">{{ $value }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <!--end offcanvas-body-->
                 <div class="offcanvas-footer border-top p-3 text-center hstack gap-2">
-                    <button class="btn btn-light w-100">Hapus Filter</button>
+                    <a href="{{ route('employees.index') }}" class="btn btn-light w-100">Hapus Filter</a>
                     <button type="submit" class="btn btn-success w-100">Terapkan Filter</button>
                 </div>
                 <!--end offcanvas-footer-->
@@ -69,22 +69,24 @@
                     <div id="customerList">
 
                         <div class="mt-3 mb-1">
-                            <table class="table align-middle table-nowrap" id="employeeTable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th></th>
-                                        {{-- <th>ID</th> --}}
-                                        <th>NIY</th>
-                                        <th>Lembaga</th>
-                                        <th>Jabatan</th>
-                                        <th>Nama Lengkap</th>
-                                        <th>Bergabung</th>
-                                        @if (auth()->getDefaultDriver() == 'web')
-                                            <th>Aksi</th>
-                                        @endif
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table align-middle table-nowrap" id="employeeTable">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th></th>
+                                            {{-- <th>ID</th> --}}
+                                            <th>NIY</th>
+                                            <th>Lembaga</th>
+                                            <th>Jabatan</th>
+                                            <th>Nama Lengkap</th>
+                                            <th>Bergabung</th>
+                                            @if (auth()->getDefaultDriver() == 'web')
+                                                <th>Aksi</th>
+                                            @endif
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
 
                     </div>
@@ -430,6 +432,40 @@
                 }
             })
         }
+
+        // Filters
+        $('#filter-employee').on('submit', function(e) {
+            e.preventDefault();
+
+            
+            // Get value from #filter-by-institution
+            var institution = $('#filter-by-institution').val();
+
+            console.log(institution);
+            
+            // Validate if at least one filter is selected
+            if (institution == null) {
+                Swal.fire({
+                    html: 'Pilih minimal satu filter',
+                    showCancelButton: true,
+                    showConfirmButton: false,
+                    cancelButtonClass: 'btn btn-primary w-xs mb-1',
+                    cancelButtonText: 'Tutup',
+                    buttonsStyling: false,
+                    showCloseButton: true
+                })
+                return;
+            }
+
+            // Filter datatable
+            var table = $('#employeeTable').DataTable();
+            table.column(2).search(institution).draw();
+
+            // Click button data-bs-dismiss="offcanvas" parent of #filter-employee
+            $('#filter-employee').parent().find('[data-bs-dismiss="offcanvas"]').click();
+
+        });
+
     </script>
 
     <script>
