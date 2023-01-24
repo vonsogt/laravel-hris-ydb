@@ -255,7 +255,7 @@
                             el.className = 'invalid-feedback'
                             el.innerHTML = '<strong>Identitas tersebut tidak cocok dengan data kami.</strong>'
 
-                            var input = document.getElementById("handleAjax").querySelector('input[name=institution_number]')
+                            var input = document.getElementById("handleAjax").querySelector('input[name=email]')
 
                             input.parentNode.insertBefore(el, input.nextSibling)
                             input.classList.add('is-invalid')

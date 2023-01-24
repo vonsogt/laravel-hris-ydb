@@ -19,6 +19,7 @@ class Employee extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'institution_number',
+        'email',
         'id_card',
         'education_personnel_number',
         'birth_place',
