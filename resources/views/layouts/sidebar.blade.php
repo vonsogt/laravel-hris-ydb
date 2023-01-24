@@ -45,11 +45,11 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('salaries.*')) ? 'active' : '' }}" href="{{ route('salaries.index') }}">
                             <i class="ri-money-dollar-box-line"></i> <span>Slip Gaji</span>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs(['leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
@@ -119,11 +119,11 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('employee.salaries.*')) ? 'active' : '' }}" href="{{ route('employee.salaries.index') }}">
                             <i class="ri-money-dollar-box-line"></i> <span>Slip Gaji</span>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
