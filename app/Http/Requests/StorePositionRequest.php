@@ -25,6 +25,7 @@ class StorePositionRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'theme_color' => 'required|max:255',
         ];
     }
 
@@ -33,6 +34,9 @@ class StorePositionRequest extends FormRequest
         return [
             'name.required' => 'Nama jabatan harus diisi',
             'name.max' => 'Nama jabatan maksimal 255 karakter',
+
+            'theme_color.required' => 'Warna tema harus diisi',
+            'theme_color.max' => 'Warna tema maksimal 255 karakter',
         ];
     }
 }

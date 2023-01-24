@@ -47,7 +47,7 @@
                         </div>
                         <div>
                             <label class="form-label">Tema Dasbor</label>
-                            <input type="hidden" name="theme_color" value="{{ old('theme_color', $position->theme_color ?? '') }}">
+                            <input type="hidden" name="theme_color" value="{{ old('theme_color', $position->theme_color ?? '#405189') }}">
                             <div id="theme-color-picker" class="colorpicker-input"></div>
                         </div><!-- end col -->
                     </div>
