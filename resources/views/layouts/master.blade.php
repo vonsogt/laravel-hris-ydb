@@ -68,6 +68,10 @@
                     return false;
                 });
             });
+
+            $(".navbar-menu").css("background-color", "{{ auth('api')->user()->color() }}");
+            $(".navbar-brand-box").css("background-color", "{{ auth('api')->user()->color() }}");
+
         </script>
     @endif
 </body>

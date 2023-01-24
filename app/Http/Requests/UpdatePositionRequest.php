@@ -27,4 +27,12 @@ class UpdatePositionRequest extends FormRequest
             'name' => 'required|max:255',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama jabatan harus diisi',
+            'name.max' => 'Nama jabatan maksimal 255 karakter',
+        ];
+    }
 }

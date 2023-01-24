@@ -100,4 +100,11 @@ class Employee extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Position::class);
     }
+
+    public function color()
+    {
+        $color = $this->position->theme_color;
+
+        return $color;
+    }
 }
