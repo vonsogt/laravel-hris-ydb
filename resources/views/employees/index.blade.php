@@ -296,7 +296,6 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     }, 
-
                     @if (auth()->getDefaultDriver() == 'web')
                         {
                             data: 'action',
@@ -308,7 +307,8 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 1, 2, 3, 4, 5],
+                        
+                        targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web') 23 @endif],
                         visible: true
                     },
                     {
@@ -323,14 +323,11 @@
                             if (data == null) {
                                 return '';
                             }
-                            // Make object to text with comma
-                            var children = '';
-                            for (var i = 0; i < data.length; i++) {
-                                children += data[i].name + ', ';
-                            }
-                            // Remove last comma
-                            children = children.slice(0, -2);
-                            return children;
+                            // Convert object to array
+                            var children = Object.values(data);
+                            // Join array with comma
+                            var childrenName = children.join(', ');
+                            return childrenName;
                         }
                     },
                     // Format date created_at, updated_at
