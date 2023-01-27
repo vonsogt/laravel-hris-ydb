@@ -44,8 +44,6 @@
                                 <a class="dropdown-item" href="javascript:void(0)" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a>
                                 <a class="dropdown-item" href="javascript:void(0)" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a>
                                 <a class="dropdown-item" href="javascript:void(0)" id="export-print"><i class="ri-printer-line align-middle me-1"></i> Print</a>
-                                {{-- <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'xlsx']) }}" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a> --}}
-                                {{-- <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'pdf']) }}" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a> --}}
                             </div>
                         </div>
                     </div>
@@ -99,6 +97,23 @@
                                             <th>Jabatan</th>
                                             <th>Nama Lengkap</th>
                                             <th>Bergabung</th>
+                                            <th>Akhir Kontrak</th>
+                                            <th>Email</th>
+                                            <th>Nomor KTP</th>
+                                            <th>NUPTK</th>
+                                            <th>Tempat Lahir</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Pendidikan Terakhir</th>
+                                            <th>Gol Darah</th>
+                                            <th>Alamat</th>
+                                            <th>Status</th>
+                                            <th>Nomor HP</th>
+                                            <th>Nama Ibu Kandung</th>
+                                            <th>Nama Pasangan</th>
+                                            <th>Nama Anak</th>
+                                            <th>Dibuat Pada</th>
+                                            <th>Diubah Pada</th>
                                             @if (auth()->getDefaultDriver() == 'web')
                                                 <th>Aksi</th>
                                             @endif
@@ -144,8 +159,8 @@
 
             var table = $('#employeeTable').DataTable({
 
-                // responsive: true,
-                // processing: true,
+                responsive: true,
+                processing: true,
                 // serverSide: true,
                 ajax: {
                     url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}",
@@ -164,9 +179,6 @@
                         extend: 'excel',
                         text: 'Excel',
                         className: 'btn btn-primary d-none',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
-                        }
                     },
                     {
                         extend: 'pdf',
@@ -214,6 +226,76 @@
                         data: 'join_date',
                         name: 'join_date'
                     },
+                    {
+                        data: 'end_date',
+                        name: 'end_date'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'id_card',
+                        name: 'id_card'
+                    },
+                    {
+                        data: 'education_personnel_number',
+                        name: 'education_personnel_number'
+                    },
+                    {
+                        data: 'birth_place',
+                        name: 'birth_place'
+                    },
+                    {
+                        data: 'birth_date',
+                        name: 'birth_date'
+                    },
+                    {
+                        data: 'gender',
+                        name: 'gender',
+
+                    },
+                    {
+                        data: 'education',
+                        name: 'education'
+                    },
+                    {
+                        data: 'blood_type',
+                        name: 'blood_type'
+                    },
+                    {
+                        data: 'address',
+                        name: 'address'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
+                        data: 'phone_number',
+                        name: 'phone_number'
+                    },
+                    {
+                        data: 'mother_name',
+                        name: 'mother_name'
+                    },
+                    {
+                        data: 'partner_name',
+                        name: 'partner_name'
+                    },
+                    {
+                        data: 'children_name',
+                        name: 'children_name'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at'
+                    }, 
+
                     @if (auth()->getDefaultDriver() == 'web')
                         {
                             data: 'action',
@@ -222,6 +304,16 @@
                             searchable: false
                         },
                     @endif
+                ],
+                columnDefs: [
+                    {
+                        targets: [0, 1, 2, 3, 4, 5],
+                        visible: true
+                    },
+                    {
+                        targets: '_all',
+                        visible: false
+                    }
                 ],
                 language: {
                     "emptyTable": "Tidak ada data yang tersedia pada tabel ini",
