@@ -5,154 +5,6 @@
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css"/>
-
-    <style>
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            border-radius: 0.25rem;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-            color: #fff;
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            color: #0d6efd;
-            background-color: #e9ecef;
-            border-color: #dee2e6;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-            color: #6c757d;
-            cursor: default;
-            background-color: #fff;
-            border-color: #dee2e6;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:first-child {
-            margin-left: 0;
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:last-child {
-            border-top-right-radius: 0.25rem;
-            border-bottom-right-radius: 0.25rem;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .ellipsis {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            border-radius: 0.25rem;
-            color: #6c757d;
-            cursor: default;
-            background-color: #fff;
-            border-color: #dee2e6;
-        }
-
-        .dataTables_wrapper .dataTables_info {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
-
-        .dataTables_wrapper .dataTables_length {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
-
-        .dataTables_wrapper .dataTables_length select {
-            width: 75px;
-            display: inline-block;
-        }
-
-        .dataTables_wrapper .dataTables_filter {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
-
-        .dataTables_wrapper .dataTables_filter input {
-            margin-left: 0.5rem;
-            display: inline-block;
-            width: auto;
-            vertical-align: middle;
-        }
-
-        .dataTables_wrapper .dataTables_processing {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 40px;
-            margin-left: -50%;
-            margin-top: -25px;
-            padding-top: 20px;
-            text-align: center;
-            font-size: 1.2em;
-            background-color: white;
-            background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(50%, rgba(255, 255, 255, 0.9)), color-stop(100%, rgba(255, 255, 255, 0)));
-            background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0) 100%);
-            background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0) 100%);
-            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#00ffffff', GradientType=1);
-        }
-
-        .dataTables_wrapper .dataTables_scroll {
-            clear: both;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table {
-            margin-bottom: 0 !important;
-            margin-top: 0 !important;
-            border-top: 0;
-            border-left: 0;
-            border-right: 0;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable td {
-            vertical-align: middle;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable thead th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable thead td {
-            border-bottom-width: 0;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable tbody th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable tbody td {
-            border-top-width: 0;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable.no-footer {
-            border-bottom-width: 0;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable.no-footer tbody th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable.no-footer tbody td {
-            border-bottom-width: 0;
-        }
-
-        .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable.no-footer tr:last-child th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody table.dataTable.no-footer tr:last-child td {
-            border-bottom-width: 0;
-        }
-
-    </style>
-
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -176,11 +28,11 @@
         </div>
     @else
         <div class="row g-4 mb-3">
-            <div class="col-sm-auto">
+            {{-- <div class="col-sm-auto">
                 <div>
                     <a href="{{ route('employee.employees.show', auth()->user()->id) }}" class="btn btn-primary add-btn" id="create-btn"><i class="ri-eye-line align-bottom me-1"></i> Detail Pegawai Saya</a>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-sm-auto ms-auto">
                 <div class="hstack gap-2">
                     <div class="float-end">
@@ -189,8 +41,11 @@
                                 <i class="ri-file-download-line align-middle me-1"></i> Export
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'xlsx']) }}" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a>
-                                <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'pdf']) }}" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a>
+                                <a class="dropdown-item" href="javascript:void(0)" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a>
+                                <a class="dropdown-item" href="javascript:void(0)" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a>
+                                <a class="dropdown-item" href="javascript:void(0)" id="export-print"><i class="ri-printer-line align-middle me-1"></i> Print</a>
+                                {{-- <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'xlsx']) }}" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a> --}}
+                                {{-- <a class="dropdown-item" href="{{ route('employee.employees.export', ['type' => 'pdf']) }}" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a> --}}
                             </div>
                         </div>
                     </div>
@@ -274,7 +129,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.colVis.min.js"></script>
-    {{-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.flash.min.js"></script> --}}
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.flash.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -301,7 +156,30 @@
                 },
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'pdf', 'print'
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        className: 'btn btn-primary d-none',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        className: 'btn btn-primary d-none',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-primary d-none',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    }
                 ],
                 columns: [
                     {
@@ -650,6 +528,21 @@
 
             table.column(2).search('').draw();
             $('#filter-employee').parent().find('[data-bs-dismiss="offcanvas"]').click();
+        });
+
+        // Make #export-excel button trigger datatable export excel
+        $('#export-excel').on('click', function() {
+            $('#employeeTable').DataTable().button(0).trigger();
+        });
+
+        // Make #export-pdf button trigger datatable export pdf
+        $('#export-pdf').on('click', function() {
+            $('#employeeTable').DataTable().button(1).trigger();
+        });
+
+        // Make #export-print button trigger datatable export print
+        $('#export-print').on('click', function() {
+            $('#employeeTable').DataTable().button(2).trigger();
         });
 
     </script>
