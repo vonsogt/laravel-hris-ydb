@@ -323,7 +323,14 @@
                             if (data == null) {
                                 return '';
                             }
-                            return data.split(',').join(', ');
+                            // Make object to text with comma
+                            var children = '';
+                            for (var i = 0; i < data.length; i++) {
+                                children += data[i].name + ', ';
+                            }
+                            // Remove last comma
+                            children = children.slice(0, -2);
+                            return children;
                         }
                     },
                     // Format date created_at, updated_at
