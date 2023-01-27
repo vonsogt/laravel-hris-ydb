@@ -144,9 +144,9 @@
 
             var table = $('#employeeTable').DataTable({
 
-                responsive: true,
-                processing: true,
-                serverSide: true,
+                // responsive: true,
+                // processing: true,
+                // serverSide: true,
                 ajax: {
                     url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}",
                     data: function (d) {
@@ -154,6 +154,10 @@
                         d.year = "{{ request()->tahun }}";
                     }
                 },
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
                 dom: 'Bfrtip',
                 buttons: [
                     {
