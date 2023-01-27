@@ -129,8 +129,7 @@
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Email</label>
-                                                    <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', '') }}" id="username" name="email" placeholder="Masukkan email">
-                                                    @error('email')
+                                                    <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', '') }}" id="username" name="email" placeholder="cth: admin@email.com">                                                    @error('email')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
