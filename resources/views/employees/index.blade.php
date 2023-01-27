@@ -151,6 +151,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -313,7 +314,31 @@
                     {
                         targets: '_all',
                         visible: false
-                    }
+                    },
+                    // Separate children_name to text with comma
+                    {
+                        targets: 20,
+                        render: function (data, type, row) {
+                            // Check if data is null
+                            if (data == null) {
+                                return '';
+                            }
+                            return data.split(',').join(', ');
+                        }
+                    },
+                    // Format date created_at, updated_at
+                    {
+                        targets: 21,
+                        render: function (data, type, row) {
+                            return moment(data).format('DD MMMM YYYY');
+                        }
+                    },
+                    {
+                        targets: 22,
+                        render: function (data, type, row) {
+                            return moment(data).format('DD MMMM YYYY');
+                        }
+                    },
                 ],
                 language: {
                     "emptyTable": "Tidak ada data yang tersedia pada tabel ini",
