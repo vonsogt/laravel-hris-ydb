@@ -518,14 +518,14 @@
             var employeeName = $(button).attr('data-employee-name');
             var startDate = $(button).attr('data-start-date');
             var endDate = $(button).attr('data-end-date');
-            var confirmText = 'Apakah Anda ingin <span class="fw-bold text-danger">menolak</span> cuti ' + employeeName + ' pada tanggal ' + startDate + ' sampai ' + endDate + '?';
-                confirmButtonText = 'Tolak!';
+            var confirmText = 'Apakah Anda ingin <span class="fw-bold text-danger">menolak</span> cuti ' + employeeName + ' pada tanggal <span class="fw-bold text-danger">' + startDate + '</span> sampai <span class="fw-bold text-danger">' + endDate + '</span>?';
+                confirmButtonText = 'Tolak';
 
             console.log(employeeName);
 
             if (value == 1) {
-                confirmText = 'Apakah Anda ingin <span class="fw-bold text-success">menyetujui</span> cuti ' + employeeName + ' pada tanggal ' + startDate + ' sampai ' + endDate + '?';
-                confirmButtonText = 'Setujui!'
+                confirmText = 'Apakah Anda ingin <span class="fw-bold text-success">menyetujui</span> cuti ' + employeeName + ' pada tanggal <span class="fw-bold text-success">' + startDate + '</span> sampai <span class="fw-bold text-success">' + endDate + '</span>?';
+                confirmButtonText = 'Setujui'
             }
 
             Swal.fire({

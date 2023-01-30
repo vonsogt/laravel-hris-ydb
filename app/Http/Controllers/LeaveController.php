@@ -63,9 +63,13 @@ class LeaveController extends Controller
                 })
                 ->addIndexColumn()
                 ->addColumn('is_approved', function ($row) use ($type) {
-                    if ($type == 'approve') {
+                    if ($type == 'approve' && auth()->getDefaultDriver() == 'api' && auth()->user()->position == 'Kepala HRD') {
+
+                        $start_date = Carbon::make($row->start_date)->format('d M Y');
+                        $end_date = Carbon::make($row->end_date)->format('d M Y');
+
                         return '<a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="0" data-employee-name="' . $row->employee->name . '" data-start-date="' . $row->start_date . '" data-end-date="' . $row->end_date . '">Tolak</a> ' .
-                            '<a href="javascript:void(0)" class="btn btn-sm btn-success" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="1" data-employee-name="' . $row->employee->name . '" data-start-date="' . $row->start_date . '" data-end-date="' . $row->end_date . '">Setujui</a>';
+                            '<a href="javascript:void(0)" class="btn btn-sm btn-success" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="1" data-employee-name="' . $row->employee->name . '" data-start-date="' . $start_date . '" data-end-date="' . $end_date . '">Setujui</a>';
                     } else {
                         if ($row->is_approved !== null) {
                             if ($row->is_approved == 1) {
