@@ -515,16 +515,21 @@
 
             var route = $(button).attr('data-route');
             var value = $(button).attr('data-value');
-            var confirmText = 'Apakah Anda ingin <span class="fw-bold text-danger">menolak</span> cuti ini?',
+            var employeeName = $(button).attr('data-employee-name');
+            var startDate = $(button).attr('data-start-date');
+            var endDate = $(button).attr('data-end-date');
+            var confirmText = 'Apakah Anda ingin <span class="fw-bold text-danger">menolak</span> cuti ' + employeeName + ' pada tanggal ' + startDate + ' sampai ' + endDate + '?';
                 confirmButtonText = 'Tolak!';
 
+            console.log(employeeName);
+
             if (value == 1) {
-                confirmText = 'Apakah Anda ingin <span class="fw-bold text-success">menyetujui</span> cuti ini?'
+                confirmText = 'Apakah Anda ingin <span class="fw-bold text-success">menyetujui</span> cuti ' + employeeName + ' pada tanggal ' + startDate + ' sampai ' + endDate + '?';
                 confirmButtonText = 'Setujui!'
             }
 
             Swal.fire({
-                title: 'Apakah Anda yakin?',
+                // title: 'Apakah Anda yakin?',
                 html: confirmText,
                 icon: 'warning',
                 showCancelButton: true,
