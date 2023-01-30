@@ -50,7 +50,7 @@
                                         <th>ID</th>
                                         <th>Keterangan</th>
                                         <th>Nama</th>
-                                        <th>NIY</th>
+                                        {{-- <th>NIY</th> --}}
                                         <th>Pengajuan</th>
                                         <th>Mulai</th>
                                         <th>Selesai</th>
@@ -94,6 +94,7 @@
                                         <tr>
                                             <td colspan="2" class="text-center">Tidak ada data</td>
                                         </tr>
+                                        <div class="row" id="description"></div>
                                     </tbody>
                                 </table>
                             </div>
@@ -126,13 +127,36 @@
             var url = '/uploads/images/cuti/'
             var title = 'Alasan Cuti : ' + button.data('reason')
             var files = button.data('files')
+            var description = button.data('description')
+            var niy = button.data('niy')
+            var name = button.data('name')
 
             // explode files to array seperated by comma
             files = files.split(', ')
-            console.log(files)
 
             modal.find('.modal-title').text(title)
             modal.find('#files').empty()
+
+            // Change content .modal-body#description
+            modal.find('#description').empty()
+
+            // Add content to .modal-body#description
+            modal.find('#description').append(`
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Nama</h5>
+                        <p>${name}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>NIY</h5>
+                        <p>${niy}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>Deskripsi</h5>
+                        <p>${description}</p>
+                    </div>
+                </div>
+            `)
 
             if (files.length > 0) {
                 $.each(files, function (index, value) {
@@ -179,10 +203,10 @@
                         data: 'employee_name',
                         name: 'employee_name'
                     },
-                    {
-                        data: 'employee_institution_number',
-                        name: 'employee_institution_number'
-                    },
+                    // {
+                    //     data: 'employee_institution_number',
+                    //     name: 'employee_institution_number'
+                    // },
                     {
                         data: 'submission_date',
                         name: 'submission_date'

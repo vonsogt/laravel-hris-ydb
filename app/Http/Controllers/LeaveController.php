@@ -99,7 +99,7 @@ class LeaveController extends Controller
                     // Check if have files
                     if ($row->files != null) {
                         // popup modal with files
-                        return '<a href="javascript:void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-files" data-files="' . implode(', ', $row->files) . '" data-reason="' . $row->reason . '">Lihat</a>';
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-files" data-files="' . implode(', ', $row->files) . '" data-reason="' . $row->reason . '" data-description="' . $row->description . '" data-niy="' . $row->employee->institution_number . '" data-name="' . $row->employee->name . '">Lihat</a>';
 
                         return implode(', ', $row->files) . '<br>' . $row->reason;
                     }
@@ -214,7 +214,6 @@ class LeaveController extends Controller
      */
     public function update(UpdateLeaveRequest $request, Leave $leaf)
     {
-        dd($request->all());
         $leaf->update($request->all());
 
         return redirect()->route('leaves.index')->with('message', 'Cuti berhasil diubah.');
