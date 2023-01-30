@@ -38,9 +38,9 @@ class LeaveController extends Controller
         if ($request->ajax()) {
 
             $type = $request->type;
-            $data = Leave::select('*')->with(['employee'])->latest('id');
+            $data = Leave::with(['employee'])->latest('id');
 
-            if (auth()->getDefaultDriver() == 'api' && auth()->user()->position != 'Kepala HRD') {
+            if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD') {
                 $data = $data->where('employee_id', auth()->user()->id);
             }
 
@@ -63,7 +63,7 @@ class LeaveController extends Controller
                 })
                 ->addIndexColumn()
                 ->addColumn('is_approved', function ($row) use ($type) {
-                    if ($type == 'approve' && auth()->getDefaultDriver() == 'api' && auth()->user()->position == 'Kepala HRD') {
+                    if ($type == 'approve' && auth()->getDefaultDriver() == 'api' && auth()->user()->position->name == 'Kepala HRD') {
 
                         $start_date = Carbon::make($row->start_date)->format('d M Y');
                         $end_date = Carbon::make($row->end_date)->format('d M Y');
