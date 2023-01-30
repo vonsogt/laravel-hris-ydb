@@ -51,7 +51,7 @@
                         </a>
                     </li> --}}
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs(['leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarPaidLeave">
                             <i class="ri-calendar-2-line"></i> <span>Cuti</span>
@@ -66,7 +66,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('job-assessments.*')) ? 'active' : '' }}" href="{{ route('job-assessments.index') }}">
