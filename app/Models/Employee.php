@@ -102,6 +102,26 @@ class Employee extends Authenticatable implements JWTSubject
         return $this->belongsTo(Position::class);
     }
 
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+
+    public function getRemainingLeaveAttribute()
+    {
+        $count = 0;
+        // Count leave's days that has been approved
+        $approvedDays = $this->leaves()
+            ->whereYear('start_date', now()->year)
+            ->where('is_approved', true);
+
+        foreach ($approvedDays->get() as $day) {
+            $count += $day->days;
+        }
+
+        return 12 - $count;
+    }
+
     public function color()
     {
         $color = $this->position->theme_color;

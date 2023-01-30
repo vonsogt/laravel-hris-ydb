@@ -9,6 +9,7 @@ use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\DataTables;
 
 class LeaveController extends Controller
@@ -36,17 +37,17 @@ class LeaveController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Leave::select('*')->with(['employee'])->latest('id');
-
             $type = $request->type;
-            if ($type == 'approve' || $type == 'pending-approval') {
-                $data = $data->whereNull('is_approve');
-            } else {
-                $data = $data->whereNotNull('is_approve');
-            }
+            $data = Leave::select('*')->with(['employee'])->latest('id');
 
             if (auth()->getDefaultDriver() == 'api') {
                 $data = $data->where('employee_id', auth()->user()->id);
+            }
+
+            if ($type == 'approve' || $type == 'pending-approval') {
+                $data = $data->whereNull('is_approved');
+            } else {
+                $data = $data->whereNotNull('is_approved');
             }
 
             return DataTables::of($data->get())
@@ -61,15 +62,15 @@ class LeaveController extends Controller
                     }
                 })
                 ->addIndexColumn()
-                ->addColumn('is_approve', function ($row) use ($type) {
+                ->addColumn('is_approved', function ($row) use ($type) {
                     if ($type == 'approve') {
                         return '<a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="0">Tolak</a> ' .
                             '<a href="javascript:void(0)" class="btn btn-sm btn-success" onclick="updateEntry(this)" data-route="' . route("leaves.approve", $row->id) . '" data-value="1">Setujui</a>';
                     } else {
-                        if ($row->is_approve !== null) {
-                            if ($row->is_approve == 1) {
+                        if ($row->is_approved !== null) {
+                            if ($row->is_approved == 1) {
                                 return '<button type="button" class="btn btn-success">Disetujui</button>';
-                            } else if ($row->is_approve == 0) {
+                            } else if ($row->is_approved == 0) {
                                 return '<button type="button" class="btn btn-danger">Ditolak</button>';
                             }
                         }
@@ -92,14 +93,19 @@ class LeaveController extends Controller
                     return Carbon::make($row->end_date)->format('d-M-Y');
                 })
                 ->addColumn('range_count', function ($row) {
+                    return $row->days . ' Hari';
+                })
+                ->addColumn('reason', function ($row) {
+                    // Check if have files
+                    if ($row->files != null) {
+                        // popup modal with files
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-files" data-files="' . implode(', ', $row->files) . '" data-reason="' . $row->reason . '">Lihat</a>';
 
-                    // Count difference between start date and end date without sunday
-                    $start = Carbon::make($row->start_date);
-                    $end = Carbon::make($row->end_date);
-                    $count = $start->diffInDaysFiltered(function (Carbon $date) {
-                        return !$date->isSunday();
-                    }, $end) + 1;
-                    return $count . ' Hari';
+                        return implode(', ', $row->files) . '<br>' . $row->reason;
+                    }
+
+
+                    return $row->reason;
                 })
                 // ->addColumn('action', function ($row) {
                 //     $btn = '
@@ -115,7 +121,7 @@ class LeaveController extends Controller
 
                 //     return $btn;
                 // })
-                ->rawColumns(['is_approve', 'action'])
+                ->rawColumns(['is_approved', 'action', 'reason'])
                 ->make(true);
         }
 
@@ -136,8 +142,9 @@ class LeaveController extends Controller
     public function create()
     {
         $employees = Employee::get()->pluck('name', 'id');
+        $remainingLeave = auth()->guard('api')->user()->remainingLeave;
 
-        return view('leaves.create', compact('employees'));
+        return view('leaves.create', compact('employees', 'remainingLeave'));
     }
 
     /**
@@ -148,6 +155,22 @@ class LeaveController extends Controller
      */
     public function store(StoreLeaveRequest $request)
     {
+        if ($attachment = $request->attachment) {
+
+            $fileNameArray = [];
+            foreach ($attachment as $file) {
+                $file = json_decode($file);
+
+                $fileNameArray[] = $file->id . '_' . $file->name;
+                $path = public_path('uploads/images/cuti/');
+
+                File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+                File::put($path . $file->id . '_' . $file->name, base64_decode($file->data));
+            }
+
+            $request->merge(['files' => $fileNameArray]);
+        }
+
         $leave = Leave::create($request->all());
 
         if (auth()->getDefaultDriver() == 'api') {
@@ -211,7 +234,7 @@ class LeaveController extends Controller
     public function approve(Request $request, $id)
     {
         $leave = Leave::findOrFail($id);
-        $leave->is_approve = $request->is_approve;
+        $leave->is_approved = $request->is_approved;
 
         return $leave->save();
     }

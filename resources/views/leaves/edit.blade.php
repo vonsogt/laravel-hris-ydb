@@ -61,19 +61,19 @@
                             <label class="form-label" for="endDateInputdate">Disetujui?</label>
                             <!-- Base Radios -->
                             <div class="form-check mb-2">
-                                <input value="" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault" {{ old('reason', $leave->is_approve ?? '') == null ? 'checked' : '' }}>
+                                <input value="" class="form-check-input" type="radio" name="is_approved" id="flexRadioDefault" {{ old('reason', $leave->is_approved ?? '') == null ? 'checked' : '' }}>
                                 <label class="form-check-label" for="flexRadioDefault">
                                     Menunggu
                                 </label>
                             </div>
                             <div class="form-check mb-2">
-                                <input value="1" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault1" {{ old('reason', $leave->is_approve ?? '') == 1 ? 'checked' : '' }}>
+                                <input value="1" class="form-check-input" type="radio" name="is_approved" id="flexRadioDefault1" {{ old('reason', $leave->is_approved ?? '') == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Setujui
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input value="0" class="form-check-input" type="radio" name="is_approve" id="flexRadioDefault2" {{ old('reason', $leave->is_approve ?? '') == 0 ? 'checked' : '' }}>
+                                <input value="0" class="form-check-input" type="radio" name="is_approved" id="flexRadioDefault2" {{ old('reason', $leave->is_approved ?? '') == 0 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Tolak
                                 </label>

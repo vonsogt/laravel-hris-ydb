@@ -27,6 +27,7 @@ class StoreLeaveRequest extends FormRequest
             'employee_id'   => 'required',
             'start_date'    => 'required|date',
             'end_date'      => 'required|date',
+            'attachment'    => 'required_if:reason,Izin,Sakit',
         ];
     }
 
@@ -43,6 +44,8 @@ class StoreLeaveRequest extends FormRequest
             'start_date.required' => 'Tanggal mulai wajib diisi.',
 
             'end_date.required' => 'Tanggal selesai wajib diisi.',
+
+            'attachment.required_if' => 'File wajib diunggah jika alasan izin atau sakit.',
         ];
     }
 }

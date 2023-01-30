@@ -25,6 +25,13 @@
             <div class="col-sm-auto">
                 <div>
                     <a href="{{ route('employee.leaves.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah cuti</a>
+                    {{-- Add button to curent url with param type=pending-approval --}}
+                    {{-- Check if has param type=pending-approval --}}
+                    @if (request()->has('type') && request()->get('type') == 'pending-approval')
+                        <a href="{{ route('employee.leaves.index') }}" class="btn btn-warning add-btn"> Semua Cuti</a>
+                    @else
+                        <a href="{{ route('employee.leaves.index') . '?type=pending-approval' }}" class="btn btn-warning add-btn"> Menunggu Persetujuan</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -63,6 +70,44 @@
         <!-- end col -->
     </div>
     <!-- end row -->
+
+    {{-- Modal #modal-files --}}
+    <div id="modal-files" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Modal Heading</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama File</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="files">
+                                        <tr>
+                                            <td colspan="2" class="text-center">Tidak ada data</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                </div>
+    
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 @endsection
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
@@ -73,6 +118,42 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+
+        $('#modal-files').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var modal = $(this)
+            var id = button.data('id')
+            var url = '/uploads/images/cuti/'
+            var title = 'Alasan Cuti : ' + button.data('reason')
+            var files = button.data('files')
+
+            // explode files to array seperated by comma
+            files = files.split(', ')
+            console.log(files)
+
+            modal.find('.modal-title').text(title)
+            modal.find('#files').empty()
+
+            if (files.length > 0) {
+                $.each(files, function (index, value) {
+                    modal.find('#files').append(`
+                        <tr>
+                            <td>${value}</td>
+                            <td>
+                                <a href="${url}/${value}" class="btn btn-primary btn-sm" target="_blank">Lihat</a>
+                            </td>
+                        </tr>
+                    `)
+                })
+            } else {
+                modal.find('#files').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada data</td>
+                    </tr>
+                `)
+            }
+        })
+
         $(function() {
 
             var table = $('#leaveTable').DataTable({
@@ -91,8 +172,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'is_approve',
-                        name: 'is_approve'
+                        data: 'is_approved',
+                        name: 'is_approved'
                     },
                     {
                         data: 'employee_name',
@@ -436,7 +517,7 @@
                         type: "POST",
                         url: route,
                         data: {
-                            'is_approve': value
+                            'is_approved': value
                         },
                         success: function(response) {
                             if (response == 1) {

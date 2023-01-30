@@ -126,6 +126,12 @@
                     </li> --}}
 
                     <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="{{ route('employee.leaves.index') }}">
+                            <i class="ri-calendar-2-line"></i> <span>Cuti</span>
+                        </a>
+                    </li>
+
+                    {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarPaidLeave">
                             <i class="ri-calendar-2-line"></i> <span>Cuti</span>
@@ -140,7 +146,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('employee.job-assessments.*')) ? 'active' : '' }}" href="{{ route('employee.job-assessments.index') }}">
