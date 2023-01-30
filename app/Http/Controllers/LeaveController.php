@@ -40,7 +40,7 @@ class LeaveController extends Controller
             $type = $request->type;
             $data = Leave::select('*')->with(['employee'])->latest('id');
 
-            if (auth()->getDefaultDriver() == 'api') {
+            if (auth()->getDefaultDriver() == 'api' && auth()->user()->position != 'Kepala HRD') {
                 $data = $data->where('employee_id', auth()->user()->id);
             }
 
