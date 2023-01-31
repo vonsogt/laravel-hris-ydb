@@ -136,10 +136,10 @@ class JobAssessmentController extends Controller
     public function create()
     {
         if (auth()->getDefaultDriver() == 'api') {
-            if (auth()->user()->position->name != 'Kepala Sekolah' && auth()->user()->position->name != 'Prof. Deontae Roberts') {
+            if (auth()->user()->position->name != 'Kepala Sekolah' && auth()->user()->position->name != 'Kepala HRD') {
                 return abort(404);
             }
-            if (auth()->user()->position->name == 'Prof. Deontae Roberts') {
+            if (auth()->user()->position->name == 'Kepala HRD') {
                 $employees = Employee::whereHas('position', function ($query) {
                     $query->whereIn('name', ['Kepala Sekolah', 'Staff HRD']);
                 })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');

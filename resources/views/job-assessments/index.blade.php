@@ -24,7 +24,7 @@
     @else
         {{-- Show button if auth()->user()->position->name == "Kepala Sekolah" --}}
         <div class="row g-4 mb-3">
-            @if (auth()->user()->position->name == "Kepala Sekolah" || auth()->user()->position->name == "Prof. Deontae Roberts")
+            @if (auth()->user()->position->name == "Kepala Sekolah" || auth()->user()->position->name == "Kepala HRD")
                 <div class="col-sm-auto">
                     <div>
                         <a href="{{ route('employee.job-assessments.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah penilaian kerja</a>
@@ -32,7 +32,7 @@
                 </div>
             @endif
 
-            @if (auth()->user()->position->name == "Prof. Deontae Roberts")
+            @if (auth()->user()->position->name == "Kepala HRD")
                 <div class="col-sm-auto ms-auto">
                     <div class="hstack gap-2">
                         <div class="float-end">
