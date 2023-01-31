@@ -79,7 +79,7 @@ class JobAssessmentController extends Controller
                         </div>
                     ';
 
-                    if (auth()->getDefaultDriver() == 'api')
+                    if (auth()->getDefaultDriver() == 'api') {
                         $btn = '
                             <div class="d-flex gap-2">
                                 <div class="show">
@@ -87,6 +87,14 @@ class JobAssessmentController extends Controller
                                 </div>
                             </div>
                         ';
+                        if (auth()->user()->position->name == 'Kepala Sekolah') {
+                            $btn += '
+                                <div class="edit">
+                                    <a href="' . route('employee.job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                </div>
+                            ';
+                        }
+                    }
 
 
                     return $btn;
@@ -106,8 +114,7 @@ class JobAssessmentController extends Controller
     public function create()
     {
         if (auth()->getDefaultDriver() == 'api') {
-            // Abort if institution name is not "Kepala Sekolah"
-            if (auth()->user()->institution->name != 'Kepala Sekolah') {
+            if (auth()->user()->position->name != 'Kepala Sekolah') {
                 return abort(404);
             }
             $employees = Employee::where('institution_id', auth()->user()->institution_id)->pluck('name', 'id');

@@ -92,16 +92,25 @@ class EmployeeController extends Controller
                     return $employee->position->name;
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '
-                        <div class="d-flex gap-2">
-                            <div class="edit">
-                                <a href="' . route('employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                    if (auth()->getDefaultDriver() == 'web') {
+                        $btn = '
+                            <div class="d-flex gap-2">
+                                <div class="edit">
+                                    <a href="' . route('employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                </div>
+                            </div>';
+                    } else {
+                        $btn = '
+                            <div class="d-flex gap-2">
+                                <div class="edit">
+                                    <a href="' . route('employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                </div>
+                                <div class="remove">
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("employees.destroy", [$row->id]) . '">Hapus</a>
+                                </div>
                             </div>
-                            <div class="remove">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("employees.destroy", [$row->id]) . '">Hapus</a>
-                            </div>
-                        </div>
-                    ';
+                        ';
+                    }
 
                     return $btn;
                 })
