@@ -87,7 +87,7 @@ class JobAssessmentController extends Controller
                                 </div>
                             </div>
                         ';
-                        
+
                         if (auth()->user()->position->name == 'Kepala Sekolah') {
                             $btn = '
                                 <div class="d-flex gap-2">
@@ -122,7 +122,10 @@ class JobAssessmentController extends Controller
             if (auth()->user()->position->name != 'Kepala Sekolah') {
                 return abort(404);
             }
-            $employees = Employee::where('institution_id', auth()->user()->institution_id)->pluck('name', 'id');
+            // Get employees from the same institution except the logged in employee
+            $employees = Employee::where('institution_id', auth()->user()->institution_id)
+                ->where('id', '!=', auth()->user()->id)
+                ->pluck('name', 'id');
         } else {
             $employees = Employee::get()->pluck('name', 'id');
         }
@@ -168,7 +171,17 @@ class JobAssessmentController extends Controller
      */
     public function edit(JobAssessment $jobAssessment)
     {
-        $employees = Employee::get()->pluck('name', 'id');
+        if (auth()->getDefaultDriver() == 'api') {
+            if (auth()->user()->position->name != 'Kepala Sekolah') {
+                return abort(404);
+            }
+            // Get employees from the same institution except the logged in employee
+            $employees = Employee::where('institution_id', auth()->user()->institution_id)
+                ->where('id', '!=', auth()->user()->id)
+                ->pluck('name', 'id');
+        } else {
+            $employees = Employee::get()->pluck('name', 'id');
+        }
 
         return view('job-assessments.edit', compact('jobAssessment', 'employees'));
     }
