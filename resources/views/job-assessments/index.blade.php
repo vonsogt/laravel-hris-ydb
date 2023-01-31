@@ -139,7 +139,7 @@
             var table = $('#JobAssessmentTable').DataTable({
 
                 processing: true,
-                serverSide: true,
+                // serverSide: true,
                 ajax: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.index') : route('job-assessments.index') }}",
                 dom: 'Bfrtip',
                 buttons: [
