@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-        @elseif (auth()->user()->position->name == "Prof. Deontae Roberts")
+        @elseif (auth()->user()->position->name == "Kepala HRD")
             <div class="row g-4 mb-3">
                 <div class="col-sm-auto ms-auto">
                     <div class="hstack gap-2">
