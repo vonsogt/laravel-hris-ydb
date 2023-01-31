@@ -87,15 +87,20 @@ class JobAssessmentController extends Controller
                                 </div>
                             </div>
                         ';
+                        
                         if (auth()->user()->position->name == 'Kepala Sekolah') {
-                            $btn += '
+                            $btn = '
+                                <div class="d-flex gap-2">
+                                    <div class="show">
+                                        <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                    </div>
+                                </div>
                                 <div class="edit">
                                     <a href="' . route('employee.job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
                                 </div>
                             ';
                         }
                     }
-
 
                     return $btn;
                 })
