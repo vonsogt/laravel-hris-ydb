@@ -4,6 +4,7 @@
 @endsection
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css"/>
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -30,8 +31,55 @@
                     </div>
                 </div>
             </div>
+        @elseif (auth()->user()->position->name == "Prof. Deontae Roberts")
+            <div class="row g-4 mb-3">
+                <div class="col-sm-auto ms-auto">
+                    <div class="hstack gap-2">
+                        <div class="float-end">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ri-file-download-line align-middle me-1"></i> Export
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="javascript:void(0)" id="export-excel"><i class="ri-file-excel-2-line align-middle me-1"></i> Excel</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" id="export-pdf"><i class="ri-file-pdf-line align-middle me-1"></i> PDF</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" id="export-print"><i class="ri-printer-line align-middle me-1"></i> Print</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Fliters</button>
+                    </div>
+                </div>
+            </div>
         @endif
     @endif
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header bg-light">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter Penilaian Kerja</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <!--end offcanvas-header-->
+        <form id="filter-job-assessment" action="" class="d-flex flex-column justify-content-end h-100">
+            <div class="offcanvas-body">
+                <div class="mb-4">
+                    <label for="filter-by-" class="form-label text-muted text-uppercase fw-semibold mb-3">Lembaga</label>
+                    <select class="form-select mb-3" id="filter-by-institution" aria-label="Default select example">
+                        <option selected="" disabled>Pilih Lembaga</option>
+                        @foreach ($institutionOptions as $key => $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <!--end offcanvas-body-->
+            <div class="offcanvas-footer border-top p-3 text-center hstack gap-2">
+                <a href="javascript:void(0)" id="clearFilter" class="btn btn-danger w-100">Hapus Filter</a>
+                <button type="submit" class="btn btn-success w-100">Terapkan Filter</button>
+            </div>
+            <!--end offcanvas-footer-->
+        </form>
+    </div>
 
     <div class="row">
         <div class="col-lg-12">
@@ -70,6 +118,19 @@
     <!-- Datatables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
 
+    <!-- Datatables Buttons -->
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -80,6 +141,33 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.index') : route('job-assessments.index') }}",
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        className: 'btn btn-primary d-none',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        className: 'btn btn-primary d-none',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-primary d-none',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    }
+                ],
                 columns: [
                     {
                         data: 'id',
@@ -387,6 +475,60 @@
                 }
             })
         }
+
+        // Filters
+        $('#filter-job-assessment').on('submit', function(e) {
+            e.preventDefault();
+
+            // Get value from #filter-by-institution
+            var institution = $('#filter-by-institution').val();
+
+            // Validate if at least one filter is selected
+            if (institution == null) {
+                Swal.fire({
+                    html: 'Pilih minimal satu filter',
+                    showCancelButton: true,
+                    showConfirmButton: false,
+                    cancelButtonClass: 'btn btn-primary w-xs mb-1',
+                    cancelButtonText: 'Tutup',
+                    buttonsStyling: false,
+                    showCloseButton: true
+                })
+                return;
+            }
+
+            // Filter datatable
+            var table = $('#JobAssessmentTable').DataTable();
+            table.column(3).search(institution).draw();
+
+            $('#filter-job-assessment').parent().find('[data-bs-dismiss="offcanvas"]').click();
+
+        });
+
+        $("#clearFilter").on('click', function() {
+            var table = $('#JobAssessmentTable').DataTable();
+
+            // Select the first option in #filter-by-institution
+            $('#filter-by-institution').val($('#filter-by-institution option:first').val());
+
+            table.column(3).search('').draw();
+            $('#filter-job-assessment').parent().find('[data-bs-dismiss="offcanvas"]').click();
+        });
+
+        // Make #export-excel button trigger datatable export excel
+        $('#export-excel').on('click', function() {
+            $('#JobAssessmentTable').DataTable().button(0).trigger();
+        });
+
+        // Make #export-pdf button trigger datatable export pdf
+        $('#export-pdf').on('click', function() {
+            $('#JobAssessmentTable').DataTable().button(1).trigger();
+        });
+
+        // Make #export-print button trigger datatable export print
+        $('#export-print').on('click', function() {
+            $('#JobAssessmentTable').DataTable().button(2).trigger();
+        });
     </script>
 
     <script>

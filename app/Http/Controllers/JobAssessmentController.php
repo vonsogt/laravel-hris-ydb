@@ -6,6 +6,7 @@ use App\Models\JobAssessment;
 use App\Http\Requests\StoreJobAssessmentRequest;
 use App\Http\Requests\UpdateJobAssessmentRequest;
 use App\Models\Employee;
+use App\Models\Institution;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -122,7 +123,9 @@ class JobAssessmentController extends Controller
                 ->make(true);
         }
 
-        return view('job-assessments.index');
+        $institutionOptions = Institution::get()->pluck('name', 'id');
+
+        return view('job-assessments.index', compact('institutionOptions'));
     }
 
     /**
