@@ -68,11 +68,13 @@
                         </div>
                     </li> --}}
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->routeIs('job-assessments.*')) ? 'active' : '' }}" href="{{ route('job-assessments.index') }}">
-                            <i class="ri-file-text-line"></i> <span>Penilaian Kerja</span>
-                        </a>
-                    </li>
+                    @if (auth()->getDefaultDriver() == 'api')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link {{ (request()->routeIs('job-assessments.*')) ? 'active' : '' }}" href="{{ route('job-assessments.index') }}">
+                                <i class="ri-file-text-line"></i> <span>Penilaian Kerja</span>
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('decrees.*')) ? 'active' : '' }}" href="{{ route('decrees.index') }}">
