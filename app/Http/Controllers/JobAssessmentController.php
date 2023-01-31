@@ -141,7 +141,7 @@ class JobAssessmentController extends Controller
             }
             if (auth()->user()->position->name == 'Kepala HRD') {
                 $employees = Employee::whereHas('position', function ($query) {
-                    $query->whereIn('name', ['Kepala Sekolah', 'Staff HRD']);
+                    $query->whereIn('name', ['Kepala Sekolah', 'Staf HRD']);
                 })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');
             } else {
                 // Get employees from the same institution except the logged in employee
