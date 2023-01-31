@@ -71,7 +71,7 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     ]);
 
     Route::resource('job-assessments', JobAssessmentController::class)->except([
-        'create', 'store', 'edit', 'update', 'destroy'
+        'store', 'edit', 'update', 'destroy'
     ]);
 
     Route::resource('decrees', DecreeController::class)->except([

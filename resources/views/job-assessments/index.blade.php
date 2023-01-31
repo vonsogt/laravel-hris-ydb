@@ -20,6 +20,17 @@
                 </div>
             </div>
         </div>
+    @else
+        {{-- Show button if auth()->user()->position->name == "Kepala Sekolah" --}}
+        @if (auth()->user()->position->name == "Kepala Sekolah")
+            <div class="row g-4 mb-3">
+                <div class="col-sm-auto">
+                    <div>
+                        <a href="{{ route('employee.job-assessments.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah penilaian kerja</a>
+                    </div>
+                </div>
+            </div>
+        @endif
     @endif
 
     <div class="row">

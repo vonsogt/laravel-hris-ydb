@@ -11,7 +11,7 @@
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
-                <a href="{{ route('job-assessments.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke penilaian kerja</a>
+                <a href="{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.index') : route('job-assessments.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke penilaian kerja</a>
             </div>
         </div>
     </div>
@@ -31,6 +31,13 @@
                 @csrf
                 <div class="card">
                     <div class="card-body">
+                        @if (auth()->getDefaultDriver() == 'api')
+                            <div class="mb-3">
+                                <label class="form-label" for="name-input">Nama Lembaga</label>
+                                <input type="text" class="form-control" value="{{ auth()->user()->institution->name }}" disabled>
+                            </div>
+                        @endif
+
                         <div class="mb-3">
                             <label class="form-label" for="name-input">Pegawai</label>
                             <select name="employee_id" class="form-control" data-choices name="choices-single-default" id="choices-single-default">

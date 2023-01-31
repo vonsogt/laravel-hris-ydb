@@ -105,7 +105,15 @@ class JobAssessmentController extends Controller
      */
     public function create()
     {
-        $employees = Employee::get()->pluck('name', 'id');
+        if (auth()->getDefaultDriver() == 'api') {
+            // Abort if institution name is not "Kepala Sekolah"
+            if (auth()->user()->institution->name != 'Kepala Sekolah') {
+                return abort(404);
+            }
+            $employees = Employee::where('institution_id', auth()->user()->institution_id)->pluck('name', 'id');
+        } else {
+            $employees = Employee::get()->pluck('name', 'id');
+        }
 
         return view('job-assessments.create', compact('employees'));
     }
