@@ -23,16 +23,16 @@
         </div>
     @else
         {{-- Show button if auth()->user()->position->name == "Kepala Sekolah" --}}
-        @if (auth()->user()->position->name == "Kepala Sekolah")
-            <div class="row g-4 mb-3">
+        <div class="row g-4 mb-3">
+            @if (auth()->user()->position->name == "Kepala Sekolah" || auth()->user()->position->name == "Prof. Deontae Roberts")
                 <div class="col-sm-auto">
                     <div>
                         <a href="{{ route('employee.job-assessments.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah penilaian kerja</a>
                     </div>
                 </div>
-            </div>
-        @elseif (auth()->user()->position->name == "Kepala HRD")
-            <div class="row g-4 mb-3">
+            @endif
+
+            @if (auth()->user()->position->name == "Prof. Deontae Roberts")
                 <div class="col-sm-auto ms-auto">
                     <div class="hstack gap-2">
                         <div class="float-end">
@@ -50,8 +50,10 @@
                         <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Fliters</button>
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
+
+        
     @endif
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
