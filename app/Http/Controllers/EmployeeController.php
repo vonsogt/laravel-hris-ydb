@@ -192,7 +192,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        if (auth()->getDefaultDriver() == 'api') {
+        if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD') {
             if ($employee->id != auth()->user()->id) {
                 return abort(404);
             }
