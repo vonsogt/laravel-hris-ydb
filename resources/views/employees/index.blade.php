@@ -619,7 +619,7 @@
             var route = $(button).attr('data-route');
 
             Swal.fire({
-                title: 'Apakah Anda yakin?',
+                // title: 'Apakah Anda yakin?',
                 text: "Apakah Anda yakin ingin menonaktifkan pegawai ini?",
                 icon: 'warning',
                 showCancelButton: true,
