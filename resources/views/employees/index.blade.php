@@ -308,7 +308,7 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     }, 
-                    @if (auth()->getDefaultDriver() == 'web')
+                    @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD')
                         {
                             data: 'action',
                             name: 'action',
@@ -319,7 +319,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web') 23 @endif],
+                        targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD') 23 @endif],
                         visible: true
                     },
                     {
