@@ -57,7 +57,7 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
 
     Route::get('employees/export/{type}', [EmployeeController::class, 'export'])->name('employees.export');
     Route::resource('employees', EmployeeController::class)->except([
-        'create', 'store', 'destroy'
+        'destroy'
     ]);
 
     Route::get('salaries/download-pdf/{salary}', [SalaryController::class, 'downloadPdf'])->name('salaries.download_pdf');
