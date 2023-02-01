@@ -185,7 +185,7 @@ class JobAssessmentController extends Controller
     public function show(JobAssessment $jobAssessment)
     {
         if (auth()->getDefaultDriver() == 'api') {
-            if (auth()->user()->position->name == 'Kepala Sekolah' && auth()->user()->position->name == 'Kepala HRD' && auth()->user()->position->name == 'Ketua Yayasan') {
+            if (auth()->user()->position->name == 'Kepala Sekolah' || auth()->user()->position->name == 'Kepala HRD' || auth()->user()->position->name == 'Ketua Yayasan') {
                 return view('job-assessments.show', compact('jobAssessment'));
             } else {
                 if ($jobAssessment->employee->id != auth()->user()->id) {
