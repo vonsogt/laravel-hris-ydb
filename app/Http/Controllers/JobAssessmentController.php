@@ -136,7 +136,7 @@ class JobAssessmentController extends Controller
     public function create()
     {
         if (auth()->getDefaultDriver() == 'api') {
-            if (auth()->user()->position->name != 'Kepala Sekolah' && auth()->user()->position->name != 'Kepala HRD') {
+            if (auth()->user()->position->name != 'Kepala Sekolah' && auth()->user()->position->name != 'Kepala HRD' && auth()->user()->position->name != 'Ketua Yayasan') {
                 return abort(404);
             }
             if (auth()->user()->position->name == 'Kepala HRD') {
