@@ -39,6 +39,8 @@ class Employee extends Authenticatable implements JWTSubject
         'children_name',
         'photo',
         'password',
+        'deactive_reason',
+        'deactive_at',
     ];
 
     /**
@@ -58,6 +60,14 @@ class Employee extends Authenticatable implements JWTSubject
     protected $casts = [
         'children'  => 'array'
     ];
+
+    // Global scope using scopeActive
+    protected static function booted()
+    {
+        static::addGlobalScope('active', function ($builder) {
+            $builder->active();
+        });
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -127,5 +137,17 @@ class Employee extends Authenticatable implements JWTSubject
         $color = $this->position->theme_color;
 
         return $color;
+    }
+
+    // Scope employee where null deactive_at
+    public function scopeActive($query)
+    {
+        return $query->whereNull('deactive_at');
+    }
+
+    // Scope employee where not null deactive_at
+    public function scopeDeactive($query)
+    {
+        return $query->whereNotNull('deactive_at');
     }
 }

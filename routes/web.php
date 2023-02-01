@@ -56,6 +56,7 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     Route::get('/', [HomeController::class, 'root'])->name('home');
 
     Route::get('employees/export/{type}', [EmployeeController::class, 'export'])->name('employees.export');
+    Route::post('employees/non-active/{id}', [EmployeeController::class, 'nonActive'])->name('employees.non-active');
     Route::resource('employees', EmployeeController::class);
 
     Route::get('salaries/download-pdf/{salary}', [SalaryController::class, 'downloadPdf'])->name('salaries.download_pdf');

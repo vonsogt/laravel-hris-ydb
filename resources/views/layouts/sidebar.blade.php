@@ -76,7 +76,7 @@
                         </li>
                     @endif
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('decrees.*')) ? 'active' : '' }}" href="{{ route('decrees.index') }}">
                             <i class="ri-file-copy-line"></i> <span>SK</span>
                         </a>
@@ -86,23 +86,18 @@
                         <a class="nav-link menu-link {{ (request()->routeIs('appreciations.*')) ? 'active' : '' }}" href="{{ route('appreciations.index') }}">
                             <i class="ri-trophy-line"></i> <span>Penghargaan</span>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs(['positions.*']) ? 'active' : '' }}" href="#sidebarOtherMenu" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarOtherMenu">
-                            <i class="ri-folder-open-line"></i> <span>Menu Lain</span>
+                        <a class="nav-link menu-link {{ (request()->routeIs('positions.*')) ? 'active' : '' }}" href="{{ route('positions.index') }}">
+                            <i class="ri-stack-line"></i> <span>Data Jabatan</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->routeIs(['positions.*', 'institutions.*']) ? 'show' : '' }}" id="sidebarOtherMenu">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('positions.index') }}" class="nav-link {{ (request()->routeIs('positions.*')) ? 'active' : '' }}" >Data Jabatan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('institutions.index') }}" class="nav-link {{ (request()->routeIs('institutions.*')) ? 'active' : '' }}" >Data Lembaga</a>
-                                </li>
-                            </ul>
-                        </div>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ (request()->routeIs('institutions.*')) ? 'active' : '' }}" href="{{ route('institutions.index') }}">
+                            <i class="ri-building-line"></i> <span>Data Lembaga</span>
+                        </a>
                     </li>
 
                 </ul>
@@ -120,6 +115,12 @@
                             <i class="ri-group-line"></i> <span>Data Pegawai</span>
                         </a>
                     </li>
+
+                    {{-- <li class="nav-item">
+                        <a class="nav-link menu-link {{ (request()->routeIs('employee.employees.*')) ? 'active' : '' }}" href="{{ route('employee.employees.index') }}?resign=true">
+                            <i class="ri-group-line"></i> <span>Data Pegawai Resign</span>
+                        </a>
+                    </li> --}}
 
                     {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->routeIs('employee.salaries.*')) ? 'active' : '' }}" href="{{ route('employee.salaries.index') }}">

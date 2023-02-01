@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmployeesExport;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -43,6 +44,18 @@ class EmployeeController extends Controller
         if ($request->ajax()) {
 
             $data = Employee::with(['institution', 'position'])->select('*')->latest('id');
+            $resign = $request->resign;
+
+            // Without global scope
+            if ($resign == 'true') {
+                $data = $data->withoutGlobalScope('active')->whereNotNull('deactive_at');
+
+            }
+
+            // Except the current user
+            if (auth()->getDefaultDriver() == 'api') {
+                $data = $data->where('id', '!=', auth()->user()->id);
+            }
 
             if ($request->month || $request->year) {
                 $data = $data->whereYear('join_date', $request->year)
@@ -105,11 +118,25 @@ class EmployeeController extends Controller
                                 <div class="edit">
                                     <a href="' . route('employee.employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
                                 </div>
+                                <!--
                                 <div class="remove">
                                     <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . route("employee.employees.destroy", [$row->id]) . '">Hapus</a>
                                 </div>
+                                -->
+                                <div class="non-active">
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-warning non-active-item-btn" onclick="nonActiveEntry(this)" data-route="' . route("employee.employees.non-active", [$row->id]) . '">Non Aktifkan</a>
+                                </div>
                             </div>
                         ';
+                        if ($row->deactive_at) {
+                            $btn = '
+                                <div class="d-flex gap-2">
+                                    <div class="edit">
+                                        <a href="' . route('employee.employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                    </div>
+                                </div>
+                            ';
+                        }
                     }
 
                     return $btn;
@@ -190,8 +217,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($employee_id)
     {
+        $employee = Employee::withoutGlobalScope('active')->find($employee_id);
+
         if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD') {
             if ($employee->id != auth()->user()->id) {
                 return abort(404);
@@ -281,5 +310,24 @@ class EmployeeController extends Controller
         }
 
         return Excel::download(new EmployeesExport, $fileName);
+    }
+
+    public function nonActive(Request $request, $employee_id)
+    {
+        $employee = Employee::find($employee_id);
+        $employee->deactive_at = $request->date ?? now();
+        $employee->deactive_reason = $request->reason;
+
+        if ($employee->save()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pegawai berhasil dinonaktifkan.',
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Pegawai gagal dinonaktifkan.',
+        ]);
     }
 }

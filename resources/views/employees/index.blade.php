@@ -39,6 +39,21 @@
                         <a href="{{ route('employee.employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
                     </div>
                 </div>
+                {{-- Button Deactive --}}
+                {{-- Check if parameter resign --}}
+                @if (request()->get('resign') == 'true')
+                    <div class="col-sm-auto">
+                        <div>
+                            <a href="{{ route('employee.employees.index') }}" class="btn btn-primary add-btn"><i class="ri-eye-line align-bottom me-1"></i> Pegawai Aktif</a>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-sm-auto">
+                        <div>
+                            <a href="{{ route('employee.employees.index') }}?resign=true" class="btn btn-danger add-btn"><i class="ri-eye-off-line align-bottom me-1"></i> Pegawai Nonaktif</a>
+                        </div>
+                    </div>
+                @endif
             @endif
             <div class="col-sm-auto ms-auto">
                 <div class="hstack gap-2">
@@ -121,6 +136,8 @@
                                             <th>Nama Anak</th>
                                             <th>Dibuat Pada</th>
                                             <th>Diubah Pada</th>
+                                            <th>Dinonaktifkan Pada</th>
+                                            <th>Alasan Dinonaktifkan</th>
                                             @if (auth()->getDefaultDriver() == 'web'|| auth()->user()->position->name == 'Kepala HRD')
                                                 <th>Aksi</th>
                                             @endif
@@ -164,6 +181,18 @@
 
     <script>
         $(function() {
+            
+            // Get parameter 'resign' from url
+            var resign = new URLSearchParams(window.location.search).get('resign');
+
+            // If resign
+            if (resign) {
+                // hide #create-btn
+                $('#create-btn').parent().parent().hide();
+
+                // Change title with class .font-size-18
+                $('.font-size-18').text('Daftar Pegawai Resign');
+            }
 
             var table = $('#employeeTable').DataTable({
 
@@ -171,7 +200,7 @@
                 processing: true,
                 // serverSide: true,
                 ajax: {
-                    url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}",
+                    url: "{{ auth()->getDefaultDriver() == 'api' ? route('employee.employees.index') : route('employees.index') }}" + (resign ? '?resign=' + resign : ''),
                     data: function (d) {
                         d.month = "{{ request()->bulan }}";
                         d.year = "{{ request()->tahun }}";
@@ -190,7 +219,7 @@
                         // Export all except DT_RowIndex
                         exportOptions: {
                             // Export column 1 to 22
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
                         }
                     },
                     {
@@ -198,7 +227,11 @@
                         text: 'PDF',
                         className: 'btn btn-primary d-none',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            @if (request()->resign == 'true')
+                                columns: [1, 2, 3, 4, 5, 23, 24]
+                            @else
+                                columns: [1, 2, 3, 4, 5]
+                            @endif
                         }
                     },
                     {
@@ -206,7 +239,11 @@
                         text: 'Print',
                         className: 'btn btn-primary d-none',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            @if (request()->resign == 'true')
+                                columns: [1, 2, 3, 4, 5, 23, 24]
+                            @else
+                                columns: [1, 2, 3, 4, 5]
+                            @endif
                         }
                     }
                 ],
@@ -308,6 +345,14 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     }, 
+                    {
+                        data: 'deactive_at',
+                        name: 'deactive_at'
+                    },
+                    {
+                        data: 'deactive_reason',
+                        name: 'deactive_reason'
+                    },
                     @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD')
                         {
                             data: 'action',
@@ -319,7 +364,11 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD') 23 @endif],
+                        @if (request()->resign == 'true')
+                            targets: [0, 1, 2, 3, 4, 5, 23, 24],
+                        @else
+                            targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD') 25 @endif],
+                        @endif
                         visible: true
                     },
                     {
@@ -563,6 +612,111 @@
                     data;
             }
         };
+
+        // NonactiveButton
+        function nonActiveEntry(button) {
+
+            var route = $(button).attr('data-route');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Apakah Anda yakin ingin menonaktifkan pegawai ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Nonaktifkan!',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    Swal.fire({
+                        title: 'Alasan Nonaktifkan Pegawai',
+                        input: 'select',
+                        inputOptions: {
+                            'Mengundurkan Diri': 'Mengundurkan Diri',
+                            'PHK': 'PHK',
+                            'Meninggal Dunia': 'Meninggal Dunia',
+                            'Pensiun': 'Pensiun',
+                        },
+                        inputPlaceholder: 'Pilih alasan',
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Anda harus memilih alasan!'
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            // Swal to input date
+                            Swal.fire({
+                                title: 'Tanggal Nonaktifkan Pegawai',
+                                html:'<input type="date" id="date" class="form-control" value="' + new Date().toISOString().slice(0, 10) + '">',
+                                showCancelButton: true,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    // Ajax to store data
+                                    $.ajax({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        url: route,
+                                        type: 'POST',
+                                        data: {
+                                            reason: result.value,
+                                            date: $('#date').val()
+                                        },
+                                        success: function(data) {
+
+                                            var success = data.success;
+
+                                            if (success) {
+                                                Swal.fire({
+                                                    title: 'Berhasil!',
+                                                    text: 'Pegawai berhasil dinonaktifkan.',
+                                                    icon: 'success',
+                                                    confirmButtonText: 'OK'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        location.reload();
+                                                    }
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    title: 'Gagal!',
+                                                    text: 'Pegawai gagal dinonaktifkan.',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'OK'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        location.reload();
+                                                    }
+                                                });
+                                            }
+                                        },
+                                        error: function(data) {
+                                            Swal.fire({
+                                                title: 'Gagal!',
+                                                text: 'Pegawai gagal dinonaktifkan.',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    location.reload();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
 
         // DeleteButton
         function deleteEntry(button) {
