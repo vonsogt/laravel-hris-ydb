@@ -146,7 +146,7 @@ class JobAssessmentController extends Controller
             } else if (auth()->user()->position->name == 'Ketua Yayasan') {
                 $employees = Employee::whereHas('position', function ($query) {
                     // Where like "Kepala Departemen% or "Kepala Finance%" or "Kepala HRD%"
-                    $query->where('name', 'like', 'Kepala Sekolah%')
+                    $query->where('name', 'like', 'Kepala Departemen%')
                         ->orWhere('name', 'like', 'Kepala Finance%')
                         ->orWhere('name', 'like', 'Kepala HRD%');
                 })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');
