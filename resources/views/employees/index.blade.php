@@ -121,7 +121,7 @@
                                             <th>Nama Anak</th>
                                             <th>Dibuat Pada</th>
                                             <th>Diubah Pada</th>
-                                            @if (auth()->getDefaultDriver() == 'web')
+                                            @if (auth()->getDefaultDriver() == 'web'|| auth()->user()->position->name == 'Kepala HRD')
                                                 <th>Aksi</th>
                                             @endif
                                         </tr>
