@@ -33,8 +33,7 @@
                     <a href="{{ route('employee.employees.show', auth()->user()->id) }}" class="btn btn-primary add-btn" id="create-btn"><i class="ri-eye-line align-bottom me-1"></i> Detail Pegawai Saya</a>
                 </div>
             </div> --}}
-            {{-- If auth position name "Ketua HRD" --}}
-            @if (auth()->user()->position->name == 'Ketua HRD')
+            @if (auth()->user()->position->name == 'Kepala HRD')
                 <div class="col-sm-auto">
                     <div>
                         <a href="{{ route('employee.employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
