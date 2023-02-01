@@ -37,7 +37,7 @@ class JobAssessmentController extends Controller
 
             $data = JobAssessment::select('*')->latest('id');
 
-            if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD') {
+            if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD' && auth()->user()->position->name != 'Ketua Yayasan') {
                 $data = $data->where('employee_id', auth()->user()->id);
             }
 
