@@ -312,7 +312,6 @@
                 ],
                 columnDefs: [
                     {
-                        
                         targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web') 23 @endif],
                         visible: true
                     },
