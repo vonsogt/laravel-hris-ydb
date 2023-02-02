@@ -128,11 +128,13 @@
                         </a>
                     </li> --}}
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="{{ route('employee.leaves.index') }}">
-                            <i class="ri-calendar-2-line"></i> <span>Cuti</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->position->name != 'Ketua Yayasan')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="{{ route('employee.leaves.index') }}">
+                                <i class="ri-calendar-2-line"></i> <span>Cuti</span>
+                            </a>
+                        </li>
+                    @endif
 
                     {{-- <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs(['employee.leaves.*']) ? 'active' : '' }}" href="#sidebarPaidLeave" data-bs-toggle="collapse" role="button"
@@ -157,17 +159,19 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->routeIs('employee.decrees.*')) ? 'active' : '' }}" href="{{ route('employee.decrees.index') }}">
-                            <i class="ri-file-copy-line"></i> <span>SK</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->position->name != 'Ketua Yayasan')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link {{ (request()->routeIs('employee.decrees.*')) ? 'active' : '' }}" href="{{ route('employee.decrees.index') }}">
+                                <i class="ri-file-copy-line"></i> <span>SK</span>
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->routeIs('employee.appreciations.*')) ? 'active' : '' }}" href="{{ route('employee.appreciations.index') }}">
-                            <i class="ri-trophy-line"></i> <span>Penghargaan</span>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link {{ (request()->routeIs('employee.appreciations.*')) ? 'active' : '' }}" href="{{ route('employee.appreciations.index') }}">
+                                <i class="ri-trophy-line"></i> <span>Penghargaan</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             @endif
         </div>
