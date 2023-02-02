@@ -32,7 +32,7 @@
                 </div>
             @endif
 
-            @if (auth()->user()->position->name == "Kepala HRD")
+            @if (auth()->user()->position->name == "Kepala HRD" || auth()->user()->position->name == "Ketua Yayasan")
                 <div class="col-sm-auto ms-auto">
                     <div class="hstack gap-2">
                         <div class="float-end">
