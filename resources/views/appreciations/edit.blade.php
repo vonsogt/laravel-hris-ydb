@@ -11,7 +11,7 @@
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
-                <a href="{{ route('appreciations.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke daftar penghargaan</a>
+                <a href="{{ auth()->getDefaultDriver() == 'api' ? route('employee.appreciations.index') : route('appreciations.index') }}" class="btn btn-soft-dark add-btn" id="create-btn"><i class="ri-arrow-left-s-line align-bottom me-1"></i> Kembali ke daftar penghargaan</a>
             </div>
         </div>
     </div>

@@ -128,6 +128,15 @@ class EmployeeController extends Controller
                                 </div>
                             </div>
                         ';
+                        if (auth()->user()->position->name == 'Staf HRD')
+                            $btn = '
+                                <div class="d-flex gap-2">
+                                    <div class="edit">
+                                        <a href="' . route('employee.employees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                    </div>
+                                </div>
+                            ';
+
                         if ($row->deactive_at) {
                             $btn = '
                                 <div class="d-flex gap-2">

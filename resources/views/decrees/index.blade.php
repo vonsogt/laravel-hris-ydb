@@ -20,6 +20,16 @@
                 </div>
             </div>
         </div>
+    @else
+        @if (auth()->user()->position->name == 'Staf HRD')
+            <div class="row g-4 mb-3">
+                <div class="col-sm-auto">
+                    <div>
+                        <a href="{{ route('employee.decrees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah surat keputusan</a>
+                    </div>
+                </div>
+            </div>
+        @endif
     @endif
 
     <div class="row">

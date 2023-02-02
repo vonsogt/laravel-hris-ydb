@@ -35,7 +35,12 @@ class DecreeController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Decree::select('*')->with(['employee'])->latest('id');
+            $data = Decree::select('*')
+                ->whereHas('employee', function ($query) {
+                    $query->active();
+                })
+                ->with(['employee'])
+                ->latest('id');
 
             if (auth()->getDefaultDriver() == 'api') {
                 $data = $data->where('employee_id', auth()->user()->id);
@@ -54,10 +59,10 @@ class DecreeController extends Controller
                 })
                 ->addIndexColumn()
                 ->addColumn('employee_name', function (Decree $decree) {
-                    return $decree->employee->name;
+                    return $decree->employee->name ?? '-';
                 })
                 ->addColumn('employee_institution_name', function (Decree $decree) {
-                    return $decree->employee->institution->name;
+                    return $decree->employee->institution->name ?? '-';
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '
@@ -74,7 +79,7 @@ class DecreeController extends Controller
                         </div>
                     ';
 
-                    if (auth()->getDefaultDriver() == 'api')
+                    if (auth()->getDefaultDriver() == 'api') {
                         $btn = '
                             <div class="d-flex gap-2">
                                 <div class="show">
@@ -85,6 +90,23 @@ class DecreeController extends Controller
                                 </div>
                             </div>
                         ';
+
+                        if (auth()->user()->position->name == 'Staf HRD') {
+                            $btn = '
+                                <div class="d-flex gap-2">
+                                    <div class="show">
+                                        <a href="' . route('employee.decrees.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                    </div>
+                                    <div class="edit">
+                                        <a href="' . route('employee.decrees.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                    </div>
+                                    <div class="download">
+                                        <a href="' . ($row->files ? (url('storage/uploads') . '/' . $row->files) : 'javascript:void(0)') . '" onclick="' . (!$row->files ? "Swal.fire({ icon: 'error', title: 'Oops...', text: 'Sepertinya file SK tidak ada!'})" : '') . '" class="btn btn-sm btn-success download-item-btn">Unduh</a>
+                                    </div>
+                                </div>
+                            ';
+                        }
+                    }
 
                     return $btn;
                 })

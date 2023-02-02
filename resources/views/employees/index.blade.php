@@ -33,7 +33,7 @@
                     <a href="{{ route('employee.employees.show', auth()->user()->id) }}" class="btn btn-primary add-btn" id="create-btn"><i class="ri-eye-line align-bottom me-1"></i> Detail Pegawai Saya</a>
                 </div>
             </div> --}}
-            @if (auth()->user()->position->name == 'Kepala HRD')
+            @if (auth()->user()->position->name == 'Kepala HRD' || auth()->user()->position->name == 'Staf HRD')
                 <div class="col-sm-auto">
                     <div>
                         <a href="{{ route('employee.employees.create') }}" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Tambah pegawai</a>
@@ -138,7 +138,7 @@
                                             <th>Diubah Pada</th>
                                             <th>Dinonaktifkan Pada</th>
                                             <th>Alasan Dinonaktifkan</th>
-                                            @if (auth()->getDefaultDriver() == 'web'|| auth()->user()->position->name == 'Kepala HRD')
+                                            @if (auth()->getDefaultDriver() == 'web'|| auth()->user()->position->name == 'Kepala HRD' || auth()->user()->position->name == 'Staf HRD')
                                                 <th>Aksi</th>
                                             @endif
                                         </tr>
@@ -353,7 +353,7 @@
                         data: 'deactive_reason',
                         name: 'deactive_reason'
                     },
-                    @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD')
+                    @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD' || auth()->user()->position->name == 'Staf HRD')
                         {
                             data: 'action',
                             name: 'action',
@@ -367,7 +367,7 @@
                         @if (request()->resign == 'true')
                             targets: [0, 1, 2, 3, 4, 5, 23, 24],
                         @else
-                            targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD') 25 @endif],
+                            targets: [0, 1, 2, 3, 4, 5, @if (auth()->getDefaultDriver() == 'web' || auth()->user()->position->name == 'Kepala HRD' || auth()->user()->position->name == 'Staf HRD') 25 @endif],
                         @endif
                         visible: true
                     },

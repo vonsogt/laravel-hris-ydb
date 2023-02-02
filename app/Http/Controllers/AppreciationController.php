@@ -36,7 +36,12 @@ class AppreciationController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Appreciation::select('*')->with(['employee'])->latest('id');
+            $data = Appreciation::select('*')
+                ->whereHas('employee', function ($query) {
+                    $query->active();
+                })
+                ->with(['employee'])
+                ->latest('id');
 
             if (auth()->getDefaultDriver() == 'api') {
                 $data = $data->where('employee_id', auth()->user()->id);
@@ -55,10 +60,10 @@ class AppreciationController extends Controller
                 })
                 ->addIndexColumn()
                 ->addColumn('employee_name', function (Appreciation $appreciation) {
-                    return $appreciation->employee->name;
+                    return $appreciation->employee->name ?? '-';
                 })
                 ->addColumn('employee_institution_name', function (Appreciation $appreciation) {
-                    return $appreciation->employee->institution->name;
+                    return $appreciation->employee->institution->name ?? '-';
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '
@@ -75,7 +80,7 @@ class AppreciationController extends Controller
                         </div>
                     ';
 
-                    if (auth()->getDefaultDriver() == 'api')
+                    if (auth()->getDefaultDriver() == 'api') {
                         $btn = '
                             <div class="d-flex gap-2">
                                 <div class="show">
@@ -86,6 +91,23 @@ class AppreciationController extends Controller
                                 </div>
                             </div>
                         ';
+
+                        if (auth()->user()->position->name == 'Staf HRD') {
+                            $btn = '
+                                <div class="d-flex gap-2">
+                                    <div class="show">
+                                        <a href="' . route('employee.appreciations.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                    </div>
+                                    <div class="edit">
+                                        <a href="' . route('employee.appreciations.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                    </div>
+                                    <div class="download">
+                                        <a href="' . ($row->files ? (url('storage/uploads') . '/' . $row->files) : 'javascript:void(0)') . '" onclick="' . (!$row->files ? "Swal.fire({ icon: 'error', title: 'Oops...', text: 'Sepertinya file penghargaan tidak ada!'})" : '') . '" class="btn btn-sm btn-success download-item-btn">Unduh</a>
+                                    </div>
+                                </div>
+                            ';
+                        }
+                    }
 
                     return $btn;
                 })

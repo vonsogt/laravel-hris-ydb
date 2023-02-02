@@ -74,11 +74,11 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     ]);
 
     Route::resource('decrees', DecreeController::class)->except([
-        'create', 'store', 'edit', 'update', 'destroy'
+        'destroy'
     ]);
 
     Route::resource('appreciations', AppreciationController::class)->except([
-        'create', 'store', 'edit', 'update', 'destroy'
+        'destroy'
     ]);
 });
 
