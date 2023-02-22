@@ -177,7 +177,11 @@ class JobAssessmentController extends Controller
     {
         $jobAssessment = JobAssessment::create($request->all());
 
-        return redirect()->route('job-assessments.index')->with('message', 'Penilaian kerja berhasil ditambahkan.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.job-assessments.index')->with('message', 'Penilaian kerja berhasil ditambahkan.');
+        } else {
+            return redirect()->route('job-assessments.index')->with('message', 'Penilaian kerja berhasil ditambahkan.');
+        }
     }
 
     /**
@@ -235,7 +239,11 @@ class JobAssessmentController extends Controller
     {
         $jobAssessment->update($request->all());
 
-        return redirect()->route('job-assessments.index')->with('message', 'Penilaian kerja berhasil diubah.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.job-assessments.index')->with('message', 'Penilaian kerja berhasil diubah.');
+        } else {
+            return redirect()->route('job-assessments.index')->with('message', 'Penilaian kerja berhasil diubah.');
+        }
     }
 
     /**
