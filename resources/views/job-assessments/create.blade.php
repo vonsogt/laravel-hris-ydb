@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('job-assessments.store') }}">
+            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.store') : route('job-assessments.store') }}">
                 @csrf
                 <div class="card">
                     <div class="card-body">

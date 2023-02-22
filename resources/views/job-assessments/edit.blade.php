@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('job-assessments.update', $jobAssessment->id) }}">
+            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.update', $jobAssessment->id) : route('job-assessments.update', $jobAssessment->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="card">
