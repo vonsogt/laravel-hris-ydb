@@ -171,9 +171,9 @@ class JobAssessmentController extends Controller
             } else if (auth()->user()->position->name == 'Kepala Sekolah') {
                 $employees = Employee::where('institution_id', auth()->user()->institution_id)
                     ->where('id', '!=', auth()->user()->id)
-                    // Where position's name is not "Kepala Departemen", "Direktur Pendidikan", or "Kepala HRD"
+                    // Where position's name is not "Kepala Departemen%", "Direktur Pendidikan", or "Kepala HRD"
                     ->whereHas('position', function ($query) {
-                        $query->where('name', '!=', 'Kepala Departemen')
+                        $query->where('name', '!=', 'Kepala Departemen%')
                             ->where('name', '!=', 'Direktur Pendidikan')
                             ->where('name', '!=', 'Kepala HRD');
                     })->pluck('name', 'id');
@@ -250,12 +250,19 @@ class JobAssessmentController extends Controller
                 })
                     ->where('id', '!=', auth()->user()->id)
                     ->pluck('name', 'id');
+            } else if (auth()->user()->position->name == 'Ketua Yayasan') {
+                $employees = Employee::whereHas('position', function ($query) {
+                    // Where like "Kepala Departemen% or "Kepala Finance%" or "Kepala HRD%"
+                    $query->where('name', 'like', 'Kepala Departemen%')
+                        ->orWhere('name', 'like', 'Kepala Finance%')
+                        ->orWhere('name', 'like', 'Kepala HRD%');
+                })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');
             } else if (auth()->user()->position->name == 'Kepala Sekolah') {
                 $employees = Employee::where('institution_id', auth()->user()->institution_id)
                     ->where('id', '!=', auth()->user()->id)
-                    // Where position's name is not "Kepala Departemen", "Direktur Pendidikan", or "Kepala HRD"
+                    // Where position's name is not "Kepala Departemen%", "Direktur Pendidikan", or "Kepala HRD"
                     ->whereHas('position', function ($query) {
-                        $query->where('name', '!=', 'Kepala Departemen')
+                        $query->where('name', '!=', 'Kepala Departemen%')
                             ->where('name', '!=', 'Direktur Pendidikan')
                             ->where('name', '!=', 'Kepala HRD');
                     })->pluck('name', 'id');
