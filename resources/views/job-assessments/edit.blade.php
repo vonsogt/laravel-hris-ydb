@@ -37,6 +37,7 @@
                             <select name="employee_id" class="form-control" data-choices name="choices-single-default" id="choices-single-default">
                                 <option value="">Pilih nama pegawai</option>
                                 @foreach ($employees as $key => $value)
+                                    @dump($value);
                                     <option @if (old('employee_id', $jobAssessment->employee_id ?? '') == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>

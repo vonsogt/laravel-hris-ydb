@@ -43,6 +43,13 @@ class JobAssessmentController extends Controller
 
             if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD' && auth()->user()->position->name != 'Ketua Yayasan') {
                 $data = $data->where('employee_id', auth()->user()->id);
+            } else if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name == 'Kepala HRD') {
+                $data = $data->whereHas('employee', function ($query) {
+                    $query->whereHas('institution', function ($query) {
+                        $query->where('name', 'Kepala Sekolah%')
+                            ->orWhere('name', 'Staf HRD%');
+                    });
+                });
             }
 
             return DataTables::of($data->get())
@@ -214,13 +221,25 @@ class JobAssessmentController extends Controller
     public function edit(JobAssessment $jobAssessment)
     {
         if (auth()->getDefaultDriver() == 'api') {
-            if (auth()->user()->position->name != 'Kepala Sekolah') {
+            if (
+                auth()->user()->position->name != 'Kepala Sekolah'
+                && auth()->user()->position->name != 'Kepala HRD'
+            ) {
                 return abort(404);
             }
-            // Get employees from the same institution except the logged in employee
-            $employees = Employee::where('institution_id', auth()->user()->institution_id)
-                ->where('id', '!=', auth()->user()->id)
-                ->pluck('name', 'id');
+            if (auth()->user()->position->name == 'Kepala HRD') {
+                $employees = Employee::whereHas('institution', function ($query) {
+                    $query->where('name', 'like', 'Kepala Sekolah%')
+                        ->orWhere('name', 'like', 'Staf HRD%');
+                })
+                    ->where('id', '!=', auth()->user()->id)
+                    ->pluck('name', 'id');
+            } else {
+                // Get employees from the same institution except the logged in employee
+                $employees = Employee::where('institution_id', auth()->user()->institution_id)
+                    ->where('id', '!=', auth()->user()->id)
+                    ->pluck('name', 'id');
+            }
         } else {
             $employees = Employee::get()->pluck('name', 'id');
         }
