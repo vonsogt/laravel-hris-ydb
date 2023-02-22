@@ -166,6 +166,7 @@ class JobAssessmentController extends Controller
                     // Where like "Kepala Departemen% or "Kepala Finance%" or "Kepala HRD%"
                     $query->where('name', 'like', 'Kepala Departemen%')
                         ->orWhere('name', 'like', 'Kepala Finance%')
+                        ->orWhere('name', 'like', 'Direktur Pendidikan')
                         ->orWhere('name', 'like', 'Kepala HRD%');
                 })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');
             } else if (auth()->user()->position->name == 'Kepala Sekolah') {
@@ -255,6 +256,7 @@ class JobAssessmentController extends Controller
                     // Where like "Kepala Departemen% or "Kepala Finance%" or "Kepala HRD%"
                     $query->where('name', 'like', 'Kepala Departemen%')
                         ->orWhere('name', 'like', 'Kepala Finance%')
+                        ->orWhere('name', 'like', 'Direktur Pendidikan')
                         ->orWhere('name', 'like', 'Kepala HRD%');
                 })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');
             } else if (auth()->user()->position->name == 'Kepala Sekolah') {
