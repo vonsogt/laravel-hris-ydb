@@ -90,7 +90,7 @@ class LeaveController extends Controller
                     }
                 })
                 ->addColumn('employee_name', function (Leave $leave) {
-                    return $leave->employee->name;
+                    return $leave->employee->name ?? '';
                 })
                 ->addColumn('employee_institution_number', function (Leave $leave) {
                     return $leave->employee->institution_number;
