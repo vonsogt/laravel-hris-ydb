@@ -49,7 +49,6 @@ class EmployeeController extends Controller
             // Without global scope
             if ($resign == 'true') {
                 $data = $data->withoutGlobalScope('active')->whereNotNull('deactive_at');
-
             }
 
             // Except the current user
@@ -199,8 +198,11 @@ class EmployeeController extends Controller
         $request->merge(['password' => $password]);
 
         $employee = Employee::create($request->all());
-
-        return redirect()->route('employees.index')->with('message', 'Pegawai berhasil ditambahkan.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.employees.index')->with('message', 'Pegawai berhasil ditambahkan.');
+        } else {
+            return redirect()->route('employees.index')->with('message', 'Pegawai berhasil ditambahkan.');
+        }
     }
 
     /**
@@ -282,8 +284,11 @@ class EmployeeController extends Controller
         if (auth()->getDefaultDriver() == 'api') {
             return redirect()->route('employee.employees.index')->with('message', 'Pegawai berhasil diubah.');
         }
-
-        return redirect()->route('employees.index')->with('message', 'Pegawai berhasil diubah.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.employees.index')->with('message', 'Pegawai berhasil diubah.');
+        } else {
+            return redirect()->route('employees.index')->with('message', 'Pegawai berhasil diubah.');
+        }
     }
 
     /**
