@@ -46,8 +46,8 @@ class JobAssessmentController extends Controller
             } else if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name == 'Kepala HRD') {
                 $data = $data->whereHas('employee', function ($query) {
                     $query->whereHas('position', function ($q) {
-                        $q->where('name', 'Kepala Sekolah%')
-                            ->orWhere('name', 'Staf HRD%');
+                        $q->where('name', 'Kepala Sekolah')
+                            ->orWhere('name', 'Staf HRD');
                     });
                 });
             }
