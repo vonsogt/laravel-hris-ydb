@@ -171,9 +171,12 @@ class JobAssessmentController extends Controller
             } else if (auth()->user()->position->name == 'Kepala Sekolah') {
                 $employees = Employee::where('institution_id', auth()->user()->institution_id)
                     ->where('id', '!=', auth()->user()->id)
-                    ->whereDoesntHave('position', function ($query) {
-                        $query->whereIn('name', ['Kepala Departemen', 'Direktur Pendidikan', 'Kepala HRD']);
-                    });
+                    // Where position's name is not "Kepala Departemen", "Direktur Pendidikan", or "Kepala HRD"
+                    ->whereHas('position', function ($query) {
+                        $query->where('name', '!=', 'Kepala Departemen')
+                            ->where('name', '!=', 'Direktur Pendidikan')
+                            ->where('name', '!=', 'Kepala HRD');
+                    })->pluck('name', 'id');
             } else {
                 // Get employees from the same institution except the logged in employee
                 $employees = Employee::where('institution_id', auth()->user()->institution_id)
