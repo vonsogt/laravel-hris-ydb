@@ -173,9 +173,9 @@ class JobAssessmentController extends Controller
                     ->where('id', '!=', auth()->user()->id)
                     // Where position's name is not "Kepala Departemen%", "Direktur Pendidikan", or "Kepala HRD"
                     ->whereHas('position', function ($query) {
-                        $query->where('name', '!=', 'Kepala Departemen%')
-                            ->where('name', '!=', 'Direktur Pendidikan')
-                            ->where('name', '!=', 'Kepala HRD');
+                        $query->where('name', 'not like', 'Kepala Departemen%')
+                            ->where('name', 'not like', 'Direktur Pendidikan')
+                            ->where('name', 'not like', 'Kepala HRD');
                     })->pluck('name', 'id');
             } else {
                 // Get employees from the same institution except the logged in employee
@@ -262,9 +262,9 @@ class JobAssessmentController extends Controller
                     ->where('id', '!=', auth()->user()->id)
                     // Where position's name is not "Kepala Departemen%", "Direktur Pendidikan", or "Kepala HRD"
                     ->whereHas('position', function ($query) {
-                        $query->where('name', '!=', 'Kepala Departemen%')
-                            ->where('name', '!=', 'Direktur Pendidikan')
-                            ->where('name', '!=', 'Kepala HRD');
+                        $query->where('name', 'not like', 'Kepala Departemen%')
+                            ->where('name', 'not like', 'Direktur Pendidikan')
+                            ->where('name', 'not like', 'Kepala HRD');
                     })->pluck('name', 'id');
             } else {
                 // Get employees from the same institution except the logged in employee
