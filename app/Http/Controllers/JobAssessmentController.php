@@ -43,14 +43,15 @@ class JobAssessmentController extends Controller
 
             if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD' && auth()->user()->position->name != 'Ketua Yayasan') {
                 $data = $data->where('employee_id', auth()->user()->id);
-            } else if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name == 'Kepala HRD') {
-                $data = $data->whereHas('employee', function ($query) {
-                    $query->whereHas('position', function ($q) {
-                        $q->where('name', 'Kepala Sekolah')
-                            ->orWhere('name', 'Staf HRD');
-                    });
-                });
-            }
+            } 
+            // else if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name == 'Kepala HRD') {
+            //     $data = $data->whereHas('employee', function ($query) {
+            //         $query->whereHas('position', function ($q) {
+            //             $q->where('name', 'Kepala Sekolah')
+            //                 ->orWhere('name', 'Staf HRD');
+            //         });
+            //     });
+            // }
 
             return DataTables::of($data->get())
                 ->filter(function ($instance) use ($request) {
