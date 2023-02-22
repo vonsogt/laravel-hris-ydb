@@ -68,6 +68,7 @@ Route::middleware(['jwt.verify'])->prefix('employee')->name('employee.')->group(
     Route::resource('leaves', LeaveController::class)->except([
         'edit', 'update', 'destroy'
     ]);
+    Route::post('leaves/approve/{id}', [LeaveController::class, 'approve'])->name('leaves.approve');
 
     Route::resource('job-assessments', JobAssessmentController::class)->except([
         'destroy'
