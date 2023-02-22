@@ -32,7 +32,14 @@
                 @method('PUT')
                 <div class="card">
                     <div class="card-body">
+                        {{-- Input readonly show employee name --}}
                         <div class="mb-3">
+                            <label class="form-label" for="employeeName">Pegawai</label>
+                            <input type="hidden" name="employee_id" value="{{ old('employee_id', $jobAssessment->employee_id ?? '') }}">
+                            <input type="text" class="form-control" id="employeeName" value="{{ old('year', $jobAssessment->employee->name ?? '') }}" readonly>
+                        </div>
+                        
+                        {{-- <div class="mb-3">
                             <label class="form-label" for="name-input">Pegawai</label>
                             <select name="employee_id" class="form-control" data-choices name="choices-single-default" id="choices-single-default">
                                 <option value="">Pilih nama pegawai</option>
@@ -41,7 +48,7 @@
                                     <option @if (old('employee_id', $jobAssessment->employee_id ?? '') == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label class="form-label" for="yearInputYear">Tahun Penilaian</label>
                             <input type="text" name="year" class="form-control" id="yearInputYear" value="{{ old('year', $jobAssessment->year ?? '') }}" placeholder="Masukkan tahun penilaian">

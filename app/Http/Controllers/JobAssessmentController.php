@@ -168,6 +168,13 @@ class JobAssessmentController extends Controller
                         ->orWhere('name', 'like', 'Kepala Finance%')
                         ->orWhere('name', 'like', 'Kepala HRD%');
                 })->where('id', '!=', auth()->user()->id)->pluck('name', 'id');
+            } else if (auth()->user()->position->name == 'Kepala Sekolah') {
+                $employees = Employee::where('institution_id', auth()->user()->institution_id)
+                    ->where('id', '!=', auth()->user()->id)
+                    ->whereHas('position', function ($query) {
+                        $query->where('name', '!=', 'Kepala Departemen')
+                            ->where('name', '!=', 'Direktur Pendidikan');
+                    });
             } else {
                 // Get employees from the same institution except the logged in employee
                 $employees = Employee::where('institution_id', auth()->user()->institution_id)
@@ -240,6 +247,14 @@ class JobAssessmentController extends Controller
                         ->orWhere('name', 'like', 'Staf HRD%');
                 })
                     ->where('id', '!=', auth()->user()->id)
+                    ->pluck('name', 'id');
+            } else if (auth()->user()->position->name == 'Kepala Sekolah') {
+                $employees = Employee::where('institution_id', auth()->user()->institution_id)
+                    ->where('id', '!=', auth()->user()->id)
+                    ->whereHas('position', function ($query) {
+                        $query->where('name', '!=', 'Kepala Departemen')
+                            ->where('name', '!=', 'Direktur Pendidikan');
+                    })
                     ->pluck('name', 'id');
             } else {
                 // Get employees from the same institution except the logged in employee
