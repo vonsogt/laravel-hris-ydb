@@ -79,7 +79,7 @@ class JobAssessmentController extends Controller
                                 <a href="' . route('job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
                             </div>
                             <div class="remove">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . auth()->getDefaultDriver() == 'api' ? route("employee.job-assessments.destroy", [$row->id]) : route("job-assessments.destroy", [$row->id]) . '">Hapus</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . auth()->getDefaultDriver() == "api" ? route("employee.job-assessments.destroy", [$row->id]) : route("job-assessments.destroy", [$row->id]) . '">Hapus</a>
                             </div>
                         </div>
                     ';
@@ -114,7 +114,7 @@ class JobAssessmentController extends Controller
                                         <a href="' . route('employee.job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
                                     </div>
                                     <div class="remove">
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . auth()->getDefaultDriver() == 'api' ? route("employee.job-assessments.destroy", [$row->id]) : route("job-assessments.destroy", [$row->id]) . '">Hapus</a>
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . auth()->getDefaultDriver() == "api" ? route("employee.job-assessments.destroy", [$row->id]) : route("job-assessments.destroy", [$row->id]) . '">Hapus</a>
                                     </div>
                                 </div>
                             ';
