@@ -38,7 +38,9 @@ class LeaveController extends Controller
         if ($request->ajax()) {
 
             $type = $request->type;
-            $data = Leave::with(['employee'])->latest('id');
+            $data = Leave::whereHas('employee', function ($q) {
+                $q->where('deactive_at', null);
+            })->with(['employee'])->latest('id');
 
             if (auth()->getDefaultDriver() == 'api' && auth()->user()->position->name != 'Kepala HRD') {
                 $data = $data->where('employee_id', auth()->user()->id);
