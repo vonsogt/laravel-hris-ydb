@@ -109,7 +109,9 @@ class LeaveController extends Controller
                     return $leave->employee->institution_number;
                 })
                 ->addColumn('submission_date', function ($row) {
-                    return Carbon::make($row->submission_date)->format('d-M-Y');
+                    return $row->submission_date
+                        ? Carbon::make($row->submission_date)->format('d-M-Y')
+                        : '-';
                 })
                 ->addColumn('start_date', function ($row) {
                     return Carbon::make($row->start_date)->format('d-M-Y');
