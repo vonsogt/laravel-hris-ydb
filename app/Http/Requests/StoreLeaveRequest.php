@@ -25,6 +25,7 @@ class StoreLeaveRequest extends FormRequest
     {
         return [
             'employee_id'   => 'required',
+            'submission_date' => 'required|date', // 'submission_date' => 'required|date|after_or_equal:today
             'start_date'    => 'required|date',
             'end_date'      => 'required|date',
             'attachment'    => 'required_if:reason,Izin,Sakit',
@@ -40,6 +41,8 @@ class StoreLeaveRequest extends FormRequest
     {
         return [
             'employee_id.required' => 'Pegawai wajib diisi.',
+
+            'submission_date.required' => 'Tanggal pengajuan wajib diisi.',
 
             'start_date.required' => 'Tanggal mulai wajib diisi.',
 
