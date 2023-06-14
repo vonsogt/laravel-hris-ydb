@@ -476,7 +476,7 @@
                             if (response == 1) {
                                 // Show success notification
                                 Toastify({
-                                    text: "Item berhasil dihapus!",
+                                    text: "Cuti berhasil dihapus!",
                                     className: "info",
                                     style: {
                                         background: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -552,7 +552,7 @@
                             if (response == 1) {
                                 // Show success notification
                                 Toastify({
-                                    text: "Item berhasil diubah!",
+                                    text: "Cuti berhasil diubah!",
                                     className: "info",
                                     style: {
                                         background: "linear-gradient(to right, #00b09b, #96c93d)",
