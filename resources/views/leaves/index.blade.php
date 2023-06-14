@@ -551,13 +551,22 @@
                         success: function(response) {
                             if (response == 1) {
                                 // Show success notification
-                                Toastify({
-                                    text: "Cuti berhasil disetujui!",
-                                    className: "info",
-                                    style: {
-                                        background: "linear-gradient(to right, #00b09b, #96c93d)",
-                                    }
-                                }).showToast();
+                                if (value == 1)
+                                    Toastify({
+                                        text: "Cuti berhasil disetujui!",
+                                        className: "info",
+                                        style: {
+                                            background: "linear-gradient(to right, #00b09b, #96c93d)",
+                                        }
+                                    }).showToast();
+                                else 
+                                    Toastify({
+                                        text: "Cuti berhasil ditolak!",
+                                        className: "info",
+                                        style: {
+                                            background: "linear-gradient(to right, #00b09b, #96c93d)",
+                                        }
+                                    }).showToast();
 
                                 // remove current table row and draw table again
                                 var table = $('#leaveTable').DataTable()
