@@ -166,9 +166,10 @@ class DecreeController extends Controller
     public function show(Decree $decree)
     {
         if (auth()->getDefaultDriver() == 'api') {
-            if ($decree->employee->id != auth()->user()->id) {
-                return abort(404);
-            }
+            if (auth()->user()->position->name != 'Staf HRD')
+                if ($decree->employee->id != auth()->user()->id) {
+                    return abort(404);
+                }
         }
 
         return view('decrees.show', compact('decree'));
