@@ -27,7 +27,7 @@ class UpdateAppreciationRequest extends FormRequest
             'employee_id'   => 'required',
             'name'          => 'required',
             'date'          => 'required',
-            'files'         => 'sometimes|mimes:csv,txt,xlx,xls,pdf|max:2048',
+            'files'         => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048',
         ];
     }
 

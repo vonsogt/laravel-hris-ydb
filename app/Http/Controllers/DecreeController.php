@@ -43,7 +43,8 @@ class DecreeController extends Controller
                 ->latest('id');
 
             if (auth()->getDefaultDriver() == 'api') {
-                $data = $data->where('employee_id', auth()->user()->id);
+                if (auth()->user()->position->name != 'Staf HRD')
+                    $data = $data->where('employee_id', auth()->user()->id);
             }
 
             return DataTables::of($data->get())

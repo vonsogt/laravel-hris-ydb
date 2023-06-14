@@ -27,7 +27,7 @@ class UpdateDecreeRequest extends FormRequest
             'employee_id'   => 'required',
             'year'          => 'required',
             'number'        => 'required',
-            'files'         => 'sometimes|mimes:csv,txt,xlx,xls,pdf|max:2048',
+            'files'         => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048',
         ];
     }
 
