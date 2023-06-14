@@ -312,7 +312,8 @@
 
         // validate input name="factors[*]"
         function validateFactors() {
-            var factors = document.getElementsByName('input[name="factors[*]"]');
+            var factors = document.querySelectorAll('input[name^="factors["]');
+
             var factorChecked = false;
             for (var i = 0; i < factors.length; i++) {
                 if (factors[i].checked) {
