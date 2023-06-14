@@ -167,9 +167,10 @@ class AppreciationController extends Controller
     public function show(Appreciation $appreciation)
     {
         if (auth()->getDefaultDriver() == 'api') {
-            if ($appreciation->employee->id != auth()->user()->id) {
-                return abort(404);
-            }
+            if (auth()->user()->position->name != 'Staf HRD')
+                if ($appreciation->employee->id != auth()->user()->id) {
+                    return abort(404);
+                }
         }
 
         return view('appreciations.show', compact('appreciation'));
