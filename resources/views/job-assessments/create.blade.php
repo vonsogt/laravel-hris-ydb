@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.store') : route('job-assessments.store') }}">
+            <form method="POST" id="form" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.job-assessments.store') : route('job-assessments.store') }}">
                 @csrf
                 <div class="card">
                     <div class="card-body">
@@ -70,217 +70,217 @@
                                     <tr class="align-middle">
                                         <th scope="row">Administrasi</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[administrasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['administrasi'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Hubungan dengan Atasan</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[hubungan_dengan_atasan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_atasan'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Hubungan dengan Teman Sejawat</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[hubungan_dengan_teman_sejawat]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_teman_sejawat'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Hubungan dengan Peserta Didik</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[hubungan_dengan_peserta_didik]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['hubungan_dengan_peserta_didik'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Sikap dan Kerjasama</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[sikap_dan_kerja_sama]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['sikap_dan_kerja_sama'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Motivasi dan Inisiatif</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[motivasi_dan_inisiatif]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['motivasi_dan_inisiatif'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Disiplin</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[disiplin]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['disiplin'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Kualitas Kerja dan Prestasi Kerja</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[kualitas_kerja_dan_prestasi_kerja]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kualitas_kerja_dan_prestasi_kerja'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Komitmen Terhadap Pekerjaan</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[komitmen_terhadap_pekerjaan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['komitmen_terhadap_pekerjaan'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Kreatifitas dan Inovasi</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[kreatifitas_dan_inovasi]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kreatifitas_dan_inovasi'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Pengembangan keahlian, ilmu pengetahuan dan pendidikan</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['pengembangan_keahlian_ilmu_pengetahuan_dan_pendidikan'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
                                         <th scope="row">Kegiatan Pengembangan Karakter<br>a. Team Building and Upgrading<br>b. Workshop/Training<br>c. Upacara 17 Agustus<br>(ketidakhadiran dalam kegiatan tersebut mengurangi nilai)</th>
                                         <td class="text-center">
-                                            <input value="5" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 5 ? 'checked' : ''}}>
+                                            <input value="5" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 5 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="4" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 4 ? 'checked' : ''}}>
+                                            <input value="4" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 4 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="3" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 3 ? 'checked' : ''}}>
+                                            <input value="3" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 3 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="2" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 2 ? 'checked' : ''}}>
+                                            <input value="2" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 2 ? 'checked' : ''}}>
                                         </td>
                                         <td class="text-center">
-                                            <input value="1" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" required {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 1 ? 'checked' : ''}}>
+                                            <input value="1" class="form-check-input" type="radio" name="factors[kegiatan_pengembangan_karakter]" id="flexRadioQuestion1" {{ (old('factors', $jobAssessment->factors ?? [])['kegiatan_pengembangan_karakter'] ?? null) == 1 ? 'checked' : ''}}>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -309,5 +309,27 @@
             delimiter: '-',
             datePattern: ['Y']
         });
+
+        // validate input name="factors[*]"
+        function validateFactors() {
+            var factors = document.getElementsByName('input[name="factors[*]"]');
+            var factorChecked = false;
+            for (var i = 0; i < factors.length; i++) {
+                if (factors[i].checked) {
+                    factorChecked = true;
+                    break;
+                }
+            }
+            if (!factorChecked) {
+                alert('Mohon isi semua faktor penilaian');
+                return false;
+            }
+            return true;
+        }
+
+        // form on submit
+        document.getElementById('form').onsubmit = function() {
+            return validateFactors();
+        }
     </script>
 @endsection
