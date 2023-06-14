@@ -150,7 +150,11 @@ class AppreciationController extends Controller
 
         $appreciation = Appreciation::create($data);
 
-        return redirect()->route('appreciations.index')->with('message', 'Penghargaan berhasil ditambahkan.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.appreciations.index')->with('message', 'Penghargaan berhasil ditambahkan.');
+        } else {
+            return redirect()->route('appreciations.index')->with('message', 'Penghargaan berhasil ditambahkan.');
+        }
     }
 
     /**
@@ -209,7 +213,11 @@ class AppreciationController extends Controller
 
         $appreciation->update($data);
 
-        return redirect()->route('appreciations.index')->with('message', 'Penghargaan berhasil diubah.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.appreciations.index')->with('message', 'Penghargaan berhasil diubah.');
+        } else {
+            return redirect()->route('appreciations.index')->with('message', 'Penghargaan berhasil diubah.');
+        }
     }
 
     /**

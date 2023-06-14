@@ -149,7 +149,11 @@ class DecreeController extends Controller
 
         $appreciation = Decree::create($data);
 
-        return redirect()->route('decrees.index')->with('message', 'Surat Keputusan berhasil ditambahkan.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.decrees.index')->with('message', 'Surat Keputusan berhasil ditambahkan.');
+        } else {
+            return redirect()->route('decrees.index')->with('message', 'Surat Keputusan berhasil ditambahkan.');
+        }
     }
 
     /**
@@ -208,7 +212,11 @@ class DecreeController extends Controller
 
         $decree->update($data);
 
-        return redirect()->route('decrees.index')->with('message', 'Surat Keputusan berhasil diubah.');
+        if (auth()->getDefaultDriver() == 'api') {
+            return redirect()->route('employee.decrees.index')->with('message', 'Surat Keputusan berhasil diubah.');
+        } else {
+            return redirect()->route('decrees.index')->with('message', 'Surat Keputusan berhasil diubah.');
+        }
     }
 
     /**

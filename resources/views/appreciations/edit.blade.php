@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('appreciations.update', $appreciation->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.appreciations.update', $appreciation->id) : route('appreciations.update', $appreciation->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card">

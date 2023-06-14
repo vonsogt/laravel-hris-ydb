@@ -34,7 +34,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('decrees.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ auth()->getDefaultDriver() == 'api' ? route('employee.decrees.store') : route('decrees.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-body">
