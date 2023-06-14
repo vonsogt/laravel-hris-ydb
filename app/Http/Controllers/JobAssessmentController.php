@@ -107,8 +107,17 @@ class JobAssessmentController extends Controller
                             </div>
                         ';
 
-                        if (auth()->user()->position->name == 'Kepala Sekolah') {
-                            $btn = '
+                        if (auth()->user()->position->name == 'Kepala Sekolah' || auth()->user()->position->name == 'Kepala Yayasan') {
+                            if (auth()->user()->id == $row->employee->id) {
+                                $btn = '
+                                <div class="d-flex gap-2">
+                                    <div class="show">
+                                        <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                    </div>
+                                </div>
+                                ';
+                            } else {
+                                $btn = '
                                 <div class="d-flex gap-2">
                                     <div class="show">
                                         <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
@@ -117,21 +126,32 @@ class JobAssessmentController extends Controller
                                         <a href="' . route('employee.job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
                                     </div>
                                 </div>
-                            ';
+                                ';
+                            }
                         } else if (auth()->user()->position->name == 'Kepala HRD') {
-                            $btn = '
-                                <div class="d-flex gap-2">
-                                    <div class="show">
-                                        <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                            if (auth()->user()->id == $row->employee->id) {
+                                $btn = '
+                                    <div class="d-flex gap-2">
+                                        <div class="show">
+                                            <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                        </div>
                                     </div>
-                                    <div class="edit">
-                                        <a href="' . route('employee.job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                ';
+                            } else {
+                                $btn = '
+                                    <div class="d-flex gap-2">
+                                        <div class="show">
+                                            <a href="' . route('employee.job-assessments.show', $row->id) . '" class="btn btn-sm btn-primary edit-item-btn">Lihat</a>
+                                        </div>
+                                        <div class="edit">
+                                            <a href="' . route('employee.job-assessments.edit', $row->id) . '" class="btn btn-sm btn-success edit-item-btn">Ubah</a>
+                                        </div>
+                                        <div class="remove">
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . (auth()->getDefaultDriver() == "api" ? route("employee.job-assessments.destroy", [$row->id]) : route("job-assessments.destroy", [$row->id])) . '">Hapus</a>
+                                        </div>
                                     </div>
-                                    <div class="remove">
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-danger remove-item-btn" onclick="deleteEntry(this)" data-route="' . (auth()->getDefaultDriver() == "api" ? route("employee.job-assessments.destroy", [$row->id]) : route("job-assessments.destroy", [$row->id])) . '">Hapus</a>
-                                    </div>
-                                </div>
-                            ';
+                                ';
+                            }
                         }
                     }
 
