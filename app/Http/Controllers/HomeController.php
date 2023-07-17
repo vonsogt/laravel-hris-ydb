@@ -59,7 +59,6 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-
         $count = count(array_reverse($headcountEmployeeChartData->toArray())) - 1;
         foreach (array_reverse($headcountEmployeeChartData->toArray()) as $key => $val) {
             if ($key == $count) {
@@ -74,7 +73,9 @@ class HomeController extends Controller
         $dataChartCategories = explode(',', $data['chartCategories']);
         $maxYear = count($dataChartCategories) <= 4 ? count($dataChartCategories) : 4;
         $data['headCountEmployeeTitle'] = $data['chartCategories'] != ''
-            ? (count($dataChartCategories) > 1 ? ($dataChartCategories[0] . ' - ' . $dataChartCategories[$maxYear - 1]) : $dataChartCategories[0])
+            ? (count($dataChartCategories) > 1
+                ? ($dataChartCategories[0] . ' - ' . $dataChartCategories[count($dataChartCategories) - 1])
+                : $dataChartCategories[0])
             : now()->year;
 
         return view('index', compact('data'));
