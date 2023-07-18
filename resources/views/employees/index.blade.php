@@ -22,7 +22,7 @@
             </div>
             <div class="col-sm-auto ms-auto">
                 <div class="hstack gap-2">
-                    <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Fliters</button>
+                    <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Filters</button>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     @endif
-                    <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Fliters</button>
+                    <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> Filters</button>
                 </div>
             </div>
         </div>
