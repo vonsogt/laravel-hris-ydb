@@ -649,6 +649,7 @@
                             }
                         }
                     }).then((result) => {
+                        let reason = result.value;
                         if (result.isConfirmed) {
 
                             // Swal to input date
@@ -667,7 +668,7 @@
                                         url: route,
                                         type: 'POST',
                                         data: {
-                                            reason: result.value,
+                                            reason: reason,
                                             date: $('#date').val()
                                         },
                                         success: function(data) {
